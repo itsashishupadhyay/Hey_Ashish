@@ -26,23 +26,64 @@
 <body>
 
   <!-- Add your site or application content here -->
+  <div class="initSocial">
+    <a href="#" class="fa fa-linkedin" onclick='OpenLink("Linkedin")'  style="filter: grayscale(0%);"></a>
+    <a href="#" class="fa fa-instagram" style="filter: grayscale(0%);"></a>
+    <a href="#" class="fa fa-github" onclick='OpenLink("GitHub")' style="filter: grayscale(0%);"></a>
+    <a href="#" class="fa fa-envelope" onclick='OpenLink("Email")' style="filter: grayscale(0%);"></a>
+  </div>
 
   <div class="Banner-image">
     <div class="Banner-text">
       <h1> Ashish Upadhyay</h1>
       <p>And I'm an Artist in an Inventor's body</p>
-      <button  class="button-slipBorder" role="button" >Say Hi !</button>
+      <button  class="button-slipBorder" role="button" onclick=smoothScroll('Contacts') >Say Hi !</button>
     </div>
   </div>
 
+  <div class = "VideoEmbed">
+    <section class='left section'>
+      <p>Discuss the video here in length</p>
+    </section>
+    <section class='right section'>
+      <iframe src='https://youtube.com/embed/dBysV4OpSVE' controls></iframe>
+    </section>
+  </div>
 
-  <div class="Contact Me !">
+  <div class = "VideoEmbed">
+    <section class='left section'>
+      <iframe src='https://youtube.com/embed/xfgrLSBLTG0' controls mute></iframe>
+    </section>
+    <section class='right section'>
+      <p>Discuss the video here in length</p>
+    </section>
+  </div>
+
+  <div class = "VideoEmbed">
+    <section class='left section'>
+      <p>Discuss the video here in length</p>
+    </section>
+    <section class='right section'>
+      <iframe src='https://www.youtube.com/embed/F8Mc63sltNw' controls></iframe>
+    </section>
+  </div>
+
+  <div class = "VideoEmbed">
+    <section class='left section'>
+      <iframe src='https://youtube.com/embed/NyXsBIeEHoM' controls mute></iframe>
+    </section>
+    <section class='right section'>
+      <p>Discuss the video here in length</p>
+    </section>
+  </div>
+
+  <div class="Contact Me !" id = "Contacts">
     <h1>Contact Me</h1>
-    <div>
+    <div id = "Address">
       <h2>Address</h2>
       <p>Somewhere in Sunnyvale,CA or Brooklyn NY</p>
     </div>
-    <div>
+    <div id = "Socials">
       <a href="#" class="fa fa-linkedin" onclick='OpenLink("Linkedin")'></a>
       <a href="#" class="fa fa-instagram"></a></br>
       <a href="#" class="fa fa-github" onclick='OpenLink("GitHub")'></a>
