@@ -209,13 +209,13 @@ iframe {
 #Contacts {
   position: relative;
   width: 600px;
-  height: 400px;
+  height: 350px;
   margin: 0 auto;
 }
 
 #Address {
   position: absolute;
-  left: -200px;
+  left: -250px;
   width: 500px;
   height: 400px;
 }
@@ -224,9 +224,12 @@ iframe {
   position: absolute;
   right: -200px;
   width: 200px;
-  height: 400px;
+  height: 200px;
 }
-
+#Resume {
+  position: relative;
+  right: -200px;
+}
 .fa {
   padding: 20px;
   font-size: 40px;
@@ -268,6 +271,72 @@ iframe {
   color: dodgerblue;
   font-size: 60px;
   filter: grayscale(100%);
+}
+
+/* Resume Button */
+.GrabResume {
+  background: transparent;
+  width: 200px;
+  position: relative;
+  padding: 15px;
+  color: #1ECD97;
+  cursor: pointer;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  transition: all 500ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  border-radius: 4px;
+  font-weight: 600;
+  overflow: hidden;
+  border: 2px solid #1ECD97;
+  text-decoration: none;
+}
+
+/* In Progress Button */
+.GrabResume-progress {
+  width: 500px;
+  color: transparent;
+}
+
+.GrabResume-fill:after {
+  content: '';
+  background: #1ECD97;
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: 0;
+  display: block;
+  animation: fill 1.5s linear forwards;
+}
+
+/* Button Complete */
+.GrabResume-complete {
+  padding: 10px;
+  width: 50px;
+  color: #fff;
+  pointer-events: none;
+}
+
+.GrabResume-complete:after {
+  font-family: FontAwesome;
+  content: "\f00c";
+  color: #fff;
+  height: 100%;
+  padding-left: 3px;
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #1ECD97;
+}
+
+/* Animation */
+@keyframes fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }
 
 /* ==========================================================================
