@@ -4,8 +4,8 @@ function OpenLink(What) {
   }else if (What === "GitHub"){
     window.open("https://github.com/itsashishupadhyay", "_blank");
   }else if (What == "Email"){
-    window.open ("mailto:itsashishupadhyay+HeyAshish@gmail.com","emailWindow");
-    window.location.href = "mailto:itsashishupadhyay+HeyAshish@gmail.com";
+    window.open ("mailto:Ashish@HeyAshish.com","emailWindow");
+    window.location.href = "mailto:Ashish@HeyAshish.com";
   }else{
     window.open( What, "_blank");
 

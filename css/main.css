@@ -13,7 +13,7 @@
 
 html {
   color: #222;
-  font-size: 1em;
+  font-size: 1rem;
   line-height: 1.4;
   /*background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url(../img/PgBck.jpg) no-repeat center center fixed;*/
   background: white;
@@ -100,10 +100,11 @@ textarea {
 .Banner-image {
   /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../img/Banner.jpg");
-
+  color: white;
+  text-align:left;
   /* Set a specific height */
-  height: 1024px;
-  width: auto;
+  height: 50rem;
+  min-width: 600px;
   /* Position and center the image to scale nicely on all screens */
   background-position: center;
   background-repeat: no-repeat;
@@ -124,17 +125,35 @@ textarea {
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(100, 100, 100, 0.5)), url("../img/Banner.jpg");
   filter: grayscale(0);
   object-fit: fill;
+}
+.MyName:before{
+  content:"Ashish";
+}
+.MyName:hover:before {
+  content: " Upadhyay";
+  color:#3DD1E7;
+  font-weight: bold;
+  color: white;
+  text-shadow: 20px 10px 0px #ff99cc,
+  -15px -6px 0px #3DD1E7;
+}
 
+.TagLine:hover{
+  color:#3DD1E7;
+  font-weight: bold;
+  color: white;
+  text-shadow: 20px 25px 0px #ff99cc,
+  -15px -21px 0px #3DD1E7;
 }
 
 /* Place text in the middle of the image */
 .Banner-text {
-  text-align: center;
-  position: absolute;
-  top: 25%;
-  left: 25%;
-  transform: translate(-50%, -50%);
+  text-align: left;
+  left: 5rem;
+  top : -6rem;
   color: white;
+  position: relative;
+  overflow: hidden;
 }
 
 /* CSS */
@@ -193,6 +212,7 @@ textarea {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-width: 600px;
 }
 .section {
   width: 50%;
@@ -214,21 +234,23 @@ iframe {
 }
 
 #Address {
-  position: absolute;
+  position: center;
   left: -250px;
-  width: 500px;
-  height: 400px;
+  width: auto;
+  height: 275px;
 }
 
 #Socials {
-  position: absolute;
-  right: -200px;
-  width: 200px;
+  position: center;
+  /*right: -200px;*/
+  width: auto;
   height: 200px;
 }
 #Resume {
   position: relative;
-  right: -200px;
+  width: 600px;
+  height: 100px;
+  margin: 0 auto;
 }
 .fa {
   padding: 20px;
