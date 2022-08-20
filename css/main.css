@@ -151,6 +151,7 @@ textarea {
   text-align: left;
   left: 5rem;
   top : -6rem;
+  height: 12rem;
   color: white;
   position: relative;
   overflow: hidden;
