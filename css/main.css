@@ -12,11 +12,11 @@
    ========================================================================== */
 
 html {
-  color: #222;
+  color: White;
   font-size: 1rem;
   line-height: 1.4;
   /*background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url(../img/PgBck.jpg) no-repeat center center fixed;*/
-  background: white;
+  background: #192734;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -209,16 +209,104 @@ textarea {
     font-size: 1.25rem;
   }
 }
+
+.blockquote-wrapper {
+  display: flex;
+  min-height: 20vh;
+  padding: 0 20px;
+}
+
+/* Blockquote main style */
+.blockquote {
+  position: relative;
+  font-family: 'Barlow Condensed', sans-serif;
+  margin: 80px auto;
+  align-self: center;
+}
+
+/* Blockquote header */
+.blockquote h2 {
+  font-family: 'Abril Fatface', cursive;
+  position: relative; /* for pseudos */
+  color: #e74848;
+  font-size: 2.8rem;
+  font-weight: normal;
+  line-height: 1;
+  margin: 0;
+  border: 2px solid #fff;
+  border: solid 2px;
+  border-radius:20px;
+  padding: 25px;
+}
+
+/* Blockquote right double quotes */
+.blockquote h2:after {
+  content:"";
+  position: absolute;
+  border: 2px solid #e74848;
+  border-radius: 0 50px 0 0;
+  width: 60px;
+  height: 60px;
+  bottom: -62px;
+  left: 50px;
+  border-bottom: none;
+  border-left: none;
+  z-index: 3;
+}
+
+.blockquote h2:before {
+  content:"";
+  position: absolute;
+  width: 80px;
+  border: 6px solid #192734;
+  bottom: -3px;
+  left: 50px;
+  z-index: 2;
+}
+
+/* increase header size after 600px */
+@media all and (min-width: 600px) {
+  .blockquote h2 {
+    font-size: 3rem;
+    line-height: 1.2;
+  }
+
+}
+
+/* Blockquote subheader */
+.blockquote h4 {
+  position: relative;
+  color: #8899A6;
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0;
+  padding-top: 15px;
+  z-index: 1;
+  margin-left:150px;
+  padding-left:12px;
+}
+
+
+.blockquote h4:first-letter {
+  margin-left:-12px;
+}
+
 .VideoEmbed {
   display: flex;
   justify-content: center;
   align-items: center;
   min-width: 600px;
+  color: #8899A6;
 }
 .section {
   width: 50%;
   height: 100%;
   margin-left: 30px;
+}
+
+.VideoEmbed:hover{
+  color: #FFFFFF ;
 }
 
 iframe {
