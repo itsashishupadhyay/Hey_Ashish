@@ -12,11 +12,11 @@
    ========================================================================== */
 
 html {
-  color: White;
+  color: black;
   font-size: 1rem;
   line-height: 1.4;
   /*background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url(../img/PgBck.jpg) no-repeat center center fixed;*/
-  background: #192734;
+  background: white;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -258,7 +258,7 @@ textarea {
   content:"";
   position: absolute;
   width: 80px;
-  border: 6px solid #192734;
+  border: 6px solid white;
   bottom: -3px;
   left: 50px;
   z-index: 2;
@@ -306,7 +306,7 @@ textarea {
 }
 
 .VideoEmbed:hover{
-  color: #FFFFFF ;
+  color: black ;
 }
 
 iframe {
