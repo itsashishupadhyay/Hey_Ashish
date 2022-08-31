@@ -47,7 +47,7 @@
     <h1 class="MyName" style="font-family:Helvetica;padding-left:5rem;padding-top:10rem; text-align:left"></h1>
     <div class="Banner-text">
       <p class = "TagLine" style="font-family:Brush Script MT; font-size: 3rem">Artist in an Inventor's body</p>
-      <button  class="button-slipBorder" role="button" onclick=smoothScroll('Contacts') >Say Hi !</button>
+      <button  class="button-slipBorder" role="button" onclick=smoothScroll('post-btn') >Say Hi !</button>
     </div>
   </div>
 
@@ -108,25 +108,40 @@
     </section>
   </div>
 
-  <div class="Contact Me !" id = "Contacts">
+  <div class="Contacts" >
     <h1>Contact Me</h1>
-    <div id = "Address">
+    <div class = "Address">
       <h2>Address</h2>
       <p>Somewhere in Sunnyvale,CA</p>
       <p>Ashish@HeyAshish.com</p>
     </div>
-    <div id = "Socials">
+
+    <div class="Resume">
+      <h2>Need My Resume</h2>
+      <a href='doc/Ashish_Upadhyay_CV.pdf' download="Ashish_Upadhyay_CV.pdf" class='GrabResume'>Grab A Copy - its free !!</a>
+    </div>
+      <div class = "LightButton">
+
+        <article>
+          <h1>Say Hi</h1>
+          <p >Since you already reached here click on the button below and all the light in my room will change color and Google will play a chime for me Indicating that you said Hi !!!</p>
+        </article>
+        <button id = "post-btn" class="LightMyPresence" role="button" onclick="LightUp()";>Let Ashish Know</button>
+      </div>
+
+
+    <div class = "Socials">
       <a href="javascript:void();" class="fa fa-linkedin" onclick='OpenLink("Linkedin")'></a>
       <a href="javascript:void();" class="fa fa-instagram"></a></br>
       <a href="javascript:void();" class="fa fa-github" onclick='OpenLink("GitHub")'></a>
       <a href="javascript:void();" class="fa fa-envelope" onclick='OpenLink("Email")'></a>
     </div>
 
+
+
+
   </div>
-  <div id="Resume">
-    <h2>Need My Resume</h2>
-    <a href='doc/Ashish_Upadhyay_CV.pdf' download="Ashish_Upadhyay_CV.pdf" class='GrabResume'>Grab A Copy - its free !!</a>
-  </div>
+
 
 
   <script src="js/vendor/modernizr-3.11.2.min.js"></script>

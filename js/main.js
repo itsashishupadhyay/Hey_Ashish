@@ -37,3 +37,19 @@ $(function() {
     }, 2200);
   });
 })
+
+const button = document.getElementById('post-btn');
+
+button.addEventListener('click', async _ => {
+  try {
+    const response = await fetch('https://maker.ifttt.com/trigger/Heyashishbutton/json/with/key/ch90Ck4rGenabtIklPb-Tr6Qsl4KDngno7Lr3J1rPD_', {
+      method: 'post',
+      body: {
+        // Your body
+      }
+    });
+    console.log('Completed!', response);
+  } catch(err) {
+    console.error(`Error: ${err}`);
+  }
+});
