@@ -22,19 +22,33 @@ smoothScroll = function(elementId) {
 $(function() {
   var btn = $(".GrabResume");
 
-  btn.on("click", function() {
+  btn.on("click", async function () {
     $(this).addClass('GrabResume-progress');
-    setTimeout(function() {
+    setTimeout(function () {
       btn.addClass('GrabResume-fill')
     }, 500);
 
-    setTimeout(function() {
+    setTimeout(function () {
       btn.removeClass('GrabResume-fill')
     }, 4100);
 
-    setTimeout(function() {
+    setTimeout(function () {
       btn.addClass('GrabResume-complete')
     }, 2200);
+
+    try {
+      const response = await fetch('https://maker.ifttt.com/trigger/ResumeDownloaded/json/with/key/ch90Ck4rGenabtIklPb-Tr6Qsl4KDngno7Lr3J1rPD_', {
+        method: 'post',
+        body: {
+          // Your body
+        }
+      });
+      console.log('Completed!', response);
+    } catch (err) {
+      console.error(`Error: ${err}`);
+    }
+
+
   });
 })
 
