@@ -852,3 +852,52 @@ article {
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
   overflow: hidden;
 }
+
+/* Ensure visitor sections don't overlap previous content */
+#visitor-info,
+#visitor-map {
+  clear: both;
+}
+
+/* Mobile spacing and layout fixes to prevent overlap between .Socials and visitor card */
+@media (max-width: 640px) {
+  .Contacts {
+    width: 100%;
+    height: auto;
+    min-height: initial;
+    margin: 0 auto 2rem;
+  }
+  .Address,
+  .Socials,
+  .Resume,
+  .LightButton {
+    position: static;
+    left: auto;
+    width: 100%;
+  }
+  .Socials {
+    height: auto;
+    margin-bottom: 1.5rem;
+  }
+  #visitor-info {
+    margin-top: 3rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+  #visitor-map {
+    margin-top: 1rem;
+  }
+}
+
+/* Mobile overlap fixes: stack sections, remove rigid widths, constrain iframes, prevent horizontal overflow */
+html, body { overflow-x: hidden; }
+
+@media (max-width: 640px) {
+  .Banner-image { min-width: 0; height: auto; }
+  .VideoEmbed { min-width: 0; flex-direction: column; align-items: stretch; gap: 1rem; }
+  .section { width: 100%; margin-left: 0; }
+  iframe { height: 220px; }
+  .gallery_div { flex-direction: column; }
+  .slides { width: 100%; }
+  #visitor-info { margin-top: 4rem; }
+}
