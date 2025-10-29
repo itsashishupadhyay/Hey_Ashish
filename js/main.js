@@ -148,22 +148,24 @@ function initVisitorMap(lat, lng) {
   const mapEl = document.getElementById('visitor-map');
   if (!mapEl) return;
 
-  // Initialize map
-  const map = L.map('visitor-map', { zoomControl: false }).setView([lat, lng], 12);
+  // Initialize map with popups not auto-closing
+  const map = L.map('visitor-map', { zoomControl: false, closePopupOnClick: false }).setView([lat, lng], 12);
 
   // Add OpenStreetMap tiles (free, no API key)
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
   }).addTo(map);
 
-  // Add marker
-  L.marker([lat, lng]).addTo(map)
-    .bindPopup('You are approximately here')
-    .openPopup();
+  // Add markers with persistent popups
+  const youMarker = L.marker([lat, lng]).addTo(map)
+    .bindPopup('You are approximately here', { autoClose: false, closeOnClick: false });
+  youMarker.openPopup();
 
   // Add reference marker and a connecting line; fit map to both points
   if (typeof REF_LAT === 'number' && typeof REF_LNG === 'number') {
-    const refMarker = L.marker([REF_LAT, REF_LNG]).addTo(map).bindPopup('I am approximately here');
+    const refMarker = L.marker([REF_LAT, REF_LNG]).addTo(map)
+      .bindPopup('I am approximately here', { autoClose: false, closeOnClick: false });
+    refMarker.openPopup();
     const path = L.polyline([[lat, lng], [REF_LAT, REF_LNG]], { color: '#007BFF', weight: 3, opacity: 0.7 }).addTo(map);
     map.fitBounds(path.getBounds(), { padding: [20, 20] });
   }
@@ -198,12 +200,12 @@ async function fetchVisitorInfo() {
       const directionsG = `https://www.google.com/maps/dir/?api=1&origin=${latitude},${longitude}&destination=${REF_LAT},${REF_LNG}&travelmode=driving`;
       const directionsOSM = `https://www.openstreetmap.org/directions?engine=fossgis_osrm_car&route=${latitude},${longitude};${REF_LAT},${REF_LNG}`;
       visitorInfo.innerHTML = `
-        <p class="visitor-message">A mysterious traveler approaches…</p>
+        <p class="visitor-message">A mysterious traveler</p>
         <p class="visitor-message"><strong>You are visitor with IP:</strong></p>
         <p class="visitor-message"><strong>${ip}</strong></p>
         <p class="visitor-message">Signal originating from:</p>
         <p class="visitor-message"><strong>${city}, ${region}, ${country}</strong></p>
-        <p class="visitor-message">Coordinates reveal an estimated separation of <strong>${approxKm} km</strong> away (in a straight line).</p>
+        <p class="visitor-message">Coordinates reveal an estimated separation of <strong>${approxKm} km</strong> away (in a straight line). (Actual travel distance may increase due to… reality.)</p>
         <p class="visitor-message">➡️ Wanna meet halfway?</p>
         <p class="visitor-message"><a href="${directionsG}" target="_blank" rel="noopener">Driving directions (Google Maps)</a> · <a href="${directionsOSM}" target="_blank" rel="noopener">OSM directions</a></p>
       `;

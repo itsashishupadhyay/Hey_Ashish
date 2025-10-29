@@ -844,7 +844,7 @@ article {
 
 /* Visitor map */
 #visitor-map {
-  width: min(92vw, 900px);
+  width: min(95vw, 1100px);
   height: 260px;
   margin: 1rem auto 6rem;
   border-radius: 12px;
@@ -900,4 +900,29 @@ html, body { overflow-x: hidden; }
   .gallery_div { flex-direction: column; }
   .slides { width: 100%; }
   #visitor-info { margin-top: 4rem; }
+}
+
+/* Center-align visitor blocks consistently with visitor-info and avoid overflow */
+#visitor-info.visitor-card,
+#visitor-map.visitor-map {
+  width: 100% !important;
+  max-width: 1100px !important;
+  min-width: 0 !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  display: block;
+}
+
+/* Expand Contacts container so the map can grow wider */
+.Contacts {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  height: 350px;
+  margin: 0 auto;
 }
