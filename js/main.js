@@ -170,8 +170,12 @@ function initVisitorMap(lat, lng) {
     map.fitBounds(path.getBounds(), { padding: [20, 20] });
   }
 
-  // Finally, zoom back in on the visitor's location
-  map.setView([lat, lng], 14);
+  // Ensure the final zoom happens after any fit/animation completes
+  map.once('moveend', () => {
+    map.setView([lat, lng], 14, { animate: true });
+  });
+  // Fix cases where the container resizes after init
+  setTimeout(() => map.invalidateSize(), 0);
 }
 
 async function fetchVisitorInfo() {
