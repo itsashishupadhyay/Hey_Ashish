@@ -143,39 +143,140 @@ function haversineKm(lat1, lon1, lat2, lon2) {
   return R * c;
 }
 
-function initVisitorMap(lat, lng) {
+// Global variables for location tracking
+let currentMap = null;
+let preciseLat = null;
+let preciseLng = null;
+let isUsingPreciseLocation = false;
+
+function initVisitorMap(lat, lng, isPrecise = false) {
   if (!window.L) return; // Leaflet not loaded
   const mapEl = document.getElementById('visitor-map');
   if (!mapEl) return;
 
+  // Clear existing map if it exists
+  if (currentMap) {
+    currentMap.remove();
+  }
+
   // Initialize map with popups not auto-closing
-  const map = L.map('visitor-map', { zoomControl: false, closePopupOnClick: false }).setView([lat, lng], 12);
+  currentMap = L.map('visitor-map', { zoomControl: false, closePopupOnClick: false }).setView([lat, lng], 12);
 
   // Add OpenStreetMap tiles (free, no API key)
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
-  }).addTo(map);
+  }).addTo(currentMap);
 
   // Add markers with persistent popups
-  const youMarker = L.marker([lat, lng]).addTo(map)
-    .bindPopup('You are approximately here', { autoClose: false, closeOnClick: false });
+  const locationText = isPrecise ? 'Your precise location' : 'You are approximately here';
+  const youMarker = L.marker([lat, lng]).addTo(currentMap)
+    .bindPopup(locationText, { autoClose: false, closeOnClick: false });
   youMarker.openPopup();
 
   // Add reference marker and a connecting line; fit map to both points
   if (typeof REF_LAT === 'number' && typeof REF_LNG === 'number') {
-    const refMarker = L.marker([REF_LAT, REF_LNG]).addTo(map)
+    const refMarker = L.marker([REF_LAT, REF_LNG]).addTo(currentMap)
       .bindPopup('I am approximately here', { autoClose: false, closeOnClick: false });
     refMarker.openPopup();
-    const path = L.polyline([[lat, lng], [REF_LAT, REF_LNG]], { color: '#007BFF', weight: 3, opacity: 0.7 }).addTo(map);
-    map.fitBounds(path.getBounds(), { padding: [20, 20] });
+    const path = L.polyline([[lat, lng], [REF_LAT, REF_LNG]], { color: '#007BFF', weight: 3, opacity: 0.7 }).addTo(currentMap);
+    currentMap.fitBounds(path.getBounds(), { padding: [20, 20] });
   }
 
   // Ensure the final zoom happens after any fit/animation completes
-  map.once('moveend', () => {
-    map.setView([lat, lng], 14, { animate: true });
+  currentMap.once('moveend', () => {
+    const zoomLevel = isPrecise ? 16 : 14; // Higher zoom for precise location
+    currentMap.setView([lat, lng], zoomLevel, { animate: true });
   });
   // Fix cases where the container resizes after init
-  setTimeout(() => map.invalidateSize(), 0);
+  setTimeout(() => currentMap.invalidateSize(), 0);
+}
+
+function requestPreciseLocation() {
+  const button = document.querySelector('.location-request');
+  const statusEl = document.querySelector('.location-status');
+  
+  if (!navigator.geolocation) {
+    statusEl.textContent = 'Geolocation is not supported by this browser.';
+    statusEl.className = 'location-status error';
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = 'Getting location...';
+  statusEl.textContent = 'Requesting location permission...';
+  statusEl.className = 'location-status';
+
+  const options = {
+    enableHighAccuracy: true,
+    timeout: 10000,
+    maximumAge: 60000
+  };
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      preciseLat = position.coords.latitude;
+      preciseLng = position.coords.longitude;
+      isUsingPreciseLocation = true;
+
+      // Update the visitor info with precise location
+      updateVisitorInfoWithPreciseLocation(preciseLat, preciseLng, position.coords.accuracy);
+      
+      // Update the map with precise location
+      initVisitorMap(preciseLat, preciseLng, true);
+
+      button.textContent = 'Location updated!';
+      statusEl.textContent = `Accuracy: ±${Math.round(position.coords.accuracy)}m`;
+      statusEl.className = 'location-status success';
+      
+      // Re-enable button after 3 seconds
+      setTimeout(() => {
+        button.disabled = false;
+        button.textContent = 'Update location again';
+      }, 3000);
+    },
+    (error) => {
+      let errorMessage = '';
+      switch (error.code) {
+        case error.PERMISSION_DENIED:
+          errorMessage = 'Location access denied by user.';
+          break;
+        case error.POSITION_UNAVAILABLE:
+          errorMessage = 'Location information unavailable.';
+          break;
+        case error.TIMEOUT:
+          errorMessage = 'Location request timed out.';
+          break;
+        default:
+          errorMessage = 'An unknown error occurred.';
+          break;
+      }
+      
+      button.disabled = false;
+      button.textContent = 'Try again';
+      statusEl.textContent = errorMessage;
+      statusEl.className = 'location-status error';
+    },
+    options
+  );
+}
+
+function updateVisitorInfoWithPreciseLocation(lat, lng, accuracy) {
+  const visitorInfo = document.getElementById('visitor-info');
+  const approxKm = haversineKm(REF_LAT, REF_LNG, lat, lng).toFixed(2);
+  const directionsG = `https://www.google.com/maps/dir/?api=1&origin=${lat},${lng}&destination=${REF_LAT},${REF_LNG}&travelmode=driving`;
+  const directionsOSM = `https://www.openstreetmap.org/directions?engine=fossgis_osrm_car&route=${lat},${lng};${REF_LAT},${REF_LNG}`;
+  
+  visitorInfo.innerHTML = `
+    <p class="visitor-message">A mysterious traveler (precise location)</p>
+    <p class="visitor-message"><strong>Your precise coordinates:</strong></p>
+    <p class="visitor-message"><strong>${lat.toFixed(6)}, ${lng.toFixed(6)}</strong></p>
+    <p class="visitor-message">Accuracy: ±${Math.round(accuracy)} meters</p>
+    <p class="visitor-message">Precise distance calculation: <strong>${approxKm} km</strong> away (straight line)</p>
+    <p class="visitor-message">➡️ Wanna meet halfway?</p>
+    <p class="visitor-message"><a href="${directionsG}" target="_blank" rel="noopener">Driving directions (Google Maps)</a> · <a href="${directionsOSM}" target="_blank" rel="noopener">OSM directions</a></p>
+    <button class="location-request" onclick="requestPreciseLocation()">Update location again</button>
+    <div class="location-status"></div>
+  `;
 }
 
 async function fetchVisitorInfo() {
@@ -212,6 +313,8 @@ async function fetchVisitorInfo() {
         <p class="visitor-message">Coordinates reveal an estimated separation of <strong>${approxKm} km</strong> away (in a straight line). (Actual travel distance may increase due to… reality.)</p>
         <p class="visitor-message">➡️ Wanna meet halfway?</p>
         <p class="visitor-message"><a href="${directionsG}" target="_blank" rel="noopener">Driving directions (Google Maps)</a> · <a href="${directionsOSM}" target="_blank" rel="noopener">OSM directions</a></p>
+        <button class="location-request" onclick="requestPreciseLocation()">Want more accurate location?</button>
+        <div class="location-status"></div>
       `;
       // Initialize the small map with IP-based coordinates
       initVisitorMap(latitude, longitude);
@@ -222,11 +325,17 @@ async function fetchVisitorInfo() {
         <p class="visitor-message">Connecting from:</p>
         <p class="visitor-message"><strong>${city}, ${region}, ${country}</strong></p>
         <p class="visitor-message">Approximate location unavailable.</p>
+        <button class="location-request" onclick="requestPreciseLocation()">Want to share your location?</button>
+        <div class="location-status"></div>
       `;
     }
   } catch (error) {
     console.error('Error fetching visitor info:', error);
-    document.getElementById('visitor-info').innerHTML = '<p class="visitor-message">Unable to load visitor information.</p>';
+    document.getElementById('visitor-info').innerHTML = `
+      <p class="visitor-message">Unable to load visitor information.</p>
+      <button class="location-request" onclick="requestPreciseLocation()">Share your location instead?</button>
+      <div class="location-status"></div>
+    `;
   }
 }
 
