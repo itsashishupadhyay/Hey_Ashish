@@ -75,56 +75,209 @@ button.addEventListener('click', async _ => {
 });
 
 
-const slideGallery = document.getElementsByClassName("slides")
-console.log("num gallery", slideGallery.length)
-for (let i = 0; i < slideGallery.length; i++) {
-
-  const slides = slideGallery[i].querySelectorAll('div');
-  console.log("num slides", slides.length);
-  slides.forEach((item) => {
-    console.log(item.innerHTML);
-  })
-  const thumb1 = document.getElementById("thumb1");
-  const thumb2 = document.getElementById("thumb2");
-  const thumb3 = document.getElementById("thumb3");
-
-  const thumbnailContainer = (i == 0) ? thumb1 : ((i == 2) ? thumb2 : thumb3);
-
-  if (!thumbnailContainer) {
-    console.warn(`Thumbnail container for gallery index ${i} is missing.`);
-    continue;
-  }
-
-  const slideCount = slides.length;
-  const slideWidth = 540;
-
-  const highlightThumbnail = () => {
-    thumbnailContainer
-      .querySelectorAll('div.highlighted')
-      .forEach(el => el.classList.remove('highlighted'));
-    const index = Math.floor(slideGallery[i].scrollLeft / slideWidth);
-    thumbnailContainer
-      .querySelector(`div[data-id="${index}"]`)
-      .classList.add('highlighted');
-  };
-
-  const scrollToElement = el => {
-    const index = parseInt(el.dataset.id, 10);
-    slideGallery[i].scrollTo(index * slideWidth, 0);
-  };
-
-  thumbnailContainer.innerHTML += [...slides]
-    .map((slide, i) => `<div data-id="${i}"></div>`)
-    .join('');
-
-  thumbnailContainer.querySelectorAll('div').forEach(el => {
-    el.addEventListener('click', () => scrollToElement(el));
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize infinite gallery
+  window.infiniteGallery = new InfiniteGallery();
+  
+  // Start auto-advance after a short delay
+  setTimeout(startAutoAdvance, 2000);
+  
+  // Add hover pause/resume functionality
+  document.querySelectorAll('.slide-track').forEach((track, index) => {
+    track.addEventListener('mouseenter', () => {
+      if (window.infiniteGallery) {
+        window.infiniteGallery.pauseGallery(index);
+      }
+    });
+    
+    track.addEventListener('mouseleave', () => {
+      if (window.infiniteGallery) {
+        window.infiniteGallery.resumeGallery(index);
+      }
+    });
   });
+});
 
-  slideGallery[i].addEventListener('scroll', e => highlightThumbnail());
+// Enhanced Infinite Rolling Gallery
+class InfiniteGallery {
+  constructor() {
+    this.galleries = [
+      {
+        images: [
+          "doc/Gal1 (3).jpg",
+          "doc/Gal1 (2).png", 
+          "doc/Gal1 (1).png",
+          "doc/Gal1 (1).jpg",
+          "doc/Gal1 (1).jpeg",
+          "doc/Ga1.png",
+          "doc/ga1_1 (1).png",
+          "doc/ga1_1 (3).png",
+          "doc/wa (3).jpeg",
+          "doc/wa (5).jpeg"
+        ],
+        trackId: 'track1',
+        thumbId: 'thumb1'
+      },
+      {
+        images: [
+          "doc/IMG2.png",
+          "doc/img3.png",
+          "doc/img1.png",
+          "doc/ga1_1 (2).png",
+          "doc/img4.png",
+          "doc/img5.png",
+          "doc/img6.png",
+          "doc/img7.png",
+          "doc/img8.png"
+        ],
+        trackId: 'track2',
+        thumbId: 'thumb2'
+      }
+    ];
+    
+    this.currentIndex = [0, 0];
+    this.isAnimating = [false, false];
+    this.init();
+  }
+  
+  init() {
+    this.galleries.forEach((gallery, index) => {
+      this.setupGallery(gallery, index);
+      this.createThumbnails(gallery, index);
+    });
+  }
+  
+  setupGallery(gallery, galleryIndex) {
+    const track = document.getElementById(gallery.trackId);
+    if (!track) return;
+    
+    // Clear existing content
+    track.innerHTML = '';
+    
+    // Create slide items and duplicate for infinite effect
+    const allImages = [...gallery.images, ...gallery.images]; // Duplicate for seamless loop
+    
+    allImages.forEach((imageSrc, index) => {
+      const slideItem = document.createElement('div');
+      slideItem.className = 'slide-item';
+      slideItem.innerHTML = `
+        <img src="${imageSrc}" alt="Gallery Image ${index + 1}" loading="lazy">
+      `;
+      track.appendChild(slideItem);
+    });
+    
+    // Set initial position
+    this.resetAnimation(galleryIndex);
+  }
+  
+  createThumbnails(gallery, galleryIndex) {
+    const thumbContainer = document.getElementById(gallery.thumbId);
+    if (!thumbContainer) return;
+    
+    thumbContainer.innerHTML = '';
+    
+    gallery.images.forEach((image, index) => {
+      const thumb = document.createElement('div');
+      thumb.dataset.index = index;
+      thumb.addEventListener('click', () => this.goToSlide(galleryIndex, index));
+      thumbContainer.appendChild(thumb);
+    });
+    
+    this.updateThumbnails(galleryIndex);
+  }
+  
+  updateThumbnails(galleryIndex) {
+    const gallery = this.galleries[galleryIndex];
+    const thumbContainer = document.getElementById(gallery.thumbId);
+    const thumbs = thumbContainer.querySelectorAll('div');
+    
+    thumbs.forEach((thumb, index) => {
+      thumb.classList.toggle('highlighted', index === this.currentIndex[galleryIndex]);
+    });
+  }
+  
+  goToSlide(galleryIndex, slideIndex) {
+    if (this.isAnimating[galleryIndex]) return;
+    
+    this.currentIndex[galleryIndex] = slideIndex;
+    this.updateThumbnails(galleryIndex);
+    
+    const gallery = this.galleries[galleryIndex];
+    const track = document.getElementById(gallery.trackId);
+    const slideWidth = window.innerWidth <= 480 ? 210 : window.innerWidth <= 768 ? 265 : 320; // width + margin
+    
+    this.isAnimating[galleryIndex] = true;
+    track.style.transition = 'transform 0.6s ease-in-out';
+    track.style.transform = `translateX(-${slideIndex * slideWidth}px)`;
+    
+    setTimeout(() => {
+      this.isAnimating[galleryIndex] = false;
+    }, 600);
+  }
+  
+  nextSlide(galleryIndex) {
+    const gallery = this.galleries[galleryIndex];
+    const nextIndex = (this.currentIndex[galleryIndex] + 1) % gallery.images.length;
+    this.goToSlide(galleryIndex, nextIndex);
+  }
+  
+  prevSlide(galleryIndex) {
+    const gallery = this.galleries[galleryIndex];
+    const prevIndex = this.currentIndex[galleryIndex] === 0 
+      ? gallery.images.length - 1 
+      : this.currentIndex[galleryIndex] - 1;
+    this.goToSlide(galleryIndex, prevIndex);
+  }
+  
+  resetAnimation(galleryIndex) {
+    const gallery = this.galleries[galleryIndex];
+    const track = document.getElementById(gallery.trackId);
+    
+    // Remove CSS animation and add JavaScript control
+    track.style.animation = 'none';
+    track.style.transition = 'transform 0.6s ease-in-out';
+    track.style.transform = 'translateX(0)';
+  }
+  
+  pauseGallery(galleryIndex) {
+    const gallery = this.galleries[galleryIndex];
+    const track = document.getElementById(gallery.trackId);
+    track.style.animationPlayState = 'paused';
+  }
+  
+  resumeGallery(galleryIndex) {
+    const gallery = this.galleries[galleryIndex];
+    const track = document.getElementById(gallery.trackId);
+    track.style.animationPlayState = 'running';
+  }
+}
 
-  highlightThumbnail();
+// Global gallery control function
+function controlGallery(direction, galleryIndex) {
+  if (!window.infiniteGallery) return;
+  
+  if (direction === 'next') {
+    window.infiniteGallery.nextSlide(galleryIndex);
+  } else if (direction === 'prev') {
+    window.infiniteGallery.prevSlide(galleryIndex);
+  }
+}
 
+// Auto-advance galleries
+function startAutoAdvance() {
+  setInterval(() => {
+    if (window.infiniteGallery) {
+      window.infiniteGallery.nextSlide(0);
+    }
+  }, 4000);
+  
+  setTimeout(() => {
+    setInterval(() => {
+      if (window.infiniteGallery) {
+        window.infiniteGallery.nextSlide(1);
+      }
+    }, 4500);
+  }, 2000); // Offset second gallery
 }
 
 // Distance helpers for approximate distance from a reference point

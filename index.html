@@ -129,23 +129,20 @@
 </div>
 
 <h1>Some Behind The Scene Sneak Peak</h1>
-<p>Scroll right for gallery (JS to auto-scroll isn't working for now) ....</p>
+<p>Hover to pause, click controls to navigate...</p>
 
 <div class="gallery_div">
   <section class='gallery-container_1'>
     <div class="gallery-container">
       <div id="thumb1" class="thumbnails"></div>
+      <div class="gallery-controls">
+        <button class="gallery-control-btn" onclick="controlGallery('prev', 0)">‹</button>
+        <button class="gallery-control-btn" onclick="controlGallery('next', 0)">›</button>
+      </div>
       <div class="slides">
-        <div><img src="doc/Gal1 (3).jpg"></div>
-        <div><img src="doc/Gal1 (2).png"></div>
-        <div><img src="doc/Gal1 (1).png"></div>
-        <div><img src="doc/Gal1 (1).jpg"></div>
-        <div><img src="doc/Gal1 (1).jpeg"></div>
-        <div><img src="doc/Ga1.png"></div>
-        <div><img src="doc/ga1_1 (1).png"></div>
-        <div><img src="doc/ga1_1 (3).png"></div>
-        <div><img src="doc/wa (3).jpeg"></div>
-        <div><img src="doc/wa (5).jpeg"></div>
+        <div class="slide-track" id="track1">
+          <!-- Images will be duplicated by JavaScript for infinite scroll -->
+        </div>
       </div>
     </div>
   </section>
@@ -153,16 +150,14 @@
   <section class='gallery-container_2'>
     <div class="gallery-container">
       <div id="thumb2" class="thumbnails"></div>
+      <div class="gallery-controls">
+        <button class="gallery-control-btn" onclick="controlGallery('prev', 1)">‹</button>
+        <button class="gallery-control-btn" onclick="controlGallery('next', 1)">›</button>
+      </div>
       <div class="slides">
-        <div><img src="doc/IMG2.png"></div>
-        <div><img src="doc/img3.png"></div>
-        <div><img src="doc/img1.png"></div>
-        <div><img src="doc/ga1_1 (2).png"></div>
-        <div><img src="doc/img4.png"></div>
-        <div><img src="doc/img5.png"></div>
-        <div><img src="doc/img6.png"></div>
-        <div><img src="doc/img7.png"></div>
-        <div><img src="doc/img8.png"></div>
+        <div class="slide-track" id="track2">
+          <!-- Images will be duplicated by JavaScript for infinite scroll -->
+        </div>
       </div>
     </div>
   </section>
