@@ -20,35 +20,36 @@ const CONFIG = {
 
 // Project Data
 const PROJECTS = [
+  // === FLAGSHIP PROJECTS (with videos) ===
   {
     id: 'gesture-arm',
     title: 'Gesture Mimicking Robotic Arm',
-    description: 'Fully wireless web-based solution to record hand gestures and transmit them securely anywhere in the world.',
+    description: 'A five-finger bionic hand that mirrors your movements from anywhere on Earth. MediaPipe tracks 21 hand landmarks at 60 FPS, AWS IoT Core relays commands globally via MQTT, and an ESP32 orchestrates five servos with sub-200ms latency. Because telepresence should feel like telekinesis.',
     categories: ['hardware', 'firmware', 'cloud', 'cv'],
     video: 'https://youtube.com/embed/dBysV4OpSVE',
-    github: 'https://github.com/itsashishupadhyay/Robotic_Arm',
-    tech: ['MediaPipe', 'ESP32', 'AWS IoT', 'WebSockets']
+    github: 'https://github.com/itsashishupadhyay/VisionControlledBionicHand',
+    tech: ['MediaPipe', 'ESP32', 'AWS IoT', 'FreeRTOS', 'PCA9685']
   },
   {
     id: 'muscular-mapping',
     title: 'Muscular Contraction Mapping',
-    description: 'Looking for mechanical and EM signatures corresponding to each finger to help neuroscientists design neural simulators.',
+    description: 'Hunting for the electromagnetic fingerprints of finger movements. EMG sensors capture muscular micro-signatures while computer vision validates ground truth - building the dataset neuroscientists need to reverse-engineer the hand-brain interface.',
     categories: ['hardware', 'firmware', 'cv'],
     video: 'https://youtube.com/embed/xfgrLSBLTG0',
-    tech: ['EMG Sensors', 'Computer Vision', 'Signal Processing']
+    tech: ['EMG Sensors', 'OpenCV', 'Signal Processing', 'NumPy']
   },
   {
     id: 'air-drums',
     title: 'Air Drums',
-    description: 'Digital air drumstick with Karplus-Strong synthesis triggered by accelerometer randomness.',
+    description: 'Digital drumsticks that turn thin air into percussion. Accelerometer data seeds Karplus-Strong string synthesis, transforming random motion into surprisingly organic drum hits. Physics-based audio synthesis triggered by gravity and human imprecision.',
     categories: ['hardware', 'firmware'],
     video: 'https://www.youtube.com/embed/F8Mc63sltNw',
-    tech: ['Accelerometer', 'Karplus-Strong', 'Audio Synthesis']
+    tech: ['Accelerometer', 'Karplus-Strong', 'Audio DSP', 'Arduino']
   },
   {
     id: 'alexa-dispenser',
     title: 'Alexa Medication Dispenser',
-    description: 'Alexa-enabled medication dispenser using AWS IoT, S3, Lambda, and Alexa Skill Kit.',
+    description: 'Voice-controlled pill dispensing that could save lives. Alexa Skill Kit handles natural language, Lambda processes intent, S3 logs compliance, and an ESP32 actuates the mechanical dispenser. AWS IoT ties it together with hospital-grade reliability.',
     categories: ['hardware', 'firmware', 'cloud'],
     video: 'https://youtube.com/embed/NyXsBIeEHoM',
     tech: ['Alexa Skills', 'AWS Lambda', 'AWS S3', 'IoT Core', 'ESP32']
@@ -56,71 +57,192 @@ const PROJECTS = [
   {
     id: 'nyc-subway',
     title: 'NYC Subway Tracker',
-    description: 'Live MTA train tracker solving the "When is the next train?" question asked 3M times daily.',
+    description: 'Answering NYC\'s most-asked question: "When is the next train?" A custom GTFS parser digests MTA\'s real-time feed, ESP32 drives a retro display, and AWS IoT keeps it synced. Solving a 3-million-daily-query problem, one living room at a time.',
     categories: ['hardware', 'cloud'],
     video: 'https://youtube.com/embed/iNQItBumND8',
     github: 'https://github.com/itsashishupadhyay/Next-Train-Display',
-    tech: ['Custom API', 'ESP32', 'AWS IoT', 'MTA Feed']
+    tech: ['GTFS Parser', 'ESP32', 'AWS IoT', 'MTA Feed']
   },
+  // === RESEARCH & DEEP TECH ===
   {
     id: 'neuromod',
     title: 'Wireless Neuromodulation Implant',
-    description: 'First fully implantable wireless bidirectional vagus nerve stimulation device for mice.',
+    description: 'Designed the wireless power transfer system for the first fully implantable bidirectional vagus nerve stimulator in mice. Engineered a four-coil resonant inductive coupling topology, optimized coil geometries through COMSOL multiphysics simulations, and achieved efficient power delivery across biological tissue. Sub-millimeter flex PCBs meet biocompatible encapsulation - enabling groundbreaking neuroscience research.',
     categories: ['hardware'],
-    tech: ['4-Coil WPT', 'Bioelectronics', 'Implantable Design']
+    image: '/img/project_cards/WirelessNeuromodulationImplant.jpg',
+    tech: ['4-Coil WPT', 'Flex PCB', 'Bioelectronics', 'COMSOL']
   },
   {
     id: 'ev-charging',
     title: 'Wireless EV Charging System',
-    description: 'IEEE published wireless charging system with 95.1% efficiency at 25mm air gap.',
-    categories: ['hardware'],
-    tech: ['Class E Inverter', 'Quasi-Dynamic Charging', 'Power Electronics']
+    description: 'IEEE-published quasi-dynamic wireless charging achieving 95.1% efficiency across a 25mm air gap. Class E inverter topology, intelligent charge activation below 80% SoC, and real-time telemetry via Blynk. The future of EV charging is cordless.',
+    categories: ['hardware', 'cloud'],
+    github: 'https://github.com/itsashishupadhyay/Wireless_Charging-',
+    image: '/img/project_cards/Wireless EV Charging System.png',
+    tech: ['Class E Inverter', 'BQ27441', 'ThingSpeak', 'ESP8266']
   },
   {
+    id: 'smart-grid',
+    title: 'Stochastic Grid Market Clearing',
+    description: 'Optimizing electricity markets when the sun and wind refuse to be predictable. Two-stage stochastic programming commits generators day-ahead, then adjusts in real-time as renewables reveal their hand. GAMS + CPLEX solving the economics of a greener grid.',
+    categories: ['cloud'],
+    github: 'https://github.com/itsashishupadhyay/Smart_Grid',
+    image: '/img/project_cards/Stochastic Grid Market Clearing.webp',
+    tech: ['GAMS', 'CPLEX', 'DC-OPF', 'Stochastic MIP']
+  },
+  // === COMPUTER VISION ===
+  {
     id: 'intruder-alert',
-    title: 'Intruder Alert System',
-    description: 'Home security system using TensorFlow MobileNet and SendGrid email alerts.',
+    title: 'Guardian Eye Security System',
+    description: 'AI-powered surveillance that actually works. MobileNet-SSD v3 runs inference on Raspberry Pi, detecting 80+ object classes at configurable confidence thresholds. When a person appears, SendGrid fires an email with photographic evidence. Edge AI meets home security.',
     categories: ['cv', 'cloud'],
-    tech: ['TensorFlow', 'MobileNet', 'SendGrid', 'Raspberry Pi']
+    github: 'https://github.com/itsashishupadhyay/Intruder-Alert-System',
+    image: '/img/project_cards/img1.png',
+    tech: ['TensorFlow', 'MobileNet-SSD', 'SendGrid', 'Raspberry Pi']
   },
   {
     id: 'rock-paper-scissors',
-    title: 'Rock Paper Scissors CV Game',
-    description: 'Computer vision-based gesture recognition game using OpenCV.',
+    title: 'Rock Paper Scissors CV',
+    description: 'Defeating humans at their own game using nothing but math and a webcam. Convex hull analysis counts fingers in real-time, a 10-frame stabilization buffer filters noise, and an unbeatable (well, random) CPU opponent awaits. Gesture recognition that ships.',
     categories: ['cv'],
-    tech: ['OpenCV', 'Gesture Recognition', 'Python']
+    github: 'https://github.com/itsashishupadhyay/OpenCv_RockPaperScissor',
+    image: '/img/project_cards/img3.png',
+    tech: ['OpenCV', 'Convex Hull', 'scikit-learn', 'Tkinter']
+  },
+  {
+    id: 'yolo-detection',
+    title: 'Real-Time Object Detection (C++)',
+    description: 'Production-grade YOLO inference in pure C++ - no Python runtime required. Supports YOLOv5, v8, and the bleeding-edge YOLO26 with NMS-free architecture for 43% faster CPU inference. Built for embedded systems, spacecraft, and anywhere Python is too heavy.',
+    categories: ['cv'],
+    github: 'https://github.com/itsashishupadhyay/object_detection_opencv_cpp',
+    image: '/img/project_cards/img4.png',
+    tech: ['C++17', 'OpenCV DNN', 'YOLO26', 'ONNX', 'CMake']
+  },
+  // === COMPUTER ARCHITECTURE & SYSTEMS ===
+  {
+    id: 'mips-pipeline',
+    title: 'MIPS Pipeline Processor',
+    description: 'A cycle-accurate 5-stage MIPS processor simulator with all the hazards your CPU architecture professor warned you about. Data forwarding, pipeline stalling, and a 2-level adaptive branch predictor with pattern history tables. IPC metrics included for bragging rights.',
+    categories: ['firmware'],
+    github: 'https://github.com/itsashishupadhyay/MIPS_Pipeline',
+    image: '/img/project_cards/MIPS Pipeline Processor.jpg',
+    tech: ['C++', 'RTL Modeling', 'Branch Prediction', 'Hazard Detection']
+  },
+  {
+    id: 'aes-crypto',
+    title: 'AES File Encryption Tool',
+    description: 'Military-grade file encryption via OpenSSL\'s EVP API. Supports 128/192/256-bit keys, CBC mode, and cryptographically random IV generation. Buffered 4KB chunk processing handles files of any size. Your secrets, mathematically secured.',
+    categories: ['firmware'],
+    github: 'https://github.com/itsashishupadhyay/encrypt_decrypt_AES',
+    image: '/img/project_cards/AES File Encryption Tool.jpg',
+    tech: ['C++17', 'OpenSSL', 'AES-CBC', 'CMake']
+  },
+  {
+    id: 'anagram-hunter',
+    title: 'Anagram Chain Hunter',
+    description: 'Finding the longest chains of anagrams where each word contains all letters of its predecessor plus one more. Recursive backtracking explores branching paths while efficiently pruning dead ends. Surprisingly addictive algorithmic wordplay.',
+    categories: ['firmware'],
+    github: 'https://github.com/itsashishupadhyay/Anagrams_Derived',
+    image: '/img/project_cards/Recursive.jpg',
+    tech: ['C++', 'Recursion', 'Backtracking', 'STL']
+  },
+  // === EMBEDDED AUDIO ===
+  {
+    id: 'esp32-audio',
+    title: 'ESP32 Wireless Audio Streaming',
+    description: 'CD-quality audio over Bluetooth Classic, no drivers required. I2S captures 44.1kHz/16-bit PCM, FreeRTOS manages real-time DMA buffering, and a Python receiver writes WAV files cross-platform. When you need a wireless mic but refuse to buy one.',
+    categories: ['hardware', 'firmware'],
+    github: 'https://github.com/itsashishupadhyay/ESP32-Wireless_Audio',
+    image: '/img/project_cards/ESP32 Wireless Audio Streaming.png',
+    tech: ['ESP32', 'I2S', 'FreeRTOS', 'Bluetooth SPP', 'Python']
   }
 ];
 
-// Timeline Data
+// Timeline Data - Futuristic Career Journey
 const TIMELINE = [
   {
-    year: '2022 - Present',
-    title: 'Electrical Engineer',
-    company: 'Meta Reality Labs',
+    id: 1,
+    company: 'Meta',
+    companyShort: 'META',
     location: 'Sunnyvale, CA',
-    description: 'Power team engineer for Ray-Ban Meta Smart Glasses. SoC validation, thermal management, coexistence testing, and factory validation. 2M+ units shipped worldwide.'
+    title: 'Electrical Engineer - Power Team',
+    date: 'Nov 2025 - Present',
+    duration: '5 mos',
+    category: 'Power Systems',
+    categoryIcon: 'bolt',
+    description: 'Promoted to the Power Team to make sure AR smartglasses don\'t turn into tiny face heaters. Day-to-day involves milliwatt hunting across SOCs, sensors, and memory - basically speed-dating with silicon to understand their power personalities.\n\nAlso moonlighting as a PCB reviewer, firmware tweaker, compliance wrangler, and factory ally. The goal: ship hardware that\'s efficient, manufacturable, and won\'t melt anyone\'s face.',
+    tags: ['Power optimization', 'Characterization', 'PCB review', 'Thermal design', 'EE compliance', 'Firmware'],
+    logoType: 'meta'
   },
   {
-    year: '2020 - 2022',
-    title: 'Embedded Systems Engineer',
-    company: 'Perigon Health (Medesto)',
-    location: 'New York, NY',
-    description: 'Lead hardware engineer for FCC-certified medication adherence device. PCB design, IoT fleet management, and regulatory compliance.'
+    id: 2,
+    company: 'Meta',
+    companyShort: 'META',
+    location: 'Sunnyvale, CA',
+    title: 'Product Validation Engineer',
+    date: 'Aug 2023 - Dec 2025',
+    duration: '2 yrs 5 mos',
+    category: 'Validation',
+    categoryIcon: 'check-double',
+    description: 'The person who stress-tested wearables before the world got to wear them. Designed test plans, built automation frameworks, and ran products through every condition short of a volcano - all to catch what humans and datasheets miss.\n\nCoordinated with EE, firmware, and manufacturing teams across time zones, and kept the lab gear from turning into an expensive dust collection. If a wearable shipped and worked, this role had something to do it.',
+    tags: ['System validation', 'Test automation', 'Performance characterization', 'Lab infra', 'XFn collaboration'],
+    logoType: 'meta'
   },
   {
-    year: '2019',
-    title: 'Research Intern',
-    company: 'Feinstein Institutes for Medical Research',
-    location: 'Manhasset, NY',
-    description: 'Designed wireless power transfer hardware for fully implantable bidirectional neuromodulation system published in Biosensors and Bioelectronics.'
+    id: 3,
+    company: 'L&T Technology Services',
+    companyShort: 'LTTS',
+    location: 'United States',
+    title: 'Sr. Electrical Engineer',
+    date: 'Aug 2022 - Oct 2023',
+    duration: '1 yr 3 mos',
+    category: 'HW Validation',
+    categoryIcon: 'microchip',
+    description: 'Built hardware validation procedures for SOCs, MCUs, DDR, Flash, and peripherals for consumer AR/VR - essentially teaching silicon to prove it\'s worthy before it ships in a product.\n\nWrote firmware, automated benchtop equipment (oscilloscopes, logic analyzers, multimeters), and generated test reports for 300,000+ devices. Signed off Ok2Fab for the entire product line - no pressure.',
+    tags: ['SOC validation', 'Firmware', 'Test automation', 'DDR/Flash', 'Ok2Fab'],
+    logoType: 'ltts'
   },
   {
-    year: '2018 - 2020',
-    title: 'Research Assistant',
+    id: 4,
+    company: 'Perigon Health 360',
+    companyShort: 'PH360',
+    location: 'Plymouth, MI',
+    title: 'Electrical Design Engineer',
+    date: 'Oct 2020 - Nov 2022',
+    duration: '2 yrs 2 mos',
+    category: 'Full-stack EE',
+    categoryIcon: 'layer-group',
+    description: 'Full-stack electrical engineer before it was cool - schematics, PCB layouts, BOM analysis, RTOS firmware, AWS IoT, Alexa integration, and computer vision research, all on the same badge. Designed to UL and FCC standards because shipping something that fails compliance is just expensive sadness.\n\nBuilt production test jigs for multi-PCB setups and handled signal filtering in both hardware and firmware - whatever it took to make the product actually work, not just pass a simulation.',
+    tags: ['PCB design', 'RTOS', 'AWS IoT', 'FCC/UL', 'Signal processing', 'JTAG/SWD'],
+    logoType: 'perigon'
+  },
+  {
+    id: 5,
     company: 'New York University',
-    location: 'Brooklyn, NY',
-    description: 'MERIIT Lab: Developed COVID-19 BioTracker necklace (NSF funded). Power Lab: Wireless EV charging research (IEEE published).'
+    companyShort: 'NYU',
+    location: 'New York',
+    title: 'Research Assistant - Power Lab & Medical Robotics Lab',
+    date: 'Sep 2018 - Sep 2020',
+    duration: '2 yrs 1 mo',
+    category: 'Research',
+    categoryIcon: 'flask',
+    description: 'Designed wireless sensor controllers for two labs simultaneously - power systems and medical robotics. Built a quasi-dynamic wireless EV charging system hitting ~85% efficiency, and developed a NSF Rapid-funded wearable for COVID-19 detection. Not a slow two years.\n\nWrote firmware in C, Python, and MATLAB; designed multilayer and flex PCBs; ran DSP and EMG signal filtering algorithms; and fed sensor data into ML pipelines for decision-making. Also debugged everything with whatever tool was closest.',
+    tags: ['Wireless charging', 'IoT', 'DSP / EMG', 'Flex PCB', 'ML pipelines', 'C / Python / MATLAB'],
+    logoType: 'nyu'
+  },
+  {
+    id: 6,
+    company: 'Northwell Health',
+    companyShort: 'NORTHWELL',
+    location: 'Manhasset, NY',
+    title: 'Research Assistant - Bioelectronics & Biosensing',
+    date: 'Jun 2019 - Aug 2020',
+    duration: '1 yr 3 mos',
+    category: 'Implantables',
+    categoryIcon: 'heartbeat',
+    description: 'Designed implantable neuromodulation devices - the kind that go inside a person and still need to work perfectly. Built wireless power transfer and data telemetry systems, ran multiphysics coil simulations, and optimized PCB real-estate to power implants inside a living host.\n\nRan benchtop and in vivo experiments, wrote scripts to extract live animal data, and presented findings to research leadership. The stakes were high, the tolerances were tight, and the oscilloscope was always on.',
+    tags: ['Implantable devices', 'Wireless power transfer', 'Neuromodulation', 'Multiphysics simulation', 'In vivo experiments'],
+    logoType: 'northwell'
   }
 ];
 
@@ -1406,28 +1528,310 @@ function initProjects() {
 }
 
 // =====================================
-// TIMELINE
+// FUTURISTIC TIMELINE
 // =====================================
 
 function initTimeline() {
-  const timelineContainer = document.getElementById('timeline-container');
-  if (!timelineContainer) return;
+  const timelineCardsContainer = document.getElementById('timeline-cards');
+  const particlesContainer = document.getElementById('timeline-particles');
 
+  if (!timelineCardsContainer) return;
+
+  // Generate timeline cards
   TIMELINE.forEach((item, index) => {
-    const timelineItem = document.createElement('div');
-    timelineItem.className = 'timeline-item';
+    const isLeft = index % 2 === 0;
+    const card = createTimelineCard(item, index, isLeft);
+    timelineCardsContainer.appendChild(card);
+  });
 
-    timelineItem.innerHTML = `
-      <div class="timeline-content">
-        <div class="timeline-year">${item.year}</div>
-        <h3 class="timeline-title">${item.title}</h3>
-        <div class="timeline-company">${item.company}</div>
-        <p class="timeline-desc">${item.description}</p>
+  // Create energy particles along the timeline
+  if (particlesContainer) {
+    createTimelineParticles(particlesContainer);
+  }
+
+  // Initialize timeline animations
+  initTimelineAnimations();
+}
+
+function createTimelineCard(item, index, isLeft) {
+  const card = document.createElement('div');
+  card.className = `timeline-card ${isLeft ? 'timeline-card-left' : 'timeline-card-right'}`;
+  card.setAttribute('data-index', index);
+
+  // Generate company logo SVG based on company type
+  const logoSVG = generateCompanyLogo(item.logoType, item.companyShort);
+
+  // Generate tags HTML
+  const tagsHTML = item.tags.map(tag => `<span class="timeline-tag">${tag}</span>`).join('');
+
+  card.innerHTML = `
+    <!-- Connector Line to Timeline -->
+    <div class="timeline-connector">
+      <svg class="connector-svg" viewBox="0 0 100 20" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="connector-grad-${index}" x1="${isLeft ? '100%' : '0%'}" y1="0%" x2="${isLeft ? '0%' : '100%'}" y2="0%">
+            <stop offset="0%" stop-color="var(--color-accent)" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="var(--color-accent)" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <line class="connector-line" x1="0" y1="10" x2="100" y2="10" stroke="url(#connector-grad-${index})" stroke-width="2"/>
+        <circle class="connector-dot" cx="${isLeft ? '100' : '0'}" cy="10" r="4" fill="var(--color-accent)"/>
+      </svg>
+    </div>
+
+    <!-- Timeline Node on the spine -->
+    <div class="timeline-node">
+      <div class="node-outer">
+        <div class="node-inner">
+          <div class="node-core"></div>
+        </div>
       </div>
-      <div class="timeline-dot"></div>
-    `;
+      <div class="node-pulse"></div>
+      <div class="node-ring"></div>
+    </div>
 
-    timelineContainer.appendChild(timelineItem);
+    <!-- Flip Card Container -->
+    <div class="timeline-flip-card">
+      <div class="flip-card-inner">
+        <!-- Front Face: Logo + Date -->
+        <div class="flip-card-front">
+          <div class="card-circuit-pattern"></div>
+          <div class="card-glow-effect"></div>
+
+          <div class="card-category">
+            <i class="fas fa-${item.categoryIcon}"></i>
+            <span>${item.category}</span>
+          </div>
+
+          <div class="card-logo-container">
+            ${logoSVG}
+          </div>
+
+          <div class="card-front-info">
+            <div class="card-date">${item.date}</div>
+            <div class="card-duration">${item.duration}</div>
+            <div class="card-location">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>${item.location}</span>
+            </div>
+          </div>
+
+          <div class="card-flip-hint">
+            <span>Hover to reveal</span>
+            <i class="fas fa-sync-alt"></i>
+          </div>
+        </div>
+
+        <!-- Back Face: Details -->
+        <div class="flip-card-back">
+          <div class="card-circuit-pattern"></div>
+
+          <div class="card-back-header">
+            <h3 class="card-title">${item.title}</h3>
+            <div class="card-company-small">${item.company}</div>
+          </div>
+
+          <div class="card-description">
+            ${item.description.split('\n\n').map(p => `<p>${p}</p>`).join('')}
+          </div>
+
+          <div class="card-tags">
+            ${tagsHTML}
+          </div>
+
+          <div class="card-back-accent"></div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  return card;
+}
+
+function generateCompanyLogo(logoType, companyShort) {
+  // Logo file paths and alt text mapping
+  const logoConfig = {
+    meta: {
+      src: '/img/logos/MetaLogo.png',
+      alt: 'Meta Logo',
+      className: 'logo-meta'
+    },
+    ltts: {
+      src: '/img/logos/LnTlogo.png',
+      alt: 'L&T Technology Services Logo',
+      className: 'logo-ltts'
+    },
+    perigon: {
+      src: '/img/logos/PerigonHealth360Logo.png',
+      alt: 'Perigon Health 360 Logo',
+      className: 'logo-perigon'
+    },
+    nyu: {
+      src: '/img/logos/NYULogo.png',
+      alt: 'New York University Logo',
+      className: 'logo-nyu'
+    },
+    northwell: {
+      src: '/img/logos/NorthwellHealth_Logo.png',
+      alt: 'Northwell Health / Feinstein Institutes Logo',
+      className: 'logo-northwell'
+    }
+  };
+
+  const config = logoConfig[logoType];
+
+  if (config) {
+    return `
+      <div class="company-logo-wrapper ${config.className}">
+        <img
+          src="${config.src}"
+          alt="${config.alt}"
+          class="company-logo-img"
+          loading="lazy"
+        />
+      </div>
+    `;
+  }
+
+  // Fallback to text-based logo
+  return `
+    <div class="company-logo-text">${companyShort}</div>
+  `;
+}
+
+function createTimelineParticles(container) {
+  // Create floating energy particles that move along the timeline
+  for (let i = 0; i < 15; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'timeline-particle';
+    particle.style.setProperty('--delay', `${Math.random() * 8}s`);
+    particle.style.setProperty('--duration', `${4 + Math.random() * 4}s`);
+    particle.style.setProperty('--size', `${2 + Math.random() * 4}px`);
+    container.appendChild(particle);
+  }
+}
+
+function initTimelineAnimations() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+    // Fallback: make all cards visible
+    document.querySelectorAll('.timeline-card').forEach(card => {
+      card.classList.add('visible');
+    });
+    return;
+  }
+
+  // Master timeline for the section
+  const timelineTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.futuristic-timeline',
+      start: 'top 80%',
+      end: 'bottom 20%',
+      toggleActions: 'play none none reverse'
+    }
+  });
+
+  // Animate each card on scroll
+  gsap.utils.toArray('.timeline-card').forEach((card, index) => {
+    const isLeft = card.classList.contains('timeline-card-left');
+
+    // Initial state
+    gsap.set(card, {
+      opacity: 0,
+      x: isLeft ? -100 : 100,
+      scale: 0.9
+    });
+
+    // Animate on scroll
+    ScrollTrigger.create({
+      trigger: card,
+      start: 'top 85%',
+      onEnter: () => {
+        gsap.to(card, {
+          opacity: 1,
+          x: 0,
+          scale: 1,
+          duration: 0.8,
+          ease: 'power3.out',
+          delay: 0.1
+        });
+
+        // Animate the node
+        const node = card.querySelector('.timeline-node');
+        if (node) {
+          gsap.fromTo(node,
+            { scale: 0, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 0.5, delay: 0.3, ease: 'back.out(1.7)' }
+          );
+        }
+
+        // Animate the connector
+        const connector = card.querySelector('.connector-line');
+        if (connector) {
+          gsap.fromTo(connector,
+            { strokeDasharray: '100', strokeDashoffset: '100' },
+            { strokeDashoffset: '0', duration: 0.6, delay: 0.4, ease: 'power2.out' }
+          );
+        }
+      },
+      once: true
+    });
+  });
+
+  // Animate the timeline spine glow
+  const timelineSpine = document.querySelector('.timeline-spine');
+  if (timelineSpine) {
+    gsap.fromTo('.timeline-line-main',
+      { strokeDasharray: '1000', strokeDashoffset: '1000' },
+      {
+        strokeDashoffset: '0',
+        duration: 2,
+        ease: 'power2.inOut',
+        scrollTrigger: {
+          trigger: '.futuristic-timeline',
+          start: 'top 70%',
+          toggleActions: 'play none none reverse'
+        }
+      }
+    );
+  }
+
+  // Add touch support for mobile flip cards
+  initTimelineTouchSupport();
+}
+
+function initTimelineTouchSupport() {
+  // Detect touch device
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+  if (!isTouchDevice) return;
+
+  document.querySelectorAll('.timeline-flip-card').forEach(flipCard => {
+    let isFlipped = false;
+
+    flipCard.addEventListener('click', (e) => {
+      e.preventDefault();
+      const inner = flipCard.querySelector('.flip-card-inner');
+
+      if (inner) {
+        isFlipped = !isFlipped;
+        if (isFlipped) {
+          inner.style.transform = 'rotateY(180deg)';
+        } else {
+          inner.style.transform = 'rotateY(0deg)';
+        }
+      }
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!flipCard.contains(e.target) && isFlipped) {
+        const inner = flipCard.querySelector('.flip-card-inner');
+        if (inner) {
+          isFlipped = false;
+          inner.style.transform = 'rotateY(0deg)';
+        }
+      }
+    });
   });
 }
 
@@ -1688,17 +2092,37 @@ function initSayHi() {
   updateHiCounter();
 }
 
-function updateHiCounter() {
+async function updateHiCounter() {
   const counterNumber = document.getElementById('counter-number');
   const counterCountries = document.getElementById('counter-countries');
 
-  if (counterNumber) {
-    const currentCount = parseInt(localStorage.getItem('hiCount') || '42');
-    counterNumber.textContent = currentCount;
-  }
+  if (!counterNumber) return;
 
-  if (counterCountries) {
-    counterCountries.textContent = Math.min(Math.ceil(parseInt(localStorage.getItem('hiCount') || '42') / 5), 25);
+  try {
+    // Fetch visitor stats from GoatCounter API
+    const response = await fetch('https://ashish.goatcounter.com/counter/.json');
+    if (response.ok) {
+      const data = await response.json();
+      // Use unique visitors count
+      counterNumber.textContent = data.count_unique || data.count || '0';
+
+      // Estimate countries based on unique visitors (roughly 1 country per 3-5 visitors)
+      // This is an approximation since the simple API doesn't expose country data
+      if (counterCountries) {
+        const uniqueCount = parseInt(data.count_unique?.replace(/[^0-9]/g, '') || data.count?.replace(/[^0-9]/g, '') || '0');
+        const estimatedCountries = Math.max(1, Math.min(Math.ceil(uniqueCount / 4), 50));
+        counterCountries.textContent = estimatedCountries;
+      }
+    } else {
+      // Fallback if API fails
+      counterNumber.textContent = '0';
+      if (counterCountries) counterCountries.textContent = '0';
+    }
+  } catch (error) {
+    console.log('GoatCounter stats not yet available:', error);
+    // Show placeholder while waiting for first data
+    counterNumber.textContent = '0';
+    if (counterCountries) counterCountries.textContent = '0';
   }
 }
 
@@ -3138,10 +3562,10 @@ class MuseumCarousel {
     const numCards = this.filteredProjects.length;
     this.cardAngle = 360 / numCards;
     // Radius based on card width and number of cards
-    const cardWidth = 450; // Updated to match new card size
+    const cardWidth = 520; // Updated to match new larger card size
     this.radius = (cardWidth * 1.2) / (2 * Math.sin(Math.PI / numCards));
-    this.radius = Math.max(this.radius, 600); // Minimum radius increased for larger cards
-    this.radius = Math.min(this.radius, 1400); // Maximum radius increased for larger cards
+    this.radius = Math.max(this.radius, 700); // Minimum radius increased for larger cards
+    this.radius = Math.min(this.radius, 1600); // Maximum radius increased for larger cards
 
     console.log('calculateGeometry - numCards:', numCards, 'cardAngle:', this.cardAngle, 'radius:', this.radius);
   }
@@ -3204,10 +3628,14 @@ class MuseumCarousel {
           <div class="carousel-card-content">
             <h3 class="carousel-card-title">${project.title}</h3>
             <p class="carousel-card-description">${project.description}</p>
+          </div>
+          <div class="carousel-card-footer">
             <div class="carousel-card-tech">${techTags}</div>
             ${actionsHTML}
+            <div class="carousel-card-meta">
+              <span class="carousel-card-number">${String(index + 1).padStart(2, '0')} / ${String(this.filteredProjects.length).padStart(2, '0')}</span>
+            </div>
           </div>
-          <span class="carousel-card-number">${String(index + 1).padStart(2, '0')} / ${String(this.filteredProjects.length).padStart(2, '0')}</span>
         </div>
       `;
 
