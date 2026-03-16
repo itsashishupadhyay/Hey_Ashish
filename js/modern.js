@@ -2092,35 +2092,61 @@ function initSayHi() {
   updateHiCounter();
 }
 
+// Convert country code to flag emoji
+function countryCodeToFlag(countryCode) {
+  if (!countryCode || countryCode.length !== 2) return '';
+  const codePoints = countryCode
+    .toUpperCase()
+    .split('')
+    .map(char => 127397 + char.charCodeAt(0));
+  return String.fromCodePoint(...codePoints);
+}
+
 async function updateHiCounter() {
   const counterNumber = document.getElementById('counter-number');
   const counterCountries = document.getElementById('counter-countries');
+  const topCountryFlag = document.getElementById('top-country-flag');
 
   if (!counterNumber) return;
 
-  try {
-    // Fetch visitor stats from GoatCounter API
-    const response = await fetch('https://ashish.goatcounter.com/counter/.json');
-    if (response.ok) {
-      const data = await response.json();
-      // Use unique visitors count
-      counterNumber.textContent = data.count_unique || data.count || '0';
+  const GOATCOUNTER_TOKEN = '1zloze7194p411mznipdxvxpr3b4jayu9tfsgz1pdsvrm0fqva2';
 
-      // Estimate countries based on unique visitors (roughly 1 country per 3-5 visitors)
-      // This is an approximation since the simple API doesn't expose country data
+  try {
+    // Fetch unique visitors count
+    const visitorResponse = await fetch('https://ashish.goatcounter.com/counter/.json');
+
+    // Fetch locations data with API token
+    const locationsResponse = await fetch('https://ashish.goatcounter.com/api/v0/stats/locations', {
+      headers: { 'Authorization': `Bearer ${GOATCOUNTER_TOKEN}` }
+    });
+
+    if (visitorResponse.ok) {
+      const visitorData = await visitorResponse.json();
+      counterNumber.textContent = visitorData.count_unique || visitorData.count || '0';
+    }
+
+    if (locationsResponse.ok) {
+      const locationsData = await locationsResponse.json();
+      const countries = locationsData.stats || [];
+
+      // Update country count
       if (counterCountries) {
-        const uniqueCount = parseInt(data.count_unique?.replace(/[^0-9]/g, '') || data.count?.replace(/[^0-9]/g, '') || '0');
-        const estimatedCountries = Math.max(1, Math.min(Math.ceil(uniqueCount / 4), 50));
-        counterCountries.textContent = estimatedCountries;
+        counterCountries.textContent = countries.length || '0';
+      }
+
+      // Show top country flag
+      if (topCountryFlag && countries.length > 0) {
+        const topCountry = countries[0];
+        const flag = countryCodeToFlag(topCountry.id);
+        topCountryFlag.textContent = flag ? `${flag} ${topCountry.name}` : topCountry.name;
+        topCountryFlag.title = `Top country: ${topCountry.name} (${topCountry.count} visits)`;
       }
     } else {
-      // Fallback if API fails
-      counterNumber.textContent = '0';
+      // Fallback if locations API fails
       if (counterCountries) counterCountries.textContent = '0';
     }
   } catch (error) {
     console.log('GoatCounter stats not yet available:', error);
-    // Show placeholder while waiting for first data
     counterNumber.textContent = '0';
     if (counterCountries) counterCountries.textContent = '0';
   }
