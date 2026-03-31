@@ -1,0 +1,4712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Palak & Ashish &mdash; Wedding Invitation</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --ivory: #FAF7F0;
+  --ivory-warm: #FFF8EE;
+  --gold: #C9A84C;
+  --gold-deep: #B8972E;
+  --gold-light: #E8C97A;
+  --gold-pale: #F0E4C4;
+  --olive: #4A5240;
+  --olive-mid: #6B7355;
+  --olive-light: #8B956D;
+  --text-dark: #1A1A1A;
+  --text-warm: #3D3530;
+  --text-muted: #7A7265;
+  --white: #FFFDF8;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'EB Garamond', Georgia, serif;
+  color: var(--text-dark);
+  background: var(--ivory);
+  overflow-x: hidden;
+  cursor: none;
+  line-height: 1.6;
+}
+
+/* ===== CUSTOM CURSOR ===== */
+.cursor-dot,
+.cursor-ring {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s;
+}
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--gold);
+}
+.cursor-ring {
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid var(--gold);
+  opacity: 0.5;
+  transition: width 0.25s ease, height 0.25s ease, opacity 0.3s;
+}
+
+@media (pointer: coarse) {
+  .cursor-dot, .cursor-ring { display: none; }
+  body { cursor: auto; }
+}
+
+/* ===== PAGE CURTAIN ===== */
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--ivory);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 1.2s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.curtain.open {
+  transform: translateY(-100%);
+}
+.curtain-monogram {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--gold);
+  letter-spacing: 0.15em;
+  animation: curtainPulse 1.5s ease-in-out infinite;
+}
+@keyframes curtainPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* ===== GRAIN TEXTURE OVERLAY ===== */
+.grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  z-index: 1;
+}
+
+/* ===== FALLING LEAVES ===== */
+.leaf {
+  position: fixed;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform;
+  filter: drop-shadow(1px 2px 3px rgba(0,0,0,0.15));
+  mix-blend-mode: multiply;
+}
+
+.leaf-inner {
+  display: inline-block;
+  transform-origin: center center;
+  will-change: transform;
+  transition: transform 0.1s ease-out;
+}
+
+@keyframes petalFall {
+  0% {
+    transform: translate(0, -10vh) rotate(0deg);
+    opacity: 0;
+  }
+  5%  { opacity: 0.62; }
+  20% { transform: translate(calc(var(--drift) * 0.15 + var(--sway)), calc(20vh + 2vh)) rotate(calc(var(--spin) * 0.2)); opacity: 0.58; }
+  40% { transform: translate(calc(var(--drift) * 0.35 + var(--sway) * -1), calc(40vh + 4vh)) rotate(calc(var(--spin) * 0.4)); opacity: 0.55; }
+  60% { transform: translate(calc(var(--drift) * 0.55 + var(--sway) * 0.8), calc(60vh + 2vh)) rotate(calc(var(--spin) * 0.6)); opacity: 0.50; }
+  80% { transform: translate(calc(var(--drift) * 0.8 + var(--sway) * -0.6), calc(80vh)) rotate(calc(var(--spin) * 0.8)); opacity: 0.40; }
+  100% {
+    transform: translate(var(--drift), 112vh) rotate(var(--spin));
+    opacity: 0;
+  }
+}
+
+@keyframes leafFlutter {
+  0%, 100% { transform: rotateY(0deg) rotateX(0deg); }
+  25% { transform: rotateY(18deg) rotateX(5deg); }
+  50% { transform: rotateY(-12deg) rotateX(-3deg); }
+  75% { transform: rotateY(8deg) rotateX(4deg); }
+}
+
+/* ===== SCROLL REVEAL ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== RANGOLI DIVIDER (replaces gold-divider) ===== */
+.rangoli-divider {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+.rangoli-svg path,
+.rangoli-svg line {
+  stroke: #C9A84C;
+  stroke-width: 0.9;
+  fill: none;
+  stroke-dasharray: var(--rl);
+  stroke-dashoffset: var(--rl);
+  transition: stroke-dashoffset 1.8s ease-out;
+}
+.rangoli-divider.active .rangoli-svg path,
+.rangoli-divider.active .rangoli-svg line {
+  stroke-dashoffset: 0;
+}
+
+/* ===== SUNDIAL — Hero watermark ===== */
+.sundial-svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(80vw, 560px);
+  height: min(80vw, 560px);
+  z-index: 0;
+  pointer-events: none;
+}
+.sundial-svg path {
+  stroke: #C9A84C;
+  stroke-width: 0.9;
+  fill: none;
+  opacity: 0.7;
+}
+.sundial-svg.drawing path {
+  animation: sunDraw 5s ease-in-out forwards, sunFade 2s ease 4s forwards;
+}
+@keyframes sunDraw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes sunFade {
+  to { opacity: 0.055; }
+}
+
+/* ===== ONE BREATH — Page border ===== */
+.one-breath-border {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+}
+.one-breath-border path {
+  stroke: #C9A84C;
+  stroke-width: 0.8;
+  fill: none;
+  opacity: 0;
+}
+.one-breath-border.drawing path {
+  opacity: 0.28;
+  animation: borderDraw 4s ease-in-out forwards;
+}
+@keyframes borderDraw {
+  from { stroke-dashoffset: var(--bl); }
+  to { stroke-dashoffset: 0; }
+}
+
+/* ===== SECTION COMMONS ===== */
+section {
+  position: relative;
+}
+
+.section-padding {
+  padding: 100px 24px;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== HERO SECTION ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: var(--ivory);
+  position: relative;
+  text-align: center;
+  padding: 40px 24px;
+}
+
+.hero-wreath {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 40px;
+}
+
+
+.hero-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  color: var(--gold);
+  letter-spacing: 0.25em;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: heroFade 1s ease 1.6s forwards;
+}
+
+.hero-names {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(3rem, 9vw, 7.5rem);
+  line-height: 1.05;
+  color: var(--text-dark);
+  letter-spacing: 0.04em;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: heroFade 1.2s ease 2s forwards;
+}
+
+.hero-names .ampersand {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 0.4em;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  margin: 4px 0;
+}
+
+.hero-date {
+  font-family: 'EB Garamond', serif;
+  font-weight: 400;
+  font-size: clamp(0.9rem, 2vw, 1.15rem);
+  color: var(--text-muted);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: heroFade 1s ease 2.5s forwards;
+}
+
+@keyframes heroFade {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  animation: heroFade 1s ease 3.2s forwards;
+}
+
+.scroll-indicator .scroll-line {
+  width: 1px;
+  height: 48px;
+  background: var(--gold-light);
+  margin: 0 auto 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-indicator .scroll-line::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--gold);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0% { top: -100%; }
+  50% { top: 100%; }
+  100% { top: 100%; }
+}
+
+.scroll-indicator span {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ===== COUNTDOWN SECTION ===== */
+.countdown-section {
+  background: var(--ivory-warm);
+}
+
+.countdown-heading {
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--text-warm);
+  margin-bottom: 48px;
+}
+
+.countdown-grid {
+  display: flex;
+  justify-content: center;
+  gap: clamp(12px, 3vw, 32px);
+  flex-wrap: wrap;
+}
+
+.countdown-card {
+  width: clamp(70px, 18vw, 140px);
+  text-align: center;
+  border: 1px solid var(--gold-pale);
+  padding: clamp(16px, 3vw, 32px) clamp(8px, 2vw, 20px);
+  background: rgba(255, 253, 248, 0.6);
+  position: relative;
+}
+
+.countdown-card::before,
+.countdown-card::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: var(--gold);
+}
+
+.countdown-card::before {
+  top: -1px;
+  left: -1px;
+  border-top: 1px solid var(--gold);
+  border-left: 1px solid var(--gold);
+}
+
+.countdown-card::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 1px solid var(--gold);
+  border-right: 1px solid var(--gold);
+}
+
+.countdown-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--text-dark);
+  line-height: 1;
+  display: inline-block;
+  min-width: 2ch;
+  transition: transform 0.3s ease;
+}
+
+.countdown-label {
+  font-family: 'EB Garamond', serif;
+  font-size: clamp(0.6rem, 1.5vw, 0.8rem);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 12px;
+}
+
+/* ===== COUPLE SECTION ===== */
+.couple-section {
+  background: var(--ivory);
+}
+
+.couple-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+@media (max-width: 700px) {
+  .couple-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .couple-center-ornament {
+    order: -1;
+  }
+}
+
+.couple-card {
+  text-align: center;
+}
+
+.couple-photo-frame {
+  width: clamp(160px, 36vw, 240px);
+  height: clamp(160px, 36vw, 240px);
+  border-radius: 50%;
+  margin: 0 auto 32px;
+  border: 2px solid var(--gold-pale);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ivory-warm);
+  overflow: hidden;
+}
+
+.couple-photo-frame::after {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  border: 1px solid var(--gold-light);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.couple-photo-frame:has(.couple-photo)::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    transparent 55%,
+    rgba(250, 246, 238, 0.35) 75%,
+    rgba(201, 168, 76, 0.12) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.couple-photo-frame .placeholder-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.couple-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.bride-photo {
+  object-position: center 18%;
+}
+
+.groom-photo {
+  /* Face is in upper-center of outdoor coastal shot */
+  object-position: center 12%;
+}
+
+.couple-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.couple-role {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.couple-desc {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 280px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.couple-center-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+}
+
+/* ===== STORY / TIMELINE SECTION ===== */
+.story-section {
+  background: var(--ivory-warm);
+}
+
+.story-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  text-align: center;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+}
+
+.story-subheading {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  text-align: center;
+  color: var(--text-muted);
+  margin-bottom: 72px;
+}
+
+.timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--gold-pale);
+  transform: translateX(-50%);
+}
+
+.timeline-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 72px;
+  position: relative;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-item:nth-child(odd) {
+  flex-direction: row;
+  padding-right: calc(50% + 40px);
+  text-align: right;
+}
+
+.timeline-item:nth-child(even) {
+  flex-direction: row-reverse;
+  padding-left: calc(50% + 40px);
+  text-align: left;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: 50%;
+  top: 8px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--gold);
+  background: var(--ivory-warm);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.timeline-content {
+  width: 100%;
+}
+
+.timeline-image-frame {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--gold-pale);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  background: rgba(255, 253, 248, 0.5);
+}
+
+.timeline-image-frame .placeholder-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ── Graduation Animation Stage ── */
+/* ══════════════════════════════════════════════
+   GRADUATION STAGE  — luxury photo reveal
+   24 s cycle, ZERO overlap between slides
+   ══════════════════════════════════════════════ */
+
+.grad-stage {
+  position: relative;
+  width: 100%;
+  /* Tall portrait frame — suits image 3 (full body) perfectly;
+     images 1 & 2 (landscape) anchor at the bottom, breathing room above */
+  aspect-ratio: 3 / 4;
+  background: radial-gradient(ellipse at 50% 70%, var(--ivory) 35%, var(--ivory-warm) 100%);
+  overflow: hidden;
+  margin-bottom: 24px;
+  /* Luxury frame: subtle outer border */
+  border: 1px solid var(--gold-pale);
+  box-shadow: inset 0 0 0 6px var(--ivory-warm),
+              inset 0 0 0 7px var(--gold-pale);
+}
+
+/* Bottom vignette — subjects emerge from warmth */
+.grad-stage::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 90px;
+  background: linear-gradient(to top, rgba(245,237,216,0.65) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* ── Slides ── */
+.grad-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  /* NO animation-delay — all timings baked into per-slide keyframes */
+}
+
+.grad-slide img {
+  filter: drop-shadow(0 14px 36px rgba(26,16,5,0.20));
+  transform-origin: center center;
+}
+
+/* Slide 1: transparent PNG — contain, centred at bottom */
+.grad-s1 img {
+  max-width: 92%;
+  max-height: calc(100% - 70px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center bottom;
+  margin-bottom: 50px;
+  position: static;
+}
+
+/* Slides 2 & 3: JPEG photos — cover the frame */
+.grad-s2, .grad-s3 {
+  align-items: stretch;
+}
+.grad-s2 img {
+  position: absolute;
+  inset: 0 0 60px 0;
+  width: 100%;
+  height: calc(100% - 60px);
+  object-fit: cover;
+  object-position: center 20%;
+}
+.grad-s3 img {
+  position: absolute;
+  inset: 0 0 60px 0;
+  width: 100%;
+  height: calc(100% - 60px);
+  object-fit: cover;
+  object-position: center 15%;
+}
+
+.grad-slide-caption {
+  position: absolute;
+  bottom: 18px;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 4;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(0.72rem, 1.4vw, 0.88rem);
+  letter-spacing: 0.14em;
+  color: var(--gold);
+}
+
+/* ── Per-slide animations (24 s, no delay, no overlap) ──
+   Slide 1 : visible  0.8 s → 5.2 s   (in 0→0.8 s, out 5.2→6.0 s)
+   Slide 2 : visible  7.3 s → 11.7 s  (in 6.5→7.3 s, out 11.7→12.5 s)
+   Slide 3 : visible  13.8 s → 23.0 s (in 13.0→13.8 s, out 23.0→24.0 s)
+   All expressed as % of 24 s
+── */
+.grad-s1 { animation: gradS1 24s infinite; }
+.grad-s2 { animation: gradS2 24s infinite; }
+.grad-s3 { animation: gradS3 24s infinite; }
+
+.grad-s1 img { animation: gradS1img 24s infinite; }
+.grad-s2 img { animation: gradS2img 24s infinite; }
+.grad-s3 img { animation: gradS3img 24s infinite; }
+
+/* Slide 1: 0 → 3.3% fade in | 21.7% → 25% fade out | rest hidden */
+@keyframes gradS1 {
+  0%     { opacity: 0; }
+  3.3%   { opacity: 1; }
+  21.7%  { opacity: 1; }
+  25%    { opacity: 0; }
+  100%   { opacity: 0; }
+}
+@keyframes gradS1img {
+  0%     { transform: scale(1.06); }
+  3.3%   { transform: scale(1.00); }
+  21.7%  { transform: scale(0.97); }
+  100%   { transform: scale(0.97); }
+}
+
+/* Slide 2: hidden until 27.1% | 27.1→30.4% fade in | 48.8→52.1% fade out */
+@keyframes gradS2 {
+  0%     { opacity: 0; }
+  27.1%  { opacity: 0; }
+  30.4%  { opacity: 1; }
+  48.8%  { opacity: 1; }
+  52.1%  { opacity: 0; }
+  100%   { opacity: 0; }
+}
+@keyframes gradS2img {
+  0%     { transform: scale(1.00); }
+  27.1%  { transform: scale(1.06); }
+  30.4%  { transform: scale(1.00); }
+  48.8%  { transform: scale(0.97); }
+  100%   { transform: scale(0.97); }
+}
+
+/* Slide 3: hidden until 54.2% | 54.2→57.5% fade in | 95.8→100% fade out */
+@keyframes gradS3 {
+  0%     { opacity: 0; }
+  54.2%  { opacity: 0; }
+  57.5%  { opacity: 1; }
+  95.8%  { opacity: 1; }
+  100%   { opacity: 0; }
+}
+@keyframes gradS3img {
+  0%     { transform: scale(1.00); }
+  54.2%  { transform: scale(1.07); }
+  57.5%  { transform: scale(1.00); }
+  95.8%  { transform: scale(1.00); }
+  100%   { transform: scale(0.98); }
+}
+
+/* ── Gold corner ornaments ── */
+.grad-corner {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.65;
+}
+.grad-tl { top: 14px; left: 14px; }
+.grad-tr { top: 14px; right: 14px; }
+.grad-bl { bottom: 14px; left: 14px; }
+.grad-br { bottom: 14px; right: 14px; }
+
+/* ── Indicator dots (synced to 24 s, no delays, baked keyframes) ── */
+.grad-dots {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 6;
+}
+.grad-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--gold-pale);
+  border: 1px solid var(--gold-light);
+  display: block;
+}
+.grad-dot-1 { animation: gradDot1 24s infinite; }
+.grad-dot-2 { animation: gradDot2 24s infinite; }
+.grad-dot-3 { animation: gradDot3 24s infinite; }
+
+@keyframes gradDot1 {
+  0%     { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); }
+  25%    { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); }
+  26%    { background: var(--gold-pale); box-shadow: none; }
+  100%   { background: var(--gold-pale); box-shadow: none; }
+}
+@keyframes gradDot2 {
+  0%     { background: var(--gold-pale); }
+  27%    { background: var(--gold-pale); }
+  27.1%  { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); }
+  52%    { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); }
+  53%    { background: var(--gold-pale); box-shadow: none; }
+  100%   { background: var(--gold-pale); box-shadow: none; }
+}
+@keyframes gradDot3 {
+  0%     { background: var(--gold-pale); }
+  54%    { background: var(--gold-pale); }
+  54.2%  { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); }
+  100%   { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   GROWING TOGETHER — 5-slide CSS-only photo slideshow (30 s cycle)
+   ════════════════════════════════════════════════════════════════ */
+
+.gt-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: radial-gradient(ellipse at 50% 70%, var(--ivory) 35%, var(--ivory-warm) 100%);
+  overflow: hidden;
+  margin-bottom: 24px;
+  border: 1px solid var(--gold-pale);
+  box-shadow: inset 0 0 0 6px var(--ivory-warm),
+              inset 0 0 0 7px var(--gold-pale);
+}
+
+.gt-stage::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 90px;
+  background: linear-gradient(to top, rgba(245,237,216,0.65) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.gt-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.gt-slide img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  transform-origin: center center;
+}
+
+.gt-slide-caption {
+  position: absolute;
+  bottom: 18px;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 4;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(0.72rem, 1.4vw, 0.88rem);
+  letter-spacing: 0.14em;
+  color: var(--gold);
+}
+
+/* ===== BRUSH STROKE CAPTION BACKDROP ===== */
+.caption-inner {
+  position: relative;
+  display: inline-block;
+  padding: 6px 28px;
+  z-index: 1;
+}
+
+.caption-inner::before {
+  content: '';
+  position: absolute;
+  inset: -8px -24px;
+  z-index: -1;
+  transform: rotate(-0.8deg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 60' preserveAspectRatio='none'%3E%3Cpath d='M8 38 C4 36 2 30 3 26 C4 20 8 16 16 14 C24 11 38 9 56 8 C74 6.5 96 6 120 5.5 C144 5 170 5.2 200 5.5 C230 5.2 256 5 280 5.5 C304 6 326 6.5 344 8 C362 9 376 11 384 14 C392 16 396 20 397 26 C398 30 396 36 392 38 C388 41 380 44 368 46 C356 48 340 49.5 320 50.5 C300 51.5 276 52 248 52.2 C220 52.5 188 52.5 152 52.2 C116 52 84 51.5 60 50 C40 48.8 24 47 14 44 C8 42 5 40 4 38 Z' fill='%230d1120' opacity='0.82'/%3E%3Cpath d='M20 16 C14 18 10 22 8 27 C6 24 5 20 7 17 C10 13 18 11 28 10 C22 12 19 14 20 16 Z' fill='%230d1120' opacity='0.35'/%3E%3Cpath d='M380 16 C386 18 390 22 392 27 C394 24 395 20 393 17 C390 13 382 11 372 10 C378 12 381 14 380 16 Z' fill='%230d1120' opacity='0.35'/%3E%3Cpath d='M60 7 C80 5.5 100 5 120 4.8 C100 4 80 4.5 65 5.5 C55 6.2 50 6.8 60 7 Z' fill='%230d1120' opacity='0.25'/%3E%3Cpath d='M320 50 C340 49 355 47.5 365 45.5 C358 47.8 345 49.5 328 50.8 C322 51.2 318 51 320 50 Z' fill='%230d1120' opacity='0.25'/%3E%3C/svg%3E");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* ── Per-slide fade animations (30 s cycle, ZERO overlap) ──
+   Each slide owns a 6 s window:
+     0.8 s fade in | 4.4 s hold | 0.8 s fade out
+   Slide 1:  0.00 s →  6.00 s
+   Slide 2:  6.00 s → 12.00 s
+   Slide 3: 12.00 s → 18.00 s
+   Slide 4: 18.00 s → 24.00 s
+   Slide 5: 24.00 s → 30.00 s
+── */
+
+.gt-s1     { animation: gtS1     30s infinite; }
+.gt-s1 img { animation: gtS1img  30s infinite; }
+.gt-s2     { animation: gtS2     30s infinite; }
+.gt-s2 img { animation: gtS2img  30s infinite; }
+.gt-s3     { animation: gtS3     30s infinite; }
+.gt-s3 img { animation: gtS3img  30s infinite; }
+.gt-s4     { animation: gtS4     30s infinite; }
+.gt-s4 img { animation: gtS4img  30s infinite; }
+.gt-s5     { animation: gtS5     30s infinite; }
+.gt-s5 img { animation: gtS5img  30s infinite; }
+
+/* Slide 1: 0→6 s  |  fade in 0→0.8 s (0%→2.67%)  |  fade out 5.2→6 s (17.33%→20%) */
+@keyframes gtS1 {
+  0%      { opacity: 0; }
+  2.67%   { opacity: 1; }
+  17.33%  { opacity: 1; }
+  20%     { opacity: 0; }
+  100%    { opacity: 0; }
+}
+@keyframes gtS1img {
+  0%      { transform: scale(1.08); }
+  2.67%   { transform: scale(1.06); }
+  17.33%  { transform: scale(1.00); }
+  20%     { transform: scale(0.98); }
+  100%    { transform: scale(0.98); }
+}
+
+/* Slide 2: 6→12 s  |  fade in 6→6.8 s (20%→22.67%)  |  fade out 11.2→12 s (37.33%→40%) */
+@keyframes gtS2 {
+  0%      { opacity: 0; }
+  20%     { opacity: 0; }
+  22.67%  { opacity: 1; }
+  37.33%  { opacity: 1; }
+  40%     { opacity: 0; }
+  100%    { opacity: 0; }
+}
+@keyframes gtS2img {
+  0%      { transform: scale(1.00); }
+  20%     { transform: scale(1.00); }
+  22.67%  { transform: scale(1.06); }
+  37.33%  { transform: scale(1.00); }
+  40%     { transform: scale(0.98); }
+  100%    { transform: scale(0.98); }
+}
+
+/* Slide 3: 12→18 s  |  fade in 12→12.8 s (40%→42.67%)  |  fade out 17.2→18 s (57.33%→60%) */
+@keyframes gtS3 {
+  0%      { opacity: 0; }
+  40%     { opacity: 0; }
+  42.67%  { opacity: 1; }
+  57.33%  { opacity: 1; }
+  60%     { opacity: 0; }
+  100%    { opacity: 0; }
+}
+@keyframes gtS3img {
+  0%      { transform: scale(1.00); }
+  40%     { transform: scale(1.00); }
+  42.67%  { transform: scale(1.06); }
+  57.33%  { transform: scale(1.00); }
+  60%     { transform: scale(0.98); }
+  100%    { transform: scale(0.98); }
+}
+
+/* Slide 4: 18→24 s  |  fade in 18→18.8 s (60%→62.67%)  |  fade out 23.2→24 s (77.33%→80%) */
+@keyframes gtS4 {
+  0%      { opacity: 0; }
+  60%     { opacity: 0; }
+  62.67%  { opacity: 1; }
+  77.33%  { opacity: 1; }
+  80%     { opacity: 0; }
+  100%    { opacity: 0; }
+}
+@keyframes gtS4img {
+  0%      { transform: scale(1.00); }
+  60%     { transform: scale(1.00); }
+  62.67%  { transform: scale(1.06); }
+  77.33%  { transform: scale(1.00); }
+  80%     { transform: scale(0.98); }
+  100%    { transform: scale(0.98); }
+}
+
+/* Slide 5: 24→30 s  |  fade in 24→24.8 s (80%→82.67%)  |  fade out 29.2→30 s (97.33%→100%) */
+@keyframes gtS5 {
+  0%      { opacity: 0; }
+  80%     { opacity: 0; }
+  82.67%  { opacity: 1; }
+  97.33%  { opacity: 1; }
+  100%    { opacity: 0; }
+}
+@keyframes gtS5img {
+  0%      { transform: scale(1.00); }
+  80%     { transform: scale(1.00); }
+  82.67%  { transform: scale(1.06); }
+  97.33%  { transform: scale(1.00); }
+  100%    { transform: scale(0.98); }
+}
+
+/* ── Gold corner ornaments ── */
+.gt-corner {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.65;
+}
+.gt-tl { top: 14px; left: 14px; }
+.gt-tr { top: 14px; right: 14px; }
+.gt-bl { bottom: 14px; left: 14px; }
+.gt-br { bottom: 14px; right: 14px; }
+
+/* ── Indicator dots (synced to 30 s, no delays, baked keyframes) ── */
+.gt-dots {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 6;
+}
+.gt-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--gold-pale);
+  border: 1px solid var(--gold-light);
+  display: block;
+  transition: none;
+}
+.gt-dot-1 { animation: gtDot1 30s infinite; }
+.gt-dot-2 { animation: gtDot2 30s infinite; }
+.gt-dot-3 { animation: gtDot3 30s infinite; }
+.gt-dot-4 { animation: gtDot4 30s infinite; }
+.gt-dot-5 { animation: gtDot5 30s infinite; }
+
+@keyframes gtDot1 {
+  0%      { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); transform: scale(1.35); }
+  17.33%  { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); transform: scale(1.35); }
+  20%     { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+  100%    { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+}
+@keyframes gtDot2 {
+  0%      { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+  20%     { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+  22.67%  { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); transform: scale(1.35); }
+  37.33%  { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); transform: scale(1.35); }
+  40%     { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+  100%    { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+}
+@keyframes gtDot3 {
+  0%      { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+  40%     { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+  42.67%  { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); transform: scale(1.35); }
+  57.33%  { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); transform: scale(1.35); }
+  60%     { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+  100%    { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+}
+@keyframes gtDot4 {
+  0%      { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+  60%     { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+  62.67%  { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); transform: scale(1.35); }
+  77.33%  { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); transform: scale(1.35); }
+  80%     { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+  100%    { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+}
+@keyframes gtDot5 {
+  0%      { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+  80%     { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+  82.67%  { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); transform: scale(1.35); }
+  97.33%  { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); transform: scale(1.35); }
+  100%    { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+}
+
+/* ============================================================
+   WHERE IT BEGAN  –  4-slide Ken Burns slideshow  (24 s cycle)
+   ============================================================ */
+.wib-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: radial-gradient(ellipse at 50% 70%, var(--ivory) 35%, var(--ivory-warm) 100%);
+  overflow: hidden;
+  margin-bottom: 24px;
+  border: 1px solid var(--gold-pale);
+  box-shadow: inset 0 0 0 6px var(--ivory-warm),
+              inset 0 0 0 7px var(--gold-pale);
+}
+
+.wib-stage::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 90px;
+  background: linear-gradient(to top, rgba(245,237,216,0.65) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.wib-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.wib-slide img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  transform-origin: center center;
+}
+
+.wib-slide-caption {
+  position: absolute;
+  bottom: 18px;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 4;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(0.72rem, 1.4vw, 0.88rem);
+  letter-spacing: 0.14em;
+  color: var(--gold);
+}
+
+/* ── Per-slide fade animations (24 s cycle, 4 slides, ZERO overlap) ──
+   Each slide owns a 6 s window:
+     0.8 s fade in | 4.4 s hold | 0.8 s fade out
+   Slide 1:  0.00 s →  6.00 s   (  0.00% → 25.00% )
+   Slide 2:  6.00 s → 12.00 s   ( 25.00% → 50.00% )
+   Slide 3: 12.00 s → 18.00 s   ( 50.00% → 75.00% )
+   Slide 4: 18.00 s → 24.00 s   ( 75.00% → 100%   )
+── */
+
+.wib-s1     { animation: wibS1     24s infinite; }
+.wib-s1 img { animation: wibS1img  24s infinite; }
+.wib-s2     { animation: wibS2     24s infinite; }
+.wib-s2 img { animation: wibS2img  24s infinite; }
+.wib-s3     { animation: wibS3     24s infinite; }
+.wib-s3 img { animation: wibS3img  24s infinite; }
+.wib-s4     { animation: wibS4     24s infinite; }
+.wib-s4 img { animation: wibS4img  24s infinite; }
+
+/* Slide 1: 0→6 s  |  fade in 0→0.8 s (0%→3.33%)  |  hold end 5.2 s (21.67%)  |  fade out 6 s (25%) */
+@keyframes wibS1 {
+  0%      { opacity: 0; }
+  3.33%   { opacity: 1; }
+  21.67%  { opacity: 1; }
+  25%     { opacity: 0; }
+  100%    { opacity: 0; }
+}
+@keyframes wibS1img {
+  0%      { object-position: 15% center; transform: scale(1.04); }
+  3.33%   { object-position: 15% center; transform: scale(1.02); }
+  21.67%  { object-position: 85% center; transform: scale(1.00); }
+  25%     { object-position: 85% center; transform: scale(1.00); }
+  100%    { object-position: 85% center; transform: scale(1.00); }
+}
+
+/* Slide 2: 6→12 s  |  fade in 6→6.8 s (25%→28.33%)  |  hold end 11.2 s (46.67%)  |  fade out 12 s (50%) */
+@keyframes wibS2 {
+  0%      { opacity: 0; }
+  25%     { opacity: 0; }
+  28.33%  { opacity: 1; }
+  46.67%  { opacity: 1; }
+  50%     { opacity: 0; }
+  100%    { opacity: 0; }
+}
+@keyframes wibS2img {
+  0%      { transform: scale(1.00); }
+  25%     { transform: scale(1.08); }
+  28.33%  { transform: scale(1.00); }
+  46.67%  { transform: scale(0.97); }
+  50%     { transform: scale(0.97); }
+  100%    { transform: scale(0.97); }
+}
+
+/* Slide 3: 12→18 s  |  fade in 12→12.8 s (50%→53.33%)  |  hold end 17.2 s (71.67%)  |  fade out 18 s (75%) */
+@keyframes wibS3 {
+  0%      { opacity: 0; }
+  50%     { opacity: 0; }
+  53.33%  { opacity: 1; }
+  71.67%  { opacity: 1; }
+  75%     { opacity: 0; }
+  100%    { opacity: 0; }
+}
+@keyframes wibS3img {
+  0%      { transform: scale(1.00); }
+  50%     { transform: scale(1.08); }
+  53.33%  { transform: scale(1.00); }
+  71.67%  { transform: scale(0.97); }
+  75%     { transform: scale(0.97); }
+  100%    { transform: scale(0.97); }
+}
+
+/* Slide 4: 18→24 s  |  fade in 18→18.8 s (75%→78.33%)  |  hold end 23.2 s (96.67%)  |  fade out 24 s (100%) */
+@keyframes wibS4 {
+  0%      { opacity: 0; }
+  75%     { opacity: 0; }
+  78.33%  { opacity: 1; }
+  96.67%  { opacity: 1; }
+  100%    { opacity: 0; }
+}
+@keyframes wibS4img {
+  0%      { transform: scale(1.00); }
+  75%     { transform: scale(1.08); }
+  78.33%  { transform: scale(1.00); }
+  96.67%  { transform: scale(0.97); }
+  100%    { transform: scale(0.97); }
+}
+
+/* ── Gold corner ornaments ── */
+.wib-corner {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.65;
+}
+.wib-tl { top: 14px; left: 14px; }
+.wib-tr { top: 14px; right: 14px; }
+.wib-bl { bottom: 14px; left: 14px; }
+.wib-br { bottom: 14px; right: 14px; }
+
+/* ── Indicator dots (synced to 24 s, no delays, baked keyframes) ── */
+.wib-dots {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 6;
+}
+.wib-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--gold-pale);
+  border: 1px solid var(--gold-light);
+  display: block;
+  transition: none;
+}
+.wib-dot-1 { animation: wibDot1 24s infinite; }
+.wib-dot-2 { animation: wibDot2 24s infinite; }
+.wib-dot-3 { animation: wibDot3 24s infinite; }
+.wib-dot-4 { animation: wibDot4 24s infinite; }
+
+@keyframes wibDot1 {
+  0%      { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); transform: scale(1.35); }
+  21.67%  { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); transform: scale(1.35); }
+  25%     { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+  100%    { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+}
+@keyframes wibDot2 {
+  0%      { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+  25%     { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+  28.33%  { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); transform: scale(1.35); }
+  46.67%  { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); transform: scale(1.35); }
+  50%     { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+  100%    { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+}
+@keyframes wibDot3 {
+  0%      { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+  50%     { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+  53.33%  { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); transform: scale(1.35); }
+  71.67%  { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); transform: scale(1.35); }
+  75%     { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+  100%    { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+}
+@keyframes wibDot4 {
+  0%      { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+  75%     { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+  78.33%  { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); transform: scale(1.35); }
+  96.67%  { background: var(--gold); box-shadow: 0 0 5px rgba(201,168,76,0.55); transform: scale(1.35); }
+  100%    { background: var(--gold-pale); box-shadow: none; transform: scale(1); }
+}
+
+.timeline-date {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.timeline-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.timeline-desc {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+@media (max-width: 700px) {
+  .timeline::before {
+    left: 20px;
+  }
+  .timeline-dot {
+    left: 20px;
+  }
+  .timeline-item:nth-child(odd),
+  .timeline-item:nth-child(even) {
+    flex-direction: row;
+    padding-left: 52px;
+    padding-right: 0;
+    text-align: left;
+  }
+}
+
+/* ===== WEDDING DETAILS SECTION ===== */
+.details-section {
+  background: var(--ivory);
+}
+
+.details-card {
+  max-width: 680px;
+  margin: 0 auto;
+  border: 1px solid var(--gold-pale);
+  padding: clamp(40px, 8vw, 80px) clamp(24px, 6vw, 64px);
+  text-align: center;
+  position: relative;
+  background: rgba(255, 253, 248, 0.4);
+}
+
+/* Corner ornaments */
+.details-card .corner {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+}
+.details-card .corner svg {
+  width: 100%;
+  height: 100%;
+}
+.details-card .corner.tl { top: 12px; left: 12px; }
+.details-card .corner.tr { top: 12px; right: 12px; transform: scaleX(-1); }
+.details-card .corner.bl { bottom: 12px; left: 12px; transform: scaleY(-1); }
+.details-card .corner.br { bottom: 12px; right: 12px; transform: scale(-1); }
+
+.details-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.details-subtitle {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-bottom: 48px;
+}
+
+.detail-row {
+  margin-bottom: 32px;
+}
+
+.detail-row:last-child {
+  margin-bottom: 0;
+}
+
+.detail-label {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.detail-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  color: var(--text-dark);
+}
+
+.detail-value.venue {
+  font-style: italic;
+  color: var(--text-warm);
+}
+
+.details-branches {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ===== CLOSING SECTION ===== */
+.closing-section {
+  background: var(--ivory-warm);
+  text-align: center;
+  padding-bottom: 80px;
+}
+
+.closing-message {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(1.3rem, 3.5vw, 2rem);
+  color: var(--text-warm);
+  max-width: 600px;
+  margin: 0 auto 48px;
+  line-height: 1.5;
+}
+
+.closing-monogram {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--gold);
+  letter-spacing: 0.15em;
+  margin-bottom: 24px;
+}
+
+.closing-sign {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.closing-footer {
+  margin-top: 80px;
+  font-family: 'EB Garamond', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--gold-pale);
+}
+
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+  .leaf { display: none; }
+  .curtain { display: none; }
+  .sundial-svg path { stroke-dashoffset: 0 !important; opacity: 0.055 !important; }
+  .one-breath-border path { stroke-dashoffset: 0 !important; opacity: 0.28 !important; }
+  .rangoli-svg path, .rangoli-svg line { stroke-dashoffset: 0 !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== CURTAIN ===== -->
+<div class="curtain" id="curtain" role="presentation">
+  <div class="curtain-monogram">P &amp; A</div>
+</div>
+
+<!-- ===== CUSTOM CURSOR ===== -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+
+<!-- ===== FLOATING PETALS CONTAINER ===== -->
+<div id="petalsContainer" aria-hidden="true"></div>
+
+<!-- ===== HERO SECTION ===== -->
+<section class="hero grain" aria-label="Wedding invitation hero">
+  <div class="hero-wreath">
+    <svg class="sundial-svg" id="sundialSvg" viewBox="0 0 560 560" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- path generated by JS -->
+    </svg>
+    <span class="hero-tagline">Together Forever</span>
+    <h1 class="hero-names">
+      PALAK
+      <span class="ampersand">&amp;</span>
+      ASHISH
+    </h1>
+    <p class="hero-date">The Third of May, Two Thousand &amp; Twenty-Six</p>
+  </div>
+
+  <div class="scroll-indicator" aria-hidden="true">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ===== COUNTDOWN ===== -->
+<section class="countdown-section section-padding grain" aria-label="Countdown to wedding">
+  <div class="container">
+    <div class="rangoli-divider">
+      <svg class="rangoli-svg" viewBox="0 0 280 60" width="280" height="60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="30" x2="106" y2="30"/>
+        <path d="M 140.00 6.00 L 145.40 20.65 L 160.78 18.00 L 150.80 30.00 L 160.78 42.00 L 145.40 39.35 L 140.00 54.00 L 134.60 39.35 L 119.22 42.00 L 129.20 30.00 L 119.22 18.00 L 134.60 20.65 Z M 140.00 24.72 L 144.57 27.36 L 144.57 32.64 L 140.00 35.28 L 135.43 32.64 L 135.43 27.36 Z"/>
+        <line x1="174" y1="30" x2="280" y2="30"/>
+      </svg>
+    </div>
+    <h2 class="countdown-heading reveal" style="transition-delay: 0.1s;">Counting the Days</h2>
+    <div class="countdown-grid reveal" style="transition-delay: 0.2s;" role="timer" aria-live="polite" aria-label="Time until the wedding">
+      <div class="countdown-card">
+        <div class="countdown-number" id="cd-days">00</div>
+        <div class="countdown-label">Days</div>
+      </div>
+      <div class="countdown-card">
+        <div class="countdown-number" id="cd-hours">00</div>
+        <div class="countdown-label">Hours</div>
+      </div>
+      <div class="countdown-card">
+        <div class="countdown-number" id="cd-minutes">00</div>
+        <div class="countdown-label">Minutes</div>
+      </div>
+      <div class="countdown-card">
+        <div class="countdown-number" id="cd-seconds">00</div>
+        <div class="countdown-label">Seconds</div>
+      </div>
+    </div>
+    <div class="rangoli-divider">
+      <svg class="rangoli-svg" viewBox="0 0 280 60" width="280" height="60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="30" x2="106" y2="30"/>
+        <path d="M 140.00 6.00 L 145.40 20.65 L 160.78 18.00 L 150.80 30.00 L 160.78 42.00 L 145.40 39.35 L 140.00 54.00 L 134.60 39.35 L 119.22 42.00 L 129.20 30.00 L 119.22 18.00 L 134.60 20.65 Z M 140.00 24.72 L 144.57 27.36 L 144.57 32.64 L 140.00 35.28 L 135.43 32.64 L 135.43 27.36 Z"/>
+        <line x1="174" y1="30" x2="280" y2="30"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== COUPLE SECTION ===== -->
+<section class="couple-section section-padding grain" aria-label="The couple">
+  <div class="container">
+    <div class="couple-grid">
+      <!-- Bride -->
+      <div class="couple-card reveal">
+        <div class="couple-photo-frame">
+          <img class="couple-photo bride-photo" src="img/invite/Bride.jpeg" alt="Palak, the Bride">
+        </div>
+        <div class="couple-role">The Bride</div>
+        <h3 class="couple-name">Palak</h3>
+        <p class="couple-desc">"A soul full of grace, a heart full of light &mdash; the one who makes everything beautiful."</p>
+      </div>
+
+      <!-- Center Ornament -->
+      <div class="couple-center-ornament reveal" style="transition-delay: 0.15s;">
+        <svg width="60" height="200" viewBox="0 0 60 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <line x1="30" y1="0" x2="30" y2="75" stroke="#E8C97A" stroke-width="0.5"/>
+          <path d="M20 85 L30 75 L40 85 L30 95 Z" fill="none" stroke="#C9A84C" stroke-width="0.8"/>
+          <circle cx="30" cy="85" r="3" fill="#C9A84C" opacity="0.6"/>
+          <line x1="30" y1="95" x2="30" y2="105" stroke="#E8C97A" stroke-width="0.5"/>
+          <text x="30" y="120" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="18" font-weight="300" fill="#C9A84C" letter-spacing="2">&amp;</text>
+          <line x1="30" y1="130" x2="30" y2="140" stroke="#E8C97A" stroke-width="0.5"/>
+          <path d="M20 150 L30 140 L40 150 L30 160 Z" fill="none" stroke="#C9A84C" stroke-width="0.8"/>
+          <circle cx="30" cy="150" r="3" fill="#C9A84C" opacity="0.6"/>
+          <line x1="30" y1="160" x2="30" y2="200" stroke="#E8C97A" stroke-width="0.5"/>
+        </svg>
+      </div>
+
+      <!-- Groom -->
+      <div class="couple-card reveal" style="transition-delay: 0.2s;">
+        <div class="couple-photo-frame">
+          <img class="couple-photo groom-photo" src="img/invite/Groom.jpeg" alt="Ashish, the Groom">
+        </div>
+        <div class="couple-role">The Groom</div>
+        <h3 class="couple-name">Ashish</h3>
+        <p class="couple-desc">"A quiet strength, a gentle warmth &mdash; the one who makes every moment matter."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STORY / TIMELINE ===== -->
+<section class="story-section section-padding grain" aria-label="Our story">
+  <div class="container">
+    <h2 class="story-heading reveal">Our Journey</h2>
+    <p class="story-subheading reveal" style="transition-delay: 0.1s;">Every love story is beautiful, but ours is our favourite</p>
+
+    <div class="timeline">
+      <!-- Milestone 1 -->
+      <div class="timeline-item reveal" style="transition-delay: 0.1s;">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="wib-stage" aria-label="Where It Began photo slideshow">
+            <div class="wib-slide wib-s1">
+              <img src="img/invite/Where_It_Began_4.jpeg" alt="Holi festival, Palak covered in colour, Ashish gazing at her">
+              <div class="wib-slide-caption"><span class="caption-inner">The moment he stopped seeing the colours. He only saw her.</span></div>
+            </div>
+            <div class="wib-slide wib-s2">
+              <img src="img/invite/Where_It_Began_1.jpeg" alt="Early Manhattan winter street selfie, both in puffy coats">
+              <div class="wib-slide-caption"><span class="caption-inner">Two coats, one city &mdash; no idea where this was going.</span></div>
+            </div>
+            <div class="wib-slide wib-s3">
+              <img src="img/invite/Where_It_Began_2.jpeg" alt="Intimate selfie with soft bokeh lights behind them">
+              <div class="wib-slide-caption"><span class="caption-inner">They can&rsquo;t remember where this was. They never forgot how it felt.</span></div>
+            </div>
+            <div class="wib-slide wib-s4">
+              <img src="img/invite/Where_It_Began_3.jpeg" alt="Coney Island boardwalk, Thunderbolt ride sign behind them">
+              <div class="wib-slide-caption"><span class="caption-inner">She said she wouldn&rsquo;t ride it. He said he&rsquo;d hold her hand. Thunderbolt had other plans.</span></div>
+            </div>
+            <svg class="wib-corner wib-tl" viewBox="0 0 30 30" width="30" height="30" fill="none">
+              <path d="M2 28 L2 2 L28 2" stroke="#C9A84C" stroke-width="1" stroke-linecap="round"/>
+              <circle cx="2" cy="2" r="2" fill="#C9A84C" opacity="0.6"/>
+            </svg>
+            <svg class="wib-corner wib-tr" viewBox="0 0 30 30" width="30" height="30" fill="none">
+              <path d="M28 28 L28 2 L2 2" stroke="#C9A84C" stroke-width="1" stroke-linecap="round"/>
+              <circle cx="28" cy="2" r="2" fill="#C9A84C" opacity="0.6"/>
+            </svg>
+            <svg class="wib-corner wib-bl" viewBox="0 0 30 30" width="30" height="30" fill="none">
+              <path d="M2 2 L2 28 L28 28" stroke="#C9A84C" stroke-width="1" stroke-linecap="round"/>
+              <circle cx="2" cy="28" r="2" fill="#C9A84C" opacity="0.6"/>
+            </svg>
+            <svg class="wib-corner wib-br" viewBox="0 0 30 30" width="30" height="30" fill="none">
+              <path d="M28 2 L28 28 L2 28" stroke="#C9A84C" stroke-width="1" stroke-linecap="round"/>
+              <circle cx="28" cy="28" r="2" fill="#C9A84C" opacity="0.6"/>
+            </svg>
+            <div class="wib-dots" aria-hidden="true">
+              <span class="wib-dot wib-dot-1"></span>
+              <span class="wib-dot wib-dot-2"></span>
+              <span class="wib-dot wib-dot-3"></span>
+              <span class="wib-dot wib-dot-4"></span>
+            </div>
+          </div>
+          <div class="timeline-date">The Beginning</div>
+          <h3 class="timeline-title">Where It Began</h3>
+          <p class="timeline-desc">Some stories begin with a glance, some with a word. Ours began with the kind of serendipity that only the universe could arrange.</p>
+        </div>
+      </div>
+
+      <!-- Milestone 2 -->
+      <div class="timeline-item reveal" style="transition-delay: 0.1s;">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="grad-stage" aria-label="Graduation day photos">
+            <!-- Slide 1: Graduation gown candid (transparent PNG) -->
+            <div class="grad-slide grad-s1">
+              <img src="img/invite/TheFirstChapter_1.png" alt="Graduation gown goofing around">
+              <div class="grad-slide-caption"><span class="caption-inner">She fixed her hat. He had opinions. Neither was ready.</span></div>
+            </div>
+            <!-- Slide 2: Outdoor summer selfie celebrating first job -->
+            <div class="grad-slide grad-s2">
+              <img src="img/invite/TheFirstChapter_2.jpeg" alt="Summer selfie celebrating first job">
+              <div class="grad-slide-caption"><span class="caption-inner">She got the offer. He photobombed the celebration.</span></div>
+            </div>
+            <!-- Slide 3: Dec 31 2020 portrait selfie -->
+            <div class="grad-slide grad-s3">
+              <img src="img/invite/TheFirstChapter_3.jpeg" alt="New Year's Eve 2020 portrait">
+              <div class="grad-slide-caption"><span class="caption-inner">Dec 31, 2020. &ldquo;This will be our year.&rdquo; &ensp;(Spoiler: it was.)</span></div>
+            </div>
+            <!-- Decorative gold corner ornaments -->
+            <svg class="grad-corner grad-tl" viewBox="0 0 30 30" width="30" height="30" fill="none">
+              <path d="M2 28 L2 2 L28 2" stroke="#C9A84C" stroke-width="1" stroke-linecap="round"/>
+              <circle cx="2" cy="2" r="2" fill="#C9A84C" opacity="0.6"/>
+            </svg>
+            <svg class="grad-corner grad-tr" viewBox="0 0 30 30" width="30" height="30" fill="none">
+              <path d="M28 28 L28 2 L2 2" stroke="#C9A84C" stroke-width="1" stroke-linecap="round"/>
+              <circle cx="28" cy="2" r="2" fill="#C9A84C" opacity="0.6"/>
+            </svg>
+            <svg class="grad-corner grad-bl" viewBox="0 0 30 30" width="30" height="30" fill="none">
+              <path d="M2 2 L2 28 L28 28" stroke="#C9A84C" stroke-width="1" stroke-linecap="round"/>
+              <circle cx="2" cy="28" r="2" fill="#C9A84C" opacity="0.6"/>
+            </svg>
+            <svg class="grad-corner grad-br" viewBox="0 0 30 30" width="30" height="30" fill="none">
+              <path d="M28 2 L28 28 L2 28" stroke="#C9A84C" stroke-width="1" stroke-linecap="round"/>
+              <circle cx="28" cy="28" r="2" fill="#C9A84C" opacity="0.6"/>
+            </svg>
+            <!-- Slide indicator dots -->
+            <div class="grad-dots" aria-hidden="true">
+              <span class="grad-dot grad-dot-1"></span>
+              <span class="grad-dot grad-dot-2"></span>
+              <span class="grad-dot grad-dot-3"></span>
+            </div>
+          </div>
+          <div class="timeline-date">Chapter One</div>
+          <h3 class="timeline-title">The First Chapter</h3>
+          <p class="timeline-desc">What started as stolen moments and lingering conversations quickly became the foundation of something extraordinary.</p>
+        </div>
+      </div>
+
+      <!-- Milestone 3 -->
+      <div class="timeline-item reveal" style="transition-delay: 0.1s;">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="gt-stage" aria-label="Growing Together photo slideshow">
+            <div class="gt-slide gt-s1">
+              <img src="img/invite/Growing_together_1.jpeg" alt="Times Square, NYC">
+              <div class="gt-slide-caption"><span class="caption-inner">Strangers saw magic. We just saw each other.</span></div>
+            </div>
+            <div class="gt-slide gt-s2">
+              <img src="img/invite/Growing_together_2.jpeg" alt="NYC night out">
+              <div class="gt-slide-caption"><span class="caption-inner">Dressed to impress. Impressed each other most.</span></div>
+            </div>
+            <div class="gt-slide gt-s3">
+              <img src="img/invite/Growing_together_3.jpeg" alt="Snowy Michigan day">
+              <div class="gt-slide-caption"><span class="caption-inner">He said he wasn&rsquo;t cold. Palak didn&rsquo;t believe him.</span></div>
+            </div>
+            <div class="gt-slide gt-s4">
+              <img src="img/invite/Growing_together_4.jpeg" alt="After Caesars Palace, Vegas">
+              <div class="gt-slide-caption"><span class="caption-inner">The house won. We still left richer.</span></div>
+            </div>
+            <div class="gt-slide gt-s5">
+              <img src="img/invite/Growing_together_5.jpeg" alt="Morning-after Vegas breakfast stroll">
+              <div class="gt-slide-caption"><span class="caption-inner">Broke, hungry &amp; inexplicably happy about it.</span></div>
+            </div>
+            <svg class="gt-corner gt-tl" viewBox="0 0 30 30" width="30" height="30" fill="none">
+              <path d="M2 28 L2 2 L28 2" stroke="#C9A84C" stroke-width="1" stroke-linecap="round"/>
+              <circle cx="2" cy="2" r="2" fill="#C9A84C" opacity="0.6"/>
+            </svg>
+            <svg class="gt-corner gt-tr" viewBox="0 0 30 30" width="30" height="30" fill="none">
+              <path d="M28 28 L28 2 L2 2" stroke="#C9A84C" stroke-width="1" stroke-linecap="round"/>
+              <circle cx="28" cy="2" r="2" fill="#C9A84C" opacity="0.6"/>
+            </svg>
+            <svg class="gt-corner gt-bl" viewBox="0 0 30 30" width="30" height="30" fill="none">
+              <path d="M2 2 L2 28 L28 28" stroke="#C9A84C" stroke-width="1" stroke-linecap="round"/>
+              <circle cx="2" cy="28" r="2" fill="#C9A84C" opacity="0.6"/>
+            </svg>
+            <svg class="gt-corner gt-br" viewBox="0 0 30 30" width="30" height="30" fill="none">
+              <path d="M28 2 L28 28 L2 28" stroke="#C9A84C" stroke-width="1" stroke-linecap="round"/>
+              <circle cx="28" cy="28" r="2" fill="#C9A84C" opacity="0.6"/>
+            </svg>
+            <div class="gt-dots" aria-hidden="true">
+              <span class="gt-dot gt-dot-1"></span>
+              <span class="gt-dot gt-dot-2"></span>
+              <span class="gt-dot gt-dot-3"></span>
+              <span class="gt-dot gt-dot-4"></span>
+              <span class="gt-dot gt-dot-5"></span>
+            </div>
+          </div>
+          <div class="timeline-date">Together</div>
+          <h3 class="timeline-title">Growing Together</h3>
+          <p class="timeline-desc">Through every season, every challenge, and every joy; We discovered that home isn't a place, it's a person.</p>
+        </div>
+      </div>
+
+      <!-- Milestone 4 -->
+      <div class="timeline-item reveal" style="transition-delay: 0.1s;">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-image-frame">
+            <span class="placeholder-text">[ Add Photo ]</span>
+          </div>
+          <div class="timeline-date">May 3, 2026</div>
+          <h3 class="timeline-title">Forever Begins</h3>
+          <p class="timeline-desc">And now, surrounded by the people we love most, we begin the most beautiful chapter of all &mdash; forever.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WEDDING DETAILS ===== -->
+<section class="details-section section-padding grain" aria-label="Wedding details">
+  <div class="container">
+    <div class="rangoli-divider">
+      <svg class="rangoli-svg" viewBox="0 0 280 60" width="280" height="60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="30" x2="106" y2="30"/>
+        <path d="M 140.00 6.00 L 145.40 20.65 L 160.78 18.00 L 150.80 30.00 L 160.78 42.00 L 145.40 39.35 L 140.00 54.00 L 134.60 39.35 L 119.22 42.00 L 129.20 30.00 L 119.22 18.00 L 134.60 20.65 Z M 140.00 24.72 L 144.57 27.36 L 144.57 32.64 L 140.00 35.28 L 135.43 32.64 L 135.43 27.36 Z"/>
+        <line x1="174" y1="30" x2="280" y2="30"/>
+      </svg>
+    </div>
+
+    <div class="details-card reveal" style="transition-delay: 0.15s;">
+      <!-- Corner ornaments -->
+      <div class="corner tl">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M0 35 Q0 0 35 0" stroke="#C9A84C" stroke-width="0.8" fill="none"/>
+          <path d="M0 25 Q0 5 20 2" stroke="#C9A84C" stroke-width="0.5" fill="none" opacity="0.5"/>
+          <ellipse cx="8" cy="8" rx="5" ry="2.5" transform="rotate(-45 8 8)" fill="#8B956D" opacity="0.35"/>
+          <ellipse cx="18" cy="4" rx="4" ry="2" transform="rotate(-20 18 4)" fill="#6B7355" opacity="0.3"/>
+          <ellipse cx="4" cy="18" rx="4" ry="2" transform="rotate(-70 4 18)" fill="#6B7355" opacity="0.3"/>
+        </svg>
+      </div>
+      <div class="corner tr">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M0 35 Q0 0 35 0" stroke="#C9A84C" stroke-width="0.8" fill="none"/>
+          <path d="M0 25 Q0 5 20 2" stroke="#C9A84C" stroke-width="0.5" fill="none" opacity="0.5"/>
+          <ellipse cx="8" cy="8" rx="5" ry="2.5" transform="rotate(-45 8 8)" fill="#8B956D" opacity="0.35"/>
+          <ellipse cx="18" cy="4" rx="4" ry="2" transform="rotate(-20 18 4)" fill="#6B7355" opacity="0.3"/>
+          <ellipse cx="4" cy="18" rx="4" ry="2" transform="rotate(-70 4 18)" fill="#6B7355" opacity="0.3"/>
+        </svg>
+      </div>
+      <div class="corner bl">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M0 35 Q0 0 35 0" stroke="#C9A84C" stroke-width="0.8" fill="none"/>
+          <path d="M0 25 Q0 5 20 2" stroke="#C9A84C" stroke-width="0.5" fill="none" opacity="0.5"/>
+          <ellipse cx="8" cy="8" rx="5" ry="2.5" transform="rotate(-45 8 8)" fill="#8B956D" opacity="0.35"/>
+          <ellipse cx="18" cy="4" rx="4" ry="2" transform="rotate(-20 18 4)" fill="#6B7355" opacity="0.3"/>
+          <ellipse cx="4" cy="18" rx="4" ry="2" transform="rotate(-70 4 18)" fill="#6B7355" opacity="0.3"/>
+        </svg>
+      </div>
+      <div class="corner br">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M0 35 Q0 0 35 0" stroke="#C9A84C" stroke-width="0.8" fill="none"/>
+          <path d="M0 25 Q0 5 20 2" stroke="#C9A84C" stroke-width="0.5" fill="none" opacity="0.5"/>
+          <ellipse cx="8" cy="8" rx="5" ry="2.5" transform="rotate(-45 8 8)" fill="#8B956D" opacity="0.35"/>
+          <ellipse cx="18" cy="4" rx="4" ry="2" transform="rotate(-20 18 4)" fill="#6B7355" opacity="0.3"/>
+          <ellipse cx="4" cy="18" rx="4" ry="2" transform="rotate(-70 4 18)" fill="#6B7355" opacity="0.3"/>
+        </svg>
+      </div>
+
+      <h2 class="details-title">Wedding Celebration</h2>
+      <p class="details-subtitle">Request the honour of your presence</p>
+
+      <div class="detail-row">
+        <div class="detail-label">Date</div>
+        <div class="detail-value">Sunday, the Third of May, 2026</div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin:24px 0;">
+        <span style="width:40px;height:1px;background:var(--gold-pale);display:block;"></span>
+        <span style="width:5px;height:5px;background:var(--gold);transform:rotate(45deg);display:block;"></span>
+        <span style="width:40px;height:1px;background:var(--gold-pale);display:block;"></span>
+      </div>
+
+      <div class="detail-row">
+        <div class="detail-label">Time</div>
+        <div class="detail-value">Twelve O'Clock Noon</div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin:24px 0;">
+        <span style="width:40px;height:1px;background:var(--gold-pale);display:block;"></span>
+        <span style="width:5px;height:5px;background:var(--gold);transform:rotate(45deg);display:block;"></span>
+        <span style="width:40px;height:1px;background:var(--gold-pale);display:block;"></span>
+      </div>
+
+      <div class="detail-row">
+        <div class="detail-label">Venue</div>
+        <div class="detail-value venue">[ Venue Name to Be Announced ]</div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin:24px 0;">
+        <span style="width:40px;height:1px;background:var(--gold-pale);display:block;"></span>
+        <span style="width:5px;height:5px;background:var(--gold);transform:rotate(45deg);display:block;"></span>
+        <span style="width:40px;height:1px;background:var(--gold-pale);display:block;"></span>
+      </div>
+
+      <div class="detail-row">
+        <div class="detail-label">Dress Code</div>
+        <div class="detail-value venue">[ Festive &amp; Elegant ]</div>
+      </div>
+    </div>
+
+    <div class="rangoli-divider">
+      <svg class="rangoli-svg" viewBox="0 0 280 60" width="280" height="60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="30" x2="106" y2="30"/>
+        <path d="M 140.00 6.00 L 145.40 20.65 L 160.78 18.00 L 150.80 30.00 L 160.78 42.00 L 145.40 39.35 L 140.00 54.00 L 134.60 39.35 L 119.22 42.00 L 129.20 30.00 L 119.22 18.00 L 134.60 20.65 Z M 140.00 24.72 L 144.57 27.36 L 144.57 32.64 L 140.00 35.28 L 135.43 32.64 L 135.43 27.36 Z"/>
+        <line x1="174" y1="30" x2="280" y2="30"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CLOSING ===== -->
+<section class="closing-section section-padding grain" aria-label="Closing message">
+  <div class="container">
+    <div class="closing-message reveal">
+      "Two souls with but a single thought,<br>
+      two hearts that beat as one."
+    </div>
+
+    <div class="closing-monogram reveal" style="transition-delay: 0.15s;">P &amp; A</div>
+
+    <p class="closing-sign reveal" style="transition-delay: 0.25s;">With love, Palak &amp; Ashish</p>
+
+    <div class="closing-footer reveal" style="transition-delay: 0.35s;">
+      &copy; 2026
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ===== CURTAIN ===== */
+  var curtain = document.getElementById('curtain');
+  window.addEventListener('load', function () {
+    setTimeout(function () {
+      curtain.classList.add('open');
+    }, 800);
+    setTimeout(function () {
+      curtain.style.display = 'none';
+    }, 2200);
+  });
+
+  /* ===== CUSTOM CURSOR ===== */
+  var dot = document.getElementById('cursorDot');
+  var ring = document.getElementById('cursorRing');
+  var mouseX = -100, mouseY = -100;
+  var ringX = -100, ringY = -100;
+
+  // Always track mouse position (needed for leaf interaction too)
+  document.addEventListener('mousemove', function (e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  if (window.matchMedia('(pointer: fine)').matches) {
+    document.addEventListener('mousemove', function (e) {
+      dot.style.left = e.clientX + 'px';
+      dot.style.top = e.clientY + 'px';
+    });
+
+    function animateRing() {
+      ringX += (mouseX - ringX) * 0.15;
+      ringY += (mouseY - ringY) * 0.15;
+      ring.style.left = ringX + 'px';
+      ring.style.top = ringY + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    document.addEventListener('mouseenter', function () {
+      dot.style.opacity = '1';
+      ring.style.opacity = '0.5';
+    });
+    document.addEventListener('mouseleave', function () {
+      dot.style.opacity = '0';
+      ring.style.opacity = '0';
+    });
+  }
+
+  /* ===== COUNTDOWN ===== */
+  // May 3, 2026, 12:00:00 IST = May 3, 2026, 06:30:00 UTC
+  var weddingDate = new Date(Date.UTC(2026, 4, 3, 6, 30, 0));
+
+  var cdDays = document.getElementById('cd-days');
+  var cdHours = document.getElementById('cd-hours');
+  var cdMinutes = document.getElementById('cd-minutes');
+  var cdSeconds = document.getElementById('cd-seconds');
+
+  function padZero(n) {
+    return n < 10 ? '0' + n : String(n);
+  }
+
+  function updateCountdown() {
+    var now = new Date().getTime();
+    var diff = weddingDate.getTime() - now;
+
+    if (diff <= 0) {
+      cdDays.textContent = '00';
+      cdHours.textContent = '00';
+      cdMinutes.textContent = '00';
+      cdSeconds.textContent = '00';
+      return;
+    }
+
+    var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    var newDays = padZero(days);
+    var newHours = padZero(hours);
+    var newMinutes = padZero(minutes);
+    var newSeconds = padZero(seconds);
+
+    if (cdDays.textContent !== newDays) {
+      cdDays.textContent = newDays;
+      cdDays.style.transform = 'scale(1.08)';
+      setTimeout(function () { cdDays.style.transform = 'scale(1)'; }, 200);
+    }
+    if (cdHours.textContent !== newHours) {
+      cdHours.textContent = newHours;
+      cdHours.style.transform = 'scale(1.08)';
+      setTimeout(function () { cdHours.style.transform = 'scale(1)'; }, 200);
+    }
+    if (cdMinutes.textContent !== newMinutes) {
+      cdMinutes.textContent = newMinutes;
+      cdMinutes.style.transform = 'scale(1.08)';
+      setTimeout(function () { cdMinutes.style.transform = 'scale(1)'; }, 200);
+    }
+    if (cdSeconds.textContent !== newSeconds) {
+      cdSeconds.textContent = newSeconds;
+      cdSeconds.style.transform = 'scale(1.08)';
+      setTimeout(function () { cdSeconds.style.transform = 'scale(1)'; }, 200);
+    }
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  /* ===== SCROLL REVEAL (IntersectionObserver) ===== */
+  var revealElements = document.querySelectorAll('.reveal');
+
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    revealElements.forEach(function (el) {
+      observer.observe(el);
+    });
+  } else {
+    revealElements.forEach(function (el) {
+      el.classList.add('visible');
+    });
+  }
+
+  /* ===== FALLING LEAVES — 6 Botanical Leaf Types + Cursor Interaction ===== */
+  var leavesContainer = document.getElementById('petalsContainer');
+  var leafCount = 35;
+  var activeLeaves = [];
+
+  /* Deep green fills + autumn variants */
+  var leafFills = [
+    '#1A3D08', '#2E5E18', '#245010', '#3A7020',
+    '#1E4A0C', '#2A580E', '#325A14', '#184008'
+  ];
+  var autumnFills = ['#4A6010', '#5A6818', '#384208'];
+
+  /* Lighter overlay fills for 3D simulation */
+  var overlayFills = [
+    'rgba(80,140,40,0.18)', 'rgba(100,160,50,0.15)', 'rgba(60,120,30,0.2)'
+  ];
+
+  var veinColor = 'rgba(100,180,60,0.4)';
+
+  /* Six distinct botanically accurate leaf shapes */
+  var leafTypes = [
+    /* 0: Mango leaf — long, pointed, wavy edge */
+    {
+      w: 20, h: 44, vb: '-2 -1 24 46',
+      body: 'M10 0 C18 6 20 20 17 34 C14 42 6 44 2 38 C-2 28 0 12 10 0Z',
+      overlay: 'M10 0 C18 6 20 20 17 34 C14 42 10 44 8 38 C5 28 6 12 10 0Z',
+      midvein: 'M10 1 C11 14 10 28 8 41',
+      laterals: [
+        'M10 7 C7 10 4 13 2 17', 'M10 7 C13 10 16 14 17 18',
+        'M10 15 C7 18 4 21 3 25', 'M10 15 C13 18 16 21 16 26',
+        'M10 23 C8 26 5 29 3 33', 'M10 23 C12 26 14 30 15 33',
+        'M10 30 C8 33 6 36 5 38', 'M10 30 C12 33 14 36 14 39'
+      ]
+    },
+    /* 1: Peepal/Bodhi — heart base with long drip tip */
+    {
+      w: 24, h: 38, vb: '-1 -1 26 40',
+      body: 'M12 0 C6 1 0 8 0 16 C0 24 5 30 12 38 C19 30 24 24 24 16 C24 8 18 1 12 0Z',
+      overlay: 'M12 0 C6 1 0 8 0 16 C0 24 5 30 12 38 C12 30 12 16 12 0Z',
+      midvein: 'M12 1 C12 13 12 26 12 36',
+      laterals: [
+        'M12 6 C8 8 4 11 2 15', 'M12 6 C16 8 20 11 22 15',
+        'M12 14 C8 17 5 20 3 24', 'M12 14 C16 17 19 20 21 24',
+        'M12 22 C9 25 6 28 5 31', 'M12 22 C15 25 18 28 19 31',
+        'M12 29 C10 31 8 34 7 36', 'M12 29 C14 31 16 34 17 36'
+      ]
+    },
+    /* 2: Neem leaflet — slim, serrated feel */
+    {
+      w: 12, h: 36, vb: '-1 -1 14 38',
+      body: 'M6 0 C9 3 11 8 11 14 C12 16 10 18 11 22 C12 26 10 30 8 34 C6 37 3 36 2 32 C0 28 0 24 1 20 C0 16 1 12 1 8 C2 3 4 0 6 0Z',
+      overlay: 'M6 0 C9 3 11 8 11 14 C12 16 10 18 11 22 C12 26 10 30 8 34 C7 34 6 22 6 0Z',
+      midvein: 'M6 1 C6 12 6 24 7 34',
+      laterals: [
+        'M6 5 C4 7 2 9 1 12', 'M6 5 C8 7 10 9 10 12',
+        'M6 13 C4 15 2 18 1 20', 'M6 13 C8 15 10 18 11 20',
+        'M6 21 C4 23 2 26 2 28', 'M6 21 C8 23 10 26 10 28',
+        'M6 28 C5 30 3 32 2 33', 'M6 28 C7 30 9 32 9 33'
+      ]
+    },
+    /* 3: Banana leaf segment — wider, parallel venation */
+    {
+      w: 28, h: 40, vb: '-1 -1 30 42',
+      body: 'M14 0 C22 4 27 14 26 24 C25 32 20 38 14 40 C8 38 3 32 2 24 C1 14 6 4 14 0Z',
+      overlay: 'M14 0 C22 4 27 14 26 24 C25 32 20 38 14 40 C14 30 14 14 14 0Z',
+      midvein: 'M14 1 C14 14 14 27 14 39',
+      laterals: [
+        'M14 5 C9 7 5 10 3 13', 'M14 5 C19 7 23 10 25 13',
+        'M14 11 C9 13 5 16 3 19', 'M14 11 C19 13 23 16 25 19',
+        'M14 17 C9 19 5 22 3 25', 'M14 17 C19 19 23 22 25 25',
+        'M14 23 C9 25 5 28 3 31', 'M14 23 C19 25 23 28 25 31',
+        'M14 29 C10 31 6 34 4 36', 'M14 29 C18 31 22 34 24 36'
+      ]
+    },
+    /* 4: Rose petal — cupped, asymmetric */
+    {
+      w: 22, h: 28, vb: '-1 -1 24 30',
+      body: 'M11 0 C18 2 22 10 20 18 C18 24 14 28 10 27 C5 26 1 22 0 16 C-1 10 4 2 11 0Z',
+      overlay: 'M11 0 C18 2 22 10 20 18 C18 24 14 28 11 27 C11 18 11 8 11 0Z',
+      midvein: 'M11 1 C11 10 10 19 10 26',
+      laterals: [
+        'M11 5 C8 7 5 10 3 13', 'M11 5 C14 7 17 10 19 13',
+        'M11 12 C8 14 5 17 3 19', 'M11 12 C14 14 17 17 18 20',
+        'M10 19 C8 21 5 23 4 25', 'M10 19 C13 21 15 24 16 25'
+      ]
+    },
+    /* 5: Jasmine leaf — small, glossy, ovate */
+    {
+      w: 14, h: 22, vb: '-1 -1 16 24',
+      body: 'M7 0 C12 3 14 10 12 16 C10 21 5 22 3 18 C0 14 1 6 7 0Z',
+      overlay: 'M7 0 C12 3 14 10 12 16 C10 21 7 22 7 18 C7 12 7 4 7 0Z',
+      midvein: 'M7 1 C7 8 7 14 6 20',
+      laterals: [
+        'M7 4 C5 6 3 8 2 11', 'M7 4 C9 6 11 8 12 11',
+        'M7 10 C5 12 3 14 2 16', 'M7 10 C9 12 11 14 11 16'
+      ]
+    }
+  ];
+
+  function createLeafSVG() {
+    var svgNS = 'http://www.w3.org/2000/svg';
+    var t = leafTypes[Math.floor(Math.random() * leafTypes.length)];
+    /* 25% chance of autumn color */
+    var fill = Math.random() < 0.25
+      ? autumnFills[Math.floor(Math.random() * autumnFills.length)]
+      : leafFills[Math.floor(Math.random() * leafFills.length)];
+    var oFill = overlayFills[Math.floor(Math.random() * overlayFills.length)];
+
+    var svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('width', t.w);
+    svg.setAttribute('height', t.h);
+    svg.setAttribute('viewBox', t.vb);
+    svg.setAttribute('xmlns', svgNS);
+    svg.style.overflow = 'visible';
+
+    /* Base body */
+    var body = document.createElementNS(svgNS, 'path');
+    body.setAttribute('d', t.body);
+    body.setAttribute('fill', fill);
+    body.setAttribute('opacity', '0.9');
+    svg.appendChild(body);
+
+    /* 3D light overlay on one half */
+    var overlay = document.createElementNS(svgNS, 'path');
+    overlay.setAttribute('d', t.overlay);
+    overlay.setAttribute('fill', oFill);
+    svg.appendChild(overlay);
+
+    /* Mid vein */
+    var mv = document.createElementNS(svgNS, 'path');
+    mv.setAttribute('d', t.midvein);
+    mv.setAttribute('stroke', veinColor);
+    mv.setAttribute('stroke-width', '0.7');
+    mv.setAttribute('fill', 'none');
+    svg.appendChild(mv);
+
+    /* Lateral veins */
+    t.laterals.forEach(function(d) {
+      var lv = document.createElementNS(svgNS, 'path');
+      lv.setAttribute('d', d);
+      lv.setAttribute('stroke', veinColor);
+      lv.setAttribute('stroke-width', '0.4');
+      lv.setAttribute('fill', 'none');
+      svg.appendChild(lv);
+    });
+
+    /* Glossy sheen highlight */
+    var sheen = document.createElementNS(svgNS, 'path');
+    sheen.setAttribute('d', t.body);
+    sheen.setAttribute('fill', 'rgba(255,255,255,0.06)');
+    sheen.setAttribute('clip-path', 'inset(0 50% 0 0)');
+    svg.appendChild(sheen);
+
+    return svg;
+  }
+
+  function launchLeaf(i) {
+    // Three levels:
+    //  .leaf        → petalFall animation (vertical drop)
+    //  .leaf-flutter → leafFlutter animation (3D tumble)
+    //  .leaf-cursor  → cursor push via JS transform (NO animation, so it isn't overridden)
+    var wrapper = document.createElement('div');
+    wrapper.className = 'leaf';
+
+    var flutter = document.createElement('div');
+    flutter.className = 'leaf-inner'; // reuse existing CSS (display:inline-block)
+
+    var cursor = document.createElement('div');
+    cursor.style.cssText = 'display:inline-block;transform-origin:center center;will-change:transform;';
+
+    var leafSvg = createLeafSVG();
+
+    /* Size variation: 16px to 52px mapped via scale */
+    var baseH = parseFloat(leafSvg.getAttribute('height'));
+    var targetSize = 16 + Math.random() * 36;
+    var sizeScale = targetSize / baseH;
+
+    cursor.appendChild(leafSvg);
+    flutter.appendChild(cursor);
+    wrapper.appendChild(flutter);
+
+    var startX = Math.random() * 100;
+    var drift = (Math.random() - 0.5) * 220;
+    var sway = 15 + Math.random() * 35;
+    var spin = (Math.random() - 0.5) * 540;
+    var duration = 18 + Math.random() * 28;
+    var delay = i * 1.5 + Math.random() * 8;
+    var flutterDur = 2 + Math.random() * 3;
+
+    wrapper.style.cssText =
+      'left:' + startX + '%;' +
+      'transform:scale(' + sizeScale.toFixed(3) + ');' +
+      '--drift:' + drift + 'px;' +
+      '--sway:' + sway + 'px;' +
+      '--spin:' + spin + 'deg;' +
+      'animation:petalFall ' + duration + 's linear ' + delay + 's infinite;';
+
+    // Flutter animation lives on the middle div — NOT on cursor div
+    flutter.style.animation = 'leafFlutter ' + flutterDur.toFixed(1) + 's ease-in-out infinite';
+    flutter.style.animationDelay = (Math.random() * flutterDur).toFixed(1) + 's';
+
+    leavesContainer.appendChild(wrapper);
+    // Store cursor div (not flutter) so JS transform isn't overridden by animation
+    activeLeaves.push({ wrapper: wrapper, cursor: cursor, pushX: 0, pushY: 0, velX: 0, velY: 0, extraSpin: 0 });
+  }
+
+  function tickLeaves() {
+    var radius = 140;
+    for (var j = 0; j < activeLeaves.length; j++) {
+      var leaf = activeLeaves[j];
+      var rect = leaf.wrapper.getBoundingClientRect();
+      var lx = rect.left + rect.width * 0.5;
+      var ly = rect.top + rect.height * 0.5;
+      var dx = lx - mouseX;
+      var dy = ly - mouseY;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist < radius && dist > 1) {
+        var force = (radius - dist) / radius;
+        leaf.velX += (dx / dist) * force * 6;
+        leaf.velY += (dy / dist) * force * 4;
+        /* Add spin on cursor hit */
+        leaf.extraSpin += force * 40;
+      }
+
+      leaf.velX *= 0.78;
+      leaf.velY *= 0.78;
+      leaf.extraSpin *= 0.92;
+      leaf.pushX = (leaf.pushX + leaf.velX) * 0.86;
+      leaf.pushY = (leaf.pushY + leaf.velY) * 0.86;
+
+      leaf.cursor.style.transform =
+        'translate(' + leaf.pushX.toFixed(1) + 'px,' + leaf.pushY.toFixed(1) + 'px) ' +
+        'rotate(' + (leaf.pushX * 2 + leaf.extraSpin).toFixed(1) + 'deg)';
+    }
+    requestAnimationFrame(tickLeaves);
+  }
+
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    for (var i = 0; i < leafCount; i++) {
+      launchLeaf(i);
+    }
+    tickLeaves();
+  }
+
+  /* ===== SCROLL PROGRESS (kept for any future use) ===== */
+  (function () {
+    function updateScrollProgress() {
+      var maxScroll = document.body.scrollHeight - window.innerHeight;
+      var scrollProgress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+      document.documentElement.style.setProperty('--scroll-progress', scrollProgress);
+    }
+    window.addEventListener('scroll', updateScrollProgress, { passive: true });
+    updateScrollProgress();
+  })();
+
+  /* ===== ANIMATION 1: SUN DIAL — Hero background watermark ===== */
+  (function buildSundial() {
+    var svgNS = 'http://www.w3.org/2000/svg';
+    var sundialSvg = document.getElementById('sundialSvg');
+    if (!sundialSvg) return;
+
+    var cx = 280, cy = 280;
+    var innerR = 560 * 0.28; // 156.8
+    var outerR = 560 * 0.50; // 280
+    var rays = 16;
+    var step = 360 / rays; // 22.5
+    var offsetDeg = 2; // slight offset for spike thickness
+
+    // Build one continuous path: center -> rays with inner circle arcs
+    var d = '';
+    for (var i = 0; i < rays; i++) {
+      var baseAngle = i * step;
+      var a1 = (baseAngle - offsetDeg) * Math.PI / 180;
+      var a2 = baseAngle * Math.PI / 180;
+      var a3 = (baseAngle + offsetDeg) * Math.PI / 180;
+      var nextBaseAngle = (i + 1) * step;
+      var a4 = (nextBaseAngle - offsetDeg) * Math.PI / 180;
+
+      // Inner circle point (approach)
+      var ix1 = cx + innerR * Math.cos(a1);
+      var iy1 = cy + innerR * Math.sin(a1);
+      // Ray tip
+      var tx = cx + outerR * Math.cos(a2);
+      var ty = cy + outerR * Math.sin(a2);
+      // Inner circle point (return)
+      var ix2 = cx + innerR * Math.cos(a3);
+      var iy2 = cy + innerR * Math.sin(a3);
+      // Next ray approach point (arc target)
+      var ix3 = cx + innerR * Math.cos(a4);
+      var iy3 = cy + innerR * Math.sin(a4);
+
+      if (i === 0) {
+        d = 'M ' + ix1.toFixed(2) + ' ' + iy1.toFixed(2);
+      }
+      // Line to tip
+      d += ' L ' + tx.toFixed(2) + ' ' + ty.toFixed(2);
+      // Line back to inner circle
+      d += ' L ' + ix2.toFixed(2) + ' ' + iy2.toFixed(2);
+      // Arc along inner circle to next ray's approach point
+      // Arc: A rx ry x-rotation large-arc-flag sweep-flag x y
+      d += ' A ' + innerR.toFixed(2) + ' ' + innerR.toFixed(2) + ' 0 0 1 ' + ix3.toFixed(2) + ' ' + iy3.toFixed(2);
+    }
+    d += ' Z';
+
+    var path = document.createElementNS(svgNS, 'path');
+    path.setAttribute('d', d);
+    // Clear placeholder comment
+    sundialSvg.innerHTML = '';
+    sundialSvg.appendChild(path);
+
+    // Set dasharray/offset from total length
+    var len = path.getTotalLength();
+    path.style.strokeDasharray = len;
+    path.style.strokeDashoffset = len;
+
+    // Trigger animation after curtain opens (~2s)
+    setTimeout(function () {
+      sundialSvg.classList.add('drawing');
+    }, 2000);
+  })();
+
+  /* ===== ANIMATION 2: ONE BREATH — Page border with leaf bumps ===== */
+  (function buildOneBreath() {
+    var svgNS = 'http://www.w3.org/2000/svg';
+    var W = window.innerWidth;
+    var H = window.innerHeight;
+    var margin = 52;
+    var leafW = 28;
+    var leafSpacing = 90;
+
+    var leftLeaves = Math.floor(H / leafSpacing);
+    var rightLeaves = Math.floor(H / leafSpacing);
+
+    // Build path: start top-left, go down left side with leaf bumps
+    var d = 'M ' + margin + ' 0';
+
+    // Left side going DOWN
+    for (var i = 0; i < leftLeaves; i++) {
+      var y0 = i * leafSpacing;
+      var yEnd = (i + 1) * leafSpacing;
+      var yMid = y0 + leafSpacing * 0.5;
+      // Teardrop leaf loop going LEFT (outward from left stem)
+      d += ' Q ' + (margin - leafW) + ' ' + (y0 + leafSpacing * 0.25).toFixed(1) + ' ' + (margin - leafW * 0.7).toFixed(1) + ' ' + yMid.toFixed(1);
+      d += ' Q ' + (margin + leafW * 0.3).toFixed(1) + ' ' + (y0 + leafSpacing * 0.75).toFixed(1) + ' ' + margin + ' ' + yEnd.toFixed(1);
+    }
+
+    // Bottom edge: go to bottom-right
+    d += ' L ' + margin + ' ' + H;
+    d += ' L ' + (W - margin) + ' ' + H;
+
+    // Right side going UP with leaf bumps
+    for (var j = 0; j < rightLeaves; j++) {
+      var yr0 = H - j * leafSpacing;
+      var yrEnd = H - (j + 1) * leafSpacing;
+      var yrMid = yr0 - leafSpacing * 0.5;
+      // Teardrop leaf loop going RIGHT (outward from right stem)
+      d += ' Q ' + (W - margin + leafW) + ' ' + (yr0 - leafSpacing * 0.25).toFixed(1) + ' ' + (W - margin + leafW * 0.7).toFixed(1) + ' ' + yrMid.toFixed(1);
+      d += ' Q ' + (W - margin - leafW * 0.3).toFixed(1) + ' ' + (yr0 - leafSpacing * 0.75).toFixed(1) + ' ' + (W - margin) + ' ' + yrEnd.toFixed(1);
+    }
+
+    // Top edge: close path
+    d += ' L ' + (W - margin) + ' 0';
+    d += ' L ' + margin + ' 0 Z';
+
+    // Create fixed SVG element
+    var svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('class', 'one-breath-border');
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    svg.setAttribute('preserveAspectRatio', 'none');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('xmlns', svgNS);
+    svg.setAttribute('aria-hidden', 'true');
+
+    var path = document.createElementNS(svgNS, 'path');
+    path.setAttribute('d', d);
+    svg.appendChild(path);
+    document.body.appendChild(svg);
+
+    // Set dash properties
+    var len = path.getTotalLength();
+    path.style.strokeDasharray = len;
+    path.style.strokeDashoffset = len;
+    svg.style.setProperty('--bl', len);
+
+    // Trigger drawing after curtain opens
+    setTimeout(function () {
+      svg.classList.add('drawing');
+    }, 2000);
+  })();
+
+  /* ===== ANIMATION 3: RANGOLI UNFURL — Section dividers ===== */
+  (function initRangoli() {
+    var dividers = document.querySelectorAll('.rangoli-divider');
+    if (!dividers.length) return;
+
+    // Set --rl on each path and line inside each rangoli SVG
+    dividers.forEach(function (div) {
+      var svgEl = div.querySelector('.rangoli-svg');
+      if (!svgEl) return;
+      var elems = svgEl.querySelectorAll('path, line');
+      elems.forEach(function (el) {
+        var len = el.getTotalLength();
+        el.style.setProperty('--rl', len);
+      });
+    });
+
+    // IntersectionObserver to trigger draw on scroll
+    if ('IntersectionObserver' in window) {
+      var rangoliObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            rangoliObs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      dividers.forEach(function (div) {
+        rangoliObs.observe(div);
+      });
+    } else {
+      dividers.forEach(function (div) {
+        div.classList.add('active');
+      });
+    }
+  })();
+
+})();
+</script>
+
+<!-- ===== BUNNY COLONY ===== -->
+<canvas id="bunnyCanvas" aria-hidden="true" style="position:fixed;bottom:0;left:0;pointer-events:none;z-index:3;"></canvas>
+<script>
+(function () {
+  'use strict';
+
+  /* Respect reduced motion */
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var canvas = document.getElementById('bunnyCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+
+  /* ===== CANVAS SIZING ===== */
+  var CANVAS_H = 180;
+  var GROUND_Y_OFFSET = 20;
+
+  function sizeCanvas() {
+    var dpr = window.devicePixelRatio || 1;
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = CANVAS_H * dpr;
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = CANVAS_H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  sizeCanvas();
+  window.addEventListener('resize', sizeCanvas);
+
+  /* ===== MOUSE TRACKING (independent of main IIFE) ===== */
+  var bunnyMouseX = -9999, bunnyMouseY = -9999;
+  document.addEventListener('mousemove', function (e) {
+    bunnyMouseX = e.clientX;
+    bunnyMouseY = e.clientY;
+  });
+  document.addEventListener('mouseleave', function () {
+    bunnyMouseX = -9999;
+    bunnyMouseY = -9999;
+  });
+
+  /* Touch support: treat touches as cursor */
+  document.addEventListener('touchmove', function (e) {
+    if (e.touches.length > 0) {
+      bunnyMouseX = e.touches[0].clientX;
+      bunnyMouseY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+  document.addEventListener('touchend', function () {
+    bunnyMouseX = -9999;
+    bunnyMouseY = -9999;
+  });
+
+  /* ===== CONSTANTS ===== */
+  var FLEE_RADIUS = 180;
+  var ADULT_MAX_SPEED = 9;
+  var BABY_MAX_SPEED = 7;
+  var GRAVITY = 0.3;
+  var GOLD = '#C9A84C';
+  var SEPARATION_RADIUS = 85;  /* px — personal space between bunnies */
+  var SEPARATION_FORCE  = 0.10; /* gentle push strength */
+  var WANDER_MIN = 80;          /* min ticks between voluntary hops (~1.3s) */
+  var WANDER_MAX = 280;         /* max ticks between voluntary hops (~4.7s) */
+
+  /* ===== FLORA STATE ===== */
+  var floraBreeze    = 0;
+  var floraHearts    = [];
+  var floraPrevMX    = -9999;
+  var floraCursorSpd = 0;
+  var TREE_X_RATIO   = 0.91;
+  var floraTreeX     = 0;
+  /* A few grass tufts + 2 flowers — keep it minimal */
+  var GRASS_POS  = [0.06, 0.20, 0.46, 0.66, 0.79];
+  var FLOWER_POS = [0.13, 0.56];
+
+  /* ===== BUNNY CREATION ===== */
+  /* bunnyType: 'chubby' | 'img2' (cute baby) | 'img3' (lean adult leap) | 'img4' (elegant adult) | 'img5' (chunky baby) */
+  var bunnies = [];
+  var bunnyPositions = [0.08, 0.18, 0.32, 0.48, 0.62, 0.74, 0.84, 0.91, 0.55, 0.25, 0.68];
+  var isAdult =    [true,  false, false, true,  false, true,  false, true,  false, true, false];
+  var bunnyTypes = ['chubby','chubby','img2','chubby','chubby','img3','chubby','chubby','chubby','img4','img5'];
+  var startPoses = [
+    'idle0', 'idle1', 'img2_sit0', 'idle0', 'idle3',
+    'img3_sit', 'idle2', 'idle0', 'idle3',
+    'img4_sit', 'img5_sit'
+  ];
+
+  for (var i = 0; i < 11; i++) {
+    bunnies.push({
+      x: bunnyPositions[i] * window.innerWidth,
+      y: 0,
+      vx: isAdult[i] ? (Math.random() - 0.5) * 1.5 : (Math.random() - 0.5) * 2,
+      facing: Math.random() < 0.5 ? 1 : -1,
+      pose: startPoses[i],
+      scale: bunnyTypes[i] === 'img5' ? 0.65 : (isAdult[i] ? 1.0 : 0.6),
+      bunnyType: bunnyTypes[i],
+      fleeTimer: 0,
+      idleTimer: Math.random() * 200 + 50,
+      idlePoseIndex: 0,
+      fleePhase: 0,
+      hopY: 0,
+      earTwitch: 0,
+      earTwitchTimer: Math.random() * 120 + 40,
+      wanderTimer: Math.floor(Math.random() * 180 + 80)
+    });
+  }
+  /* ===== POSE DRAWING FUNCTIONS ===== */
+  /* Rounded plump cartoon bunnies — sticker style, profile view */
+  /* Separate shapes: body + head + ears + tail + eye + nose */
+
+  function drawIdle0(c, earTwitch) {
+    /* Standard sitting — big round haunches, upright ears */
+    var e = Math.sin(earTwitch * 0.08) * 2.5;
+
+    /* Body — big round haunches oval */
+    c.beginPath();
+    c.moveTo(12, 0);
+    c.bezierCurveTo(4, 0, -12, 0, -22, 0);
+    c.bezierCurveTo(-30, -1, -36, -10, -36, -20);
+    c.bezierCurveTo(-36, -34, -28, -44, -14, -46);
+    c.bezierCurveTo(-4, -48, 4, -44, 8, -38);
+    c.bezierCurveTo(14, -32, 16, -18, 14, -6);
+    c.bezierCurveTo(14, -2, 13, 0, 12, 0);
+    c.stroke();
+
+    /* Head — round circle */
+    c.beginPath();
+    c.moveTo(8, -38);
+    c.bezierCurveTo(14, -36, 24, -36, 30, -42);
+    c.bezierCurveTo(36, -48, 36, -60, 30, -66);
+    c.bezierCurveTo(24, -72, 12, -72, 6, -66);
+    c.bezierCurveTo(0, -60, 0, -48, 6, -42);
+    c.bezierCurveTo(7, -40, 8, -38, 8, -38);
+    c.stroke();
+
+    /* Back ear — tall narrow oval */
+    c.beginPath();
+    c.moveTo(14, -70);
+    c.bezierCurveTo(10 + e, -78, 9 + e, -90, 11 + e, -97);
+    c.bezierCurveTo(13 + e, -101, 17 + e, -101, 19 + e, -97);
+    c.bezierCurveTo(21 + e, -90, 20, -78, 18, -70);
+    c.stroke();
+
+    /* Front ear */
+    c.beginPath();
+    c.moveTo(24, -68);
+    c.bezierCurveTo(21 + e * 0.7, -76, 20 + e * 0.7, -88, 22 + e * 0.7, -95);
+    c.bezierCurveTo(24 + e * 0.7, -99, 28 + e * 0.7, -99, 30 + e * 0.7, -95);
+    c.bezierCurveTo(32 + e * 0.7, -88, 31, -76, 28, -68);
+    c.stroke();
+
+    /* Tail */
+    c.beginPath(); c.arc(-34, -18, 6, 0, Math.PI * 2); c.stroke();
+    /* Eye */
+    c.beginPath(); c.arc(24, -54, 2.5, 0, Math.PI * 2); c.fill();
+    /* Nose */
+    c.beginPath(); c.arc(32, -44, 1.2, 0, Math.PI * 2); c.fill();
+  }
+
+  function drawIdle1(c, earTwitch) {
+    /* Alert sitting — head slightly higher, taller upright ears */
+    var sw = Math.sin(earTwitch * 0.09) * 2;
+
+    /* Body — slightly more upright */
+    c.beginPath();
+    c.moveTo(10, 0);
+    c.bezierCurveTo(2, 0, -10, 0, -20, 0);
+    c.bezierCurveTo(-28, -1, -34, -10, -34, -20);
+    c.bezierCurveTo(-34, -34, -26, -44, -12, -46);
+    c.bezierCurveTo(-2, -48, 4, -44, 8, -40);
+    c.bezierCurveTo(14, -34, 14, -18, 12, -6);
+    c.bezierCurveTo(12, -2, 11, 0, 10, 0);
+    c.stroke();
+
+    /* Head */
+    c.beginPath();
+    c.moveTo(8, -40);
+    c.bezierCurveTo(14, -38, 24, -38, 30, -44);
+    c.bezierCurveTo(36, -50, 36, -62, 30, -68);
+    c.bezierCurveTo(24, -74, 12, -74, 6, -68);
+    c.bezierCurveTo(0, -62, 0, -50, 6, -44);
+    c.bezierCurveTo(7, -42, 8, -40, 8, -40);
+    c.stroke();
+
+    /* Back ear — slightly taller */
+    c.beginPath();
+    c.moveTo(14, -72);
+    c.bezierCurveTo(10 + sw, -82, 9 + sw, -96, 11 + sw, -104);
+    c.bezierCurveTo(13 + sw, -108, 17 + sw, -108, 19 + sw, -104);
+    c.bezierCurveTo(21 + sw, -96, 20, -82, 18, -72);
+    c.stroke();
+
+    /* Front ear */
+    c.beginPath();
+    c.moveTo(24, -70);
+    c.bezierCurveTo(21 + sw * 0.7, -80, 20 + sw * 0.7, -94, 22 + sw * 0.7, -102);
+    c.bezierCurveTo(24 + sw * 0.7, -106, 28 + sw * 0.7, -106, 30 + sw * 0.7, -102);
+    c.bezierCurveTo(32 + sw * 0.7, -94, 31, -80, 28, -70);
+    c.stroke();
+
+    /* Small front paw visible */
+    c.beginPath();
+    c.moveTo(12, -22);
+    c.bezierCurveTo(16, -20, 20, -20, 22, -22);
+    c.bezierCurveTo(20, -26, 16, -26, 12, -22);
+    c.stroke();
+
+    /* Tail */
+    c.beginPath(); c.arc(-32, -18, 6, 0, Math.PI * 2); c.stroke();
+    /* Eye */
+    c.beginPath(); c.arc(24, -56, 2.5, 0, Math.PI * 2); c.fill();
+    /* Nose */
+    c.beginPath(); c.arc(32, -46, 1.2, 0, Math.PI * 2); c.fill();
+  }
+
+  function drawIdle2(c, earTwitch) {
+    /* Lop-eared sitting — ears droop down alongside face */
+    var s = Math.sin(earTwitch * 0.07) * 1.5;
+
+    /* Body — same as idle0 */
+    c.beginPath();
+    c.moveTo(12, 0);
+    c.bezierCurveTo(4, 0, -12, 0, -22, 0);
+    c.bezierCurveTo(-30, -1, -36, -10, -36, -20);
+    c.bezierCurveTo(-36, -34, -28, -44, -14, -46);
+    c.bezierCurveTo(-4, -48, 4, -44, 8, -38);
+    c.bezierCurveTo(14, -32, 16, -18, 14, -6);
+    c.bezierCurveTo(14, -2, 13, 0, 12, 0);
+    c.stroke();
+
+    /* Head */
+    c.beginPath();
+    c.moveTo(8, -38);
+    c.bezierCurveTo(14, -36, 24, -36, 30, -42);
+    c.bezierCurveTo(36, -48, 36, -60, 30, -66);
+    c.bezierCurveTo(24, -72, 12, -72, 6, -66);
+    c.bezierCurveTo(0, -60, 0, -48, 6, -42);
+    c.bezierCurveTo(7, -40, 8, -38, 8, -38);
+    c.stroke();
+
+    /* Back lop ear — droops down alongside face */
+    c.beginPath();
+    c.moveTo(14, -70);
+    c.bezierCurveTo(10 + s, -66, 6 + s, -56, 4 + s, -48);
+    c.bezierCurveTo(2 + s, -42, 2 + s, -38, 4 + s, -36);
+    c.bezierCurveTo(6 + s, -34, 8, -34, 10, -38);
+    c.bezierCurveTo(12, -46, 14, -58, 16, -68);
+    c.bezierCurveTo(16, -69, 15, -70, 14, -70);
+    c.stroke();
+
+    /* Front lop ear — droops forward/down */
+    c.beginPath();
+    c.moveTo(26, -68);
+    c.bezierCurveTo(28 + s * 0.7, -64, 30 + s * 0.7, -54, 30 + s * 0.7, -46);
+    c.bezierCurveTo(30 + s * 0.7, -40, 28 + s * 0.7, -36, 26 + s * 0.7, -36);
+    c.bezierCurveTo(24 + s * 0.7, -36, 22, -38, 22, -44);
+    c.bezierCurveTo(22, -54, 23, -64, 24, -68);
+    c.bezierCurveTo(25, -68, 26, -68, 26, -68);
+    c.stroke();
+
+    /* Tail */
+    c.beginPath(); c.arc(-34, -18, 6, 0, Math.PI * 2); c.stroke();
+    /* Eye */
+    c.beginPath(); c.arc(24, -54, 2.5, 0, Math.PI * 2); c.fill();
+    /* Nose */
+    c.beginPath(); c.arc(32, -44, 1.2, 0, Math.PI * 2); c.fill();
+  }
+
+  function drawIdle3(c, earTwitch) {
+    /* Sniffing pose — head lowered and thrust forward */
+    var e = Math.sin(earTwitch * 0.08) * 2;
+
+    /* Body */
+    c.beginPath();
+    c.moveTo(12, 0);
+    c.bezierCurveTo(4, 0, -12, 0, -22, 0);
+    c.bezierCurveTo(-30, -1, -36, -10, -36, -20);
+    c.bezierCurveTo(-36, -34, -28, -44, -14, -46);
+    c.bezierCurveTo(-4, -48, 4, -44, 8, -38);
+    c.bezierCurveTo(14, -32, 16, -18, 14, -6);
+    c.bezierCurveTo(14, -2, 13, 0, 12, 0);
+    c.stroke();
+
+    /* Head angled forward/down */
+    c.beginPath();
+    c.moveTo(8, -34);
+    c.bezierCurveTo(16, -30, 28, -28, 36, -32);
+    c.bezierCurveTo(44, -36, 46, -48, 40, -56);
+    c.bezierCurveTo(34, -64, 20, -64, 12, -58);
+    c.bezierCurveTo(4, -52, 2, -42, 6, -36);
+    c.bezierCurveTo(7, -34, 8, -34, 8, -34);
+    c.stroke();
+
+    /* Ears angled slightly forward */
+    c.beginPath();
+    c.moveTo(16, -62);
+    c.bezierCurveTo(14 + e, -70, 14 + e, -82, 16 + e, -89);
+    c.bezierCurveTo(18 + e, -93, 22 + e, -93, 24 + e, -89);
+    c.bezierCurveTo(26 + e, -82, 26, -70, 24, -62);
+    c.stroke();
+
+    c.beginPath();
+    c.moveTo(28, -60);
+    c.bezierCurveTo(26 + e * 0.7, -68, 26 + e * 0.7, -80, 28 + e * 0.7, -87);
+    c.bezierCurveTo(30 + e * 0.7, -91, 34 + e * 0.7, -91, 36 + e * 0.7, -87);
+    c.bezierCurveTo(38 + e * 0.7, -80, 38, -68, 36, -60);
+    c.stroke();
+
+    /* Tail */
+    c.beginPath(); c.arc(-34, -18, 6, 0, Math.PI * 2); c.stroke();
+    /* Eye */
+    c.beginPath(); c.arc(32, -48, 2.5, 0, Math.PI * 2); c.fill();
+    /* Nose */
+    c.beginPath(); c.arc(42, -36, 1.2, 0, Math.PI * 2); c.fill();
+  }
+
+  function drawIdle4(c, earTwitch) {
+    /* Compact chubby sitting — extra wide round body */
+    var e = Math.sin(earTwitch * 0.07) * 2;
+
+    /* Body — extra round and wide */
+    c.beginPath();
+    c.moveTo(10, 0);
+    c.bezierCurveTo(2, 0, -14, 0, -24, 0);
+    c.bezierCurveTo(-34, -1, -40, -12, -40, -22);
+    c.bezierCurveTo(-40, -36, -32, -46, -16, -48);
+    c.bezierCurveTo(-4, -50, 4, -46, 8, -40);
+    c.bezierCurveTo(14, -32, 14, -16, 12, -6);
+    c.bezierCurveTo(12, -2, 11, 0, 10, 0);
+    c.stroke();
+
+    /* Head */
+    c.beginPath();
+    c.moveTo(8, -40);
+    c.bezierCurveTo(14, -38, 24, -38, 30, -44);
+    c.bezierCurveTo(36, -50, 36, -62, 30, -68);
+    c.bezierCurveTo(24, -74, 12, -74, 6, -68);
+    c.bezierCurveTo(0, -62, 0, -50, 6, -44);
+    c.bezierCurveTo(7, -42, 8, -40, 8, -40);
+    c.stroke();
+
+    /* Two short stubby upright ears */
+    c.beginPath();
+    c.moveTo(14, -72);
+    c.bezierCurveTo(10 + e, -78, 9 + e, -88, 11 + e, -93);
+    c.bezierCurveTo(13 + e, -97, 17 + e, -97, 19 + e, -93);
+    c.bezierCurveTo(21 + e, -88, 20, -78, 18, -72);
+    c.stroke();
+
+    c.beginPath();
+    c.moveTo(24, -70);
+    c.bezierCurveTo(21 + e * 0.7, -76, 20 + e * 0.7, -86, 22 + e * 0.7, -91);
+    c.bezierCurveTo(24 + e * 0.7, -95, 28 + e * 0.7, -95, 30 + e * 0.7, -91);
+    c.bezierCurveTo(32 + e * 0.7, -86, 31, -76, 28, -70);
+    c.stroke();
+
+    /* Tail — extra fluffy */
+    c.beginPath(); c.arc(-38, -18, 7, 0, Math.PI * 2); c.stroke();
+    /* Eye */
+    c.beginPath(); c.arc(24, -56, 2.5, 0, Math.PI * 2); c.fill();
+    /* Nose */
+    c.beginPath(); c.arc(32, -46, 1.2, 0, Math.PI * 2); c.fill();
+  }
+
+  function drawHop0(c) {
+    /* Pre-hop crouch — body compressed, ears swept flat back */
+
+    /* Body — low and wide */
+    c.beginPath();
+    c.moveTo(16, 0);
+    c.bezierCurveTo(6, 0, -10, 0, -22, 0);
+    c.bezierCurveTo(-28, -1, -32, -6, -32, -14);
+    c.bezierCurveTo(-32, -24, -24, -30, -10, -32);
+    c.bezierCurveTo(-2, -34, 4, -32, 10, -28);
+    c.bezierCurveTo(16, -24, 18, -14, 16, -6);
+    c.bezierCurveTo(16, -2, 16, 0, 16, 0);
+    c.stroke();
+
+    /* Head — tucked low */
+    c.beginPath();
+    c.moveTo(10, -28);
+    c.bezierCurveTo(16, -26, 26, -24, 32, -30);
+    c.bezierCurveTo(38, -36, 38, -46, 32, -52);
+    c.bezierCurveTo(26, -58, 14, -58, 8, -52);
+    c.bezierCurveTo(2, -46, 2, -36, 8, -30);
+    c.bezierCurveTo(9, -28, 10, -28, 10, -28);
+    c.stroke();
+
+    /* Back ear — swept flat back (horizontal oval) */
+    c.beginPath();
+    c.moveTo(14, -56);
+    c.bezierCurveTo(4, -60, -8, -62, -16, -60);
+    c.bezierCurveTo(-18, -58, -18, -54, -16, -52);
+    c.bezierCurveTo(-8, -50, 4, -50, 12, -52);
+    c.bezierCurveTo(14, -53, 14, -55, 14, -56);
+    c.stroke();
+
+    /* Front ear — swept flat */
+    c.beginPath();
+    c.moveTo(18, -50);
+    c.bezierCurveTo(8, -54, -4, -54, -12, -52);
+    c.bezierCurveTo(-14, -50, -14, -47, -12, -46);
+    c.bezierCurveTo(-4, -44, 8, -44, 16, -46);
+    c.bezierCurveTo(18, -47, 18, -49, 18, -50);
+    c.stroke();
+
+    /* Tail */
+    c.beginPath(); c.arc(-30, -10, 5, 0, Math.PI * 2); c.stroke();
+    /* Eye */
+    c.beginPath(); c.arc(24, -42, 2.2, 0, Math.PI * 2); c.fill();
+    /* Nose */
+    c.beginPath(); c.arc(33, -32, 1.0, 0, Math.PI * 2); c.fill();
+  }
+
+  function drawHop1(c) {
+    /* Ascending — body tilted upward ~16°, legs extending */
+    c.save();
+    c.rotate(-0.28);
+
+    /* Body elongated */
+    c.beginPath();
+    c.moveTo(-24, -16);
+    c.bezierCurveTo(-28, -12, -28, -24, -24, -28);
+    c.bezierCurveTo(-18, -32, -4, -32, 8, -28);
+    c.bezierCurveTo(14, -26, 18, -22, 18, -18);
+    c.bezierCurveTo(18, -14, 14, -10, 6, -8);
+    c.bezierCurveTo(-4, -6, -18, -8, -24, -16);
+    c.stroke();
+
+    /* Head */
+    c.beginPath();
+    c.moveTo(18, -18);
+    c.bezierCurveTo(22, -16, 30, -14, 36, -20);
+    c.bezierCurveTo(42, -26, 42, -38, 36, -44);
+    c.bezierCurveTo(30, -50, 18, -50, 12, -44);
+    c.bezierCurveTo(6, -38, 6, -26, 12, -20);
+    c.bezierCurveTo(14, -18, 18, -18, 18, -18);
+    c.stroke();
+
+    /* Ears swept partly back */
+    c.beginPath();
+    c.moveTo(16, -48);
+    c.bezierCurveTo(6, -52, -4, -54, -10, -50);
+    c.bezierCurveTo(-12, -48, -12, -44, -10, -42);
+    c.bezierCurveTo(-4, -40, 6, -40, 14, -44);
+    c.bezierCurveTo(16, -45, 16, -47, 16, -48);
+    c.stroke();
+    c.beginPath();
+    c.moveTo(20, -44);
+    c.bezierCurveTo(10, -46, 0, -48, -6, -46);
+    c.bezierCurveTo(-8, -44, -8, -42, -6, -40);
+    c.bezierCurveTo(0, -38, 10, -38, 18, -40);
+    c.bezierCurveTo(20, -41, 20, -43, 20, -44);
+    c.stroke();
+
+    /* Hind legs pushing back */
+    c.beginPath();
+    c.moveTo(-22, -14); c.bezierCurveTo(-28, -6, -34, 0, -38, 4); c.stroke();
+    c.beginPath();
+    c.moveTo(-20, -12); c.bezierCurveTo(-26, -4, -30, 2, -34, 6); c.stroke();
+
+    /* Front legs reaching forward */
+    c.beginPath();
+    c.moveTo(12, -10); c.bezierCurveTo(18, -2, 24, 4, 28, 8); c.stroke();
+    c.beginPath();
+    c.moveTo(10, -8); c.bezierCurveTo(16, 0, 20, 6, 24, 10); c.stroke();
+
+    /* Tail */
+    c.beginPath(); c.arc(-26, -22, 5, 0, Math.PI * 2); c.stroke();
+    /* Eye */
+    c.beginPath(); c.arc(30, -34, 2.0, 0, Math.PI * 2); c.fill();
+    /* Nose */
+    c.beginPath(); c.arc(38, -22, 1.0, 0, Math.PI * 2); c.fill();
+
+    c.restore();
+  }
+
+  function drawHop2(c) {
+    /* Peak airborne — body horizontal, all legs extended */
+
+    /* Body elongated horizontal */
+    c.beginPath();
+    c.moveTo(-26, -22);
+    c.bezierCurveTo(-30, -18, -30, -28, -26, -32);
+    c.bezierCurveTo(-20, -36, -6, -36, 6, -32);
+    c.bezierCurveTo(12, -30, 16, -26, 16, -22);
+    c.bezierCurveTo(16, -18, 12, -16, 4, -14);
+    c.bezierCurveTo(-8, -12, -22, -14, -26, -22);
+    c.stroke();
+
+    /* Head */
+    c.beginPath();
+    c.moveTo(16, -22);
+    c.bezierCurveTo(20, -20, 28, -20, 34, -26);
+    c.bezierCurveTo(40, -32, 40, -44, 34, -50);
+    c.bezierCurveTo(28, -56, 16, -56, 10, -50);
+    c.bezierCurveTo(4, -44, 4, -32, 10, -26);
+    c.bezierCurveTo(12, -22, 16, -22, 16, -22);
+    c.stroke();
+
+    /* Ears flat back */
+    c.beginPath();
+    c.moveTo(14, -54);
+    c.bezierCurveTo(4, -58, -8, -60, -16, -58);
+    c.bezierCurveTo(-18, -56, -18, -52, -16, -50);
+    c.bezierCurveTo(-8, -48, 4, -48, 12, -52);
+    c.bezierCurveTo(14, -53, 14, -53, 14, -54);
+    c.stroke();
+    c.beginPath();
+    c.moveTo(18, -48);
+    c.bezierCurveTo(8, -52, -4, -52, -12, -50);
+    c.bezierCurveTo(-14, -48, -14, -46, -12, -44);
+    c.bezierCurveTo(-4, -42, 8, -42, 16, -44);
+    c.bezierCurveTo(18, -45, 18, -47, 18, -48);
+    c.stroke();
+
+    /* Hind legs extended backward */
+    c.beginPath();
+    c.moveTo(-24, -20); c.bezierCurveTo(-30, -12, -36, -4, -40, 0); c.stroke();
+    c.beginPath();
+    c.moveTo(-22, -18); c.bezierCurveTo(-28, -10, -32, -2, -36, 2); c.stroke();
+
+    /* Front legs extended forward */
+    c.beginPath();
+    c.moveTo(10, -18); c.bezierCurveTo(16, -10, 22, -2, 26, 2); c.stroke();
+    c.beginPath();
+    c.moveTo(8, -16); c.bezierCurveTo(14, -8, 18, 0, 22, 4); c.stroke();
+
+    /* Tail */
+    c.beginPath(); c.arc(-28, -28, 5, 0, Math.PI * 2); c.stroke();
+    /* Eye */
+    c.beginPath(); c.arc(28, -40, 2.0, 0, Math.PI * 2); c.fill();
+    /* Nose */
+    c.beginPath(); c.arc(36, -28, 1.0, 0, Math.PI * 2); c.fill();
+  }
+
+  function drawHop3(c) {
+    /* Landing — body tilted nose-down, front legs reaching for ground */
+    c.save();
+    c.rotate(0.24);
+
+    /* Body */
+    c.beginPath();
+    c.moveTo(-24, -16);
+    c.bezierCurveTo(-28, -12, -28, -24, -24, -28);
+    c.bezierCurveTo(-18, -32, -4, -32, 8, -28);
+    c.bezierCurveTo(14, -26, 18, -22, 18, -18);
+    c.bezierCurveTo(18, -14, 14, -10, 6, -8);
+    c.bezierCurveTo(-4, -6, -18, -8, -24, -16);
+    c.stroke();
+
+    /* Head */
+    c.beginPath();
+    c.moveTo(18, -18);
+    c.bezierCurveTo(22, -16, 30, -14, 36, -20);
+    c.bezierCurveTo(42, -26, 42, -38, 36, -44);
+    c.bezierCurveTo(30, -50, 18, -50, 12, -44);
+    c.bezierCurveTo(6, -38, 6, -26, 12, -20);
+    c.bezierCurveTo(14, -18, 18, -18, 18, -18);
+    c.stroke();
+
+    /* Ears still mostly back */
+    c.beginPath();
+    c.moveTo(16, -48);
+    c.bezierCurveTo(6, -52, -4, -54, -10, -50);
+    c.bezierCurveTo(-12, -48, -12, -44, -10, -42);
+    c.bezierCurveTo(-4, -40, 6, -40, 14, -44);
+    c.bezierCurveTo(16, -45, 16, -47, 16, -48);
+    c.stroke();
+    c.beginPath();
+    c.moveTo(20, -44);
+    c.bezierCurveTo(10, -46, 0, -48, -6, -46);
+    c.bezierCurveTo(-8, -44, -8, -42, -6, -40);
+    c.bezierCurveTo(0, -38, 10, -38, 18, -40);
+    c.bezierCurveTo(20, -41, 20, -43, 20, -44);
+    c.stroke();
+
+    /* Hind legs tucking under */
+    c.beginPath();
+    c.moveTo(-22, -14); c.bezierCurveTo(-26, -10, -28, -6, -28, -2); c.stroke();
+    c.beginPath();
+    c.moveTo(-20, -12); c.bezierCurveTo(-24, -8, -26, -4, -26, 0); c.stroke();
+
+    /* Front legs reaching down for landing */
+    c.beginPath();
+    c.moveTo(12, -10); c.bezierCurveTo(18, -2, 22, 4, 24, 8); c.stroke();
+    c.beginPath();
+    c.moveTo(14, -8); c.bezierCurveTo(20, 0, 24, 6, 26, 10); c.stroke();
+
+    /* Tail */
+    c.beginPath(); c.arc(-26, -22, 5, 0, Math.PI * 2); c.stroke();
+    /* Eye */
+    c.beginPath(); c.arc(30, -34, 2.0, 0, Math.PI * 2); c.fill();
+    /* Nose */
+    c.beginPath(); c.arc(38, -22, 1.0, 0, Math.PI * 2); c.fill();
+
+    c.restore();
+  }
+
+
+  /* ===== IMG2 BABY BUNNY (cute round, image 2 style) ===== */
+
+  function drawImg2Sit0(c, earTwitch) {
+    /* Compact sitting — very round chubby baby */
+    var e = Math.sin(earTwitch * 0.07) * 1.8;
+
+    /* Body — very round */
+    c.beginPath();
+    c.moveTo(8, 0);
+    c.bezierCurveTo(2, 0, -12, 0, -20, 0);
+    c.bezierCurveTo(-28, -1, -32, -8, -32, -18);
+    c.bezierCurveTo(-32, -32, -24, -42, -12, -44);
+    c.bezierCurveTo(-4, -46, 4, -42, 8, -36);
+    c.bezierCurveTo(12, -30, 12, -14, 10, -4);
+    c.bezierCurveTo(10, -1, 9, 0, 8, 0);
+    c.stroke();
+
+    /* Head */
+    c.beginPath();
+    c.moveTo(8, -36);
+    c.bezierCurveTo(14, -34, 22, -34, 26, -40);
+    c.bezierCurveTo(30, -46, 28, -54, 22, -58);
+    c.bezierCurveTo(16, -62, 8, -60, 4, -54);
+    c.bezierCurveTo(0, -48, 2, -40, 8, -36);
+    c.stroke();
+
+    /* Short stubby ears */
+    c.beginPath();
+    c.moveTo(12, -58);
+    c.bezierCurveTo(8 + e, -64, 7 + e, -74, 9 + e, -80);
+    c.bezierCurveTo(11 + e, -84, 15 + e, -84, 17 + e, -80);
+    c.bezierCurveTo(19 + e, -74, 20, -64, 18, -58);
+    c.stroke();
+
+    c.beginPath();
+    c.moveTo(20, -56);
+    c.bezierCurveTo(17 + e * 0.6, -62, 16 + e * 0.6, -72, 18 + e * 0.6, -78);
+    c.bezierCurveTo(20 + e * 0.6, -82, 24 + e * 0.6, -82, 26 + e * 0.6, -78);
+    c.bezierCurveTo(28 + e * 0.6, -72, 28, -62, 26, -56);
+    c.stroke();
+
+    c.beginPath(); c.arc(-30, -14, 5, 0, Math.PI * 2); c.stroke();
+    c.beginPath(); c.arc(20, -48, 2.2, 0, Math.PI * 2); c.fill();
+    c.beginPath(); c.arc(27, -40, 1.0, 0, Math.PI * 2); c.fill();
+  }
+
+  function drawImg2Sit1(c, earTwitch) {
+    /* Upright sitting — on haunches, front paws raised (image 2 pose 1) */
+    var e = Math.sin(earTwitch * 0.09) * 2;
+
+    /* Body — more vertical */
+    c.beginPath();
+    c.moveTo(8, 0);
+    c.bezierCurveTo(2, 0, -10, 0, -18, 0);
+    c.bezierCurveTo(-24, -1, -28, -8, -28, -18);
+    c.bezierCurveTo(-28, -34, -20, -46, -8, -50);
+    c.bezierCurveTo(-2, -52, 4, -48, 8, -42);
+    c.bezierCurveTo(12, -36, 12, -18, 10, -6);
+    c.bezierCurveTo(10, -2, 9, 0, 8, 0);
+    c.stroke();
+
+    /* Head */
+    c.beginPath();
+    c.moveTo(8, -42);
+    c.bezierCurveTo(14, -40, 22, -40, 26, -46);
+    c.bezierCurveTo(30, -52, 28, -62, 22, -66);
+    c.bezierCurveTo(16, -70, 8, -68, 4, -62);
+    c.bezierCurveTo(0, -56, 2, -46, 8, -42);
+    c.stroke();
+
+    /* Ears — taller */
+    c.beginPath();
+    c.moveTo(12, -66);
+    c.bezierCurveTo(8 + e, -74, 7 + e, -88, 9 + e, -96);
+    c.bezierCurveTo(11 + e, -101, 15 + e, -101, 17 + e, -96);
+    c.bezierCurveTo(19 + e, -88, 20, -74, 18, -66);
+    c.stroke();
+
+    c.beginPath();
+    c.moveTo(20, -64);
+    c.bezierCurveTo(17 + e * 0.6, -72, 16 + e * 0.6, -86, 18 + e * 0.6, -94);
+    c.bezierCurveTo(20 + e * 0.6, -99, 24 + e * 0.6, -99, 26 + e * 0.6, -94);
+    c.bezierCurveTo(28 + e * 0.6, -86, 28, -72, 26, -64);
+    c.stroke();
+
+    /* Front paws raised */
+    c.beginPath();
+    c.moveTo(10, -28);
+    c.bezierCurveTo(14, -24, 18, -22, 22, -24);
+    c.bezierCurveTo(20, -28, 16, -30, 10, -28);
+    c.stroke();
+
+    c.beginPath(); c.arc(-26, -12, 5, 0, Math.PI * 2); c.stroke();
+    c.beginPath(); c.arc(20, -56, 2.2, 0, Math.PI * 2); c.fill();
+    c.beginPath(); c.arc(27, -48, 1.0, 0, Math.PI * 2); c.fill();
+  }
+
+  function drawImg2Hop0(c) {
+    /* Baby pre-hop crouch */
+
+    c.beginPath();
+    c.moveTo(10, 0);
+    c.bezierCurveTo(2, 0, -12, 0, -20, 0);
+    c.bezierCurveTo(-26, -1, -30, -6, -30, -14);
+    c.bezierCurveTo(-30, -24, -22, -30, -10, -32);
+    c.bezierCurveTo(-2, -34, 4, -32, 8, -26);
+    c.bezierCurveTo(12, -20, 12, -10, 10, -4);
+    c.bezierCurveTo(10, -1, 10, 0, 10, 0);
+    c.stroke();
+
+    c.beginPath();
+    c.moveTo(8, -26);
+    c.bezierCurveTo(14, -24, 22, -22, 26, -28);
+    c.bezierCurveTo(30, -34, 28, -44, 22, -48);
+    c.bezierCurveTo(16, -52, 8, -50, 4, -44);
+    c.bezierCurveTo(0, -38, 2, -30, 8, -26);
+    c.stroke();
+
+    /* Ears swept flat back */
+    c.beginPath();
+    c.moveTo(12, -48);
+    c.bezierCurveTo(2, -52, -8, -54, -16, -52);
+    c.bezierCurveTo(-18, -50, -18, -46, -16, -44);
+    c.bezierCurveTo(-8, -42, 2, -42, 10, -44);
+    c.bezierCurveTo(12, -45, 12, -47, 12, -48);
+    c.stroke();
+    c.beginPath();
+    c.moveTo(16, -44);
+    c.bezierCurveTo(6, -46, -4, -48, -12, -46);
+    c.bezierCurveTo(-14, -44, -14, -42, -12, -40);
+    c.bezierCurveTo(-4, -38, 6, -38, 14, -40);
+    c.bezierCurveTo(16, -41, 16, -43, 16, -44);
+    c.stroke();
+
+    c.beginPath(); c.arc(-28, -10, 5, 0, Math.PI * 2); c.stroke();
+    c.beginPath(); c.arc(20, -38, 2.0, 0, Math.PI * 2); c.fill();
+    c.beginPath(); c.arc(27, -30, 1.0, 0, Math.PI * 2); c.fill();
+  }
+
+  function drawImg2Hop1(c) {
+    /* Baby ascending */
+    c.save();
+    c.rotate(-0.28);
+
+    c.beginPath();
+    c.moveTo(-22, -8);
+    c.bezierCurveTo(-26, -4, -26, -16, -22, -20);
+    c.bezierCurveTo(-16, -24, -4, -24, 6, -20);
+    c.bezierCurveTo(10, -18, 12, -14, 12, -10);
+    c.bezierCurveTo(12, -6, 8, -4, 0, -2);
+    c.bezierCurveTo(-10, 0, -18, -2, -22, -8);
+    c.stroke();
+
+    c.beginPath();
+    c.moveTo(12, -10);
+    c.bezierCurveTo(16, -8, 24, -6, 28, -12);
+    c.bezierCurveTo(32, -18, 32, -30, 26, -36);
+    c.bezierCurveTo(20, -42, 10, -42, 6, -36);
+    c.bezierCurveTo(2, -30, 2, -18, 8, -12);
+    c.bezierCurveTo(10, -10, 12, -10, 12, -10);
+    c.stroke();
+
+    c.beginPath();
+    c.moveTo(8, -40);
+    c.bezierCurveTo(-2, -44, -12, -46, -18, -44);
+    c.bezierCurveTo(-20, -42, -20, -38, -18, -36);
+    c.bezierCurveTo(-12, -34, -2, -34, 6, -36);
+    c.bezierCurveTo(8, -37, 8, -39, 8, -40);
+    c.stroke();
+    c.beginPath();
+    c.moveTo(12, -36);
+    c.bezierCurveTo(2, -38, -8, -40, -14, -38);
+    c.bezierCurveTo(-16, -36, -16, -34, -14, -32);
+    c.bezierCurveTo(-8, -30, 2, -30, 10, -32);
+    c.bezierCurveTo(12, -33, 12, -35, 12, -36);
+    c.stroke();
+
+    c.beginPath(); c.moveTo(-20, -6); c.bezierCurveTo(-26, 0, -30, 6, -32, 10); c.stroke();
+    c.beginPath(); c.moveTo(-18, -4); c.bezierCurveTo(-22, 2, -26, 8, -28, 12); c.stroke();
+    c.beginPath(); c.moveTo(8, -4); c.bezierCurveTo(12, 2, 18, 8, 22, 12); c.stroke();
+    c.beginPath(); c.moveTo(6, -2); c.bezierCurveTo(10, 4, 14, 10, 18, 14); c.stroke();
+
+    c.beginPath(); c.arc(-24, -14, 4, 0, Math.PI * 2); c.stroke();
+    c.beginPath(); c.arc(22, -24, 2.0, 0, Math.PI * 2); c.fill();
+    c.beginPath(); c.arc(28, -14, 1.0, 0, Math.PI * 2); c.fill();
+
+    c.restore();
+  }
+
+  function drawImg2Hop2(c) {
+    /* Baby peak leap — all four legs spread (image 2 pose 4) */
+
+    c.beginPath();
+    c.moveTo(-20, -20);
+    c.bezierCurveTo(-24, -16, -24, -26, -20, -30);
+    c.bezierCurveTo(-14, -34, 0, -34, 10, -30);
+    c.bezierCurveTo(14, -28, 16, -24, 16, -20);
+    c.bezierCurveTo(16, -16, 12, -14, 4, -12);
+    c.bezierCurveTo(-6, -10, -16, -12, -20, -20);
+    c.stroke();
+
+    c.beginPath();
+    c.moveTo(16, -20);
+    c.bezierCurveTo(20, -18, 28, -16, 32, -22);
+    c.bezierCurveTo(36, -28, 36, -40, 30, -46);
+    c.bezierCurveTo(24, -52, 14, -50, 10, -44);
+    c.bezierCurveTo(6, -38, 6, -26, 12, -20);
+    c.bezierCurveTo(14, -20, 16, -20, 16, -20);
+    c.stroke();
+
+    /* Ears swept back */
+    c.beginPath();
+    c.moveTo(12, -48);
+    c.bezierCurveTo(2, -52, -8, -54, -16, -52);
+    c.bezierCurveTo(-18, -50, -18, -46, -16, -44);
+    c.bezierCurveTo(-8, -42, 2, -42, 10, -44);
+    c.bezierCurveTo(12, -45, 12, -47, 12, -48);
+    c.stroke();
+    c.beginPath();
+    c.moveTo(16, -44);
+    c.bezierCurveTo(6, -46, -4, -48, -12, -46);
+    c.bezierCurveTo(-14, -44, -14, -42, -12, -40);
+    c.bezierCurveTo(-4, -38, 6, -38, 14, -40);
+    c.bezierCurveTo(16, -41, 16, -43, 16, -44);
+    c.stroke();
+
+    /* All four legs spread */
+    c.beginPath(); c.moveTo(-16, -18); c.bezierCurveTo(-20, -10, -24, -4, -28, 0); c.stroke();
+    c.beginPath(); c.moveTo(-14, -16); c.bezierCurveTo(-18, -8, -20, -2, -22, 4); c.stroke();
+    c.beginPath(); c.moveTo(10, -16); c.bezierCurveTo(14, -8, 18, -2, 22, 2); c.stroke();
+    c.beginPath(); c.moveTo(8, -14); c.bezierCurveTo(12, -6, 14, 0, 16, 6); c.stroke();
+
+    c.beginPath(); c.arc(-22, -26, 4, 0, Math.PI * 2); c.stroke();
+    c.beginPath(); c.arc(24, -36, 2.0, 0, Math.PI * 2); c.fill();
+    c.beginPath(); c.arc(32, -24, 1.0, 0, Math.PI * 2); c.fill();
+  }
+
+  function drawImg2Hop3(c) {
+    /* Baby landing */
+    c.save();
+    c.rotate(0.24);
+
+    c.beginPath();
+    c.moveTo(-22, -8);
+    c.bezierCurveTo(-26, -4, -26, -16, -22, -20);
+    c.bezierCurveTo(-16, -24, -4, -24, 6, -20);
+    c.bezierCurveTo(10, -18, 12, -14, 12, -10);
+    c.bezierCurveTo(12, -6, 8, -4, 0, -2);
+    c.bezierCurveTo(-10, 0, -18, -2, -22, -8);
+    c.stroke();
+
+    c.beginPath();
+    c.moveTo(12, -10);
+    c.bezierCurveTo(16, -8, 24, -6, 28, -12);
+    c.bezierCurveTo(32, -18, 32, -30, 26, -36);
+    c.bezierCurveTo(20, -42, 10, -42, 6, -36);
+    c.bezierCurveTo(2, -30, 2, -18, 8, -12);
+    c.bezierCurveTo(10, -10, 12, -10, 12, -10);
+    c.stroke();
+
+    c.beginPath();
+    c.moveTo(8, -40);
+    c.bezierCurveTo(-2, -44, -12, -46, -18, -44);
+    c.bezierCurveTo(-20, -42, -20, -38, -18, -36);
+    c.bezierCurveTo(-12, -34, -2, -34, 6, -36);
+    c.bezierCurveTo(8, -37, 8, -39, 8, -40);
+    c.stroke();
+    c.beginPath();
+    c.moveTo(12, -36);
+    c.bezierCurveTo(2, -38, -8, -40, -14, -38);
+    c.bezierCurveTo(-16, -36, -16, -34, -14, -32);
+    c.bezierCurveTo(-8, -30, 2, -30, 10, -32);
+    c.bezierCurveTo(12, -33, 12, -35, 12, -36);
+    c.stroke();
+
+    c.beginPath(); c.moveTo(-20, -6); c.bezierCurveTo(-24, -2, -26, 2, -26, 6); c.stroke();
+    c.beginPath(); c.moveTo(-18, -4); c.bezierCurveTo(-22, 0, -24, 4, -24, 8); c.stroke();
+    c.beginPath(); c.moveTo(8, -4); c.bezierCurveTo(12, 2, 16, 8, 18, 12); c.stroke();
+    c.beginPath(); c.moveTo(10, -2); c.bezierCurveTo(14, 4, 18, 10, 20, 14); c.stroke();
+
+    c.beginPath(); c.arc(-24, -14, 4, 0, Math.PI * 2); c.stroke();
+    c.beginPath(); c.arc(22, -24, 2.0, 0, Math.PI * 2); c.fill();
+    c.beginPath(); c.arc(28, -14, 1.0, 0, Math.PI * 2); c.fill();
+
+    c.restore();
+  }
+
+  /* ===== IMG3 ADULT BUNNY (lean leaping silhouette, image 3 style) ===== */
+
+  function drawImg3Sit(c, earTwitch) {
+    /* Sitting idle — same clean profile as chubby idle0 but leaner */
+    var e = Math.sin(earTwitch * 0.08) * 2.5;
+
+    c.beginPath();
+    c.moveTo(12, 0);
+    c.bezierCurveTo(4, 0, -12, 0, -22, 0);
+    c.bezierCurveTo(-30, -1, -36, -10, -36, -20);
+    c.bezierCurveTo(-36, -34, -28, -44, -14, -46);
+    c.bezierCurveTo(-4, -48, 4, -44, 8, -38);
+    c.bezierCurveTo(14, -32, 16, -18, 14, -6);
+    c.bezierCurveTo(14, -2, 13, 0, 12, 0);
+    c.stroke();
+
+    c.beginPath();
+    c.moveTo(8, -38);
+    c.bezierCurveTo(14, -36, 24, -36, 30, -42);
+    c.bezierCurveTo(36, -48, 36, -60, 30, -66);
+    c.bezierCurveTo(24, -72, 12, -72, 6, -66);
+    c.bezierCurveTo(0, -60, 0, -48, 6, -42);
+    c.bezierCurveTo(7, -40, 8, -38, 8, -38);
+    c.stroke();
+
+    c.beginPath();
+    c.moveTo(14, -70);
+    c.bezierCurveTo(10 + e, -78, 9 + e, -90, 11 + e, -97);
+    c.bezierCurveTo(13 + e, -101, 17 + e, -101, 19 + e, -97);
+    c.bezierCurveTo(21 + e, -90, 20, -78, 18, -70);
+    c.stroke();
+
+    c.beginPath();
+    c.moveTo(24, -68);
+    c.bezierCurveTo(21 + e * 0.7, -76, 20 + e * 0.7, -88, 22 + e * 0.7, -95);
+    c.bezierCurveTo(24 + e * 0.7, -99, 28 + e * 0.7, -99, 30 + e * 0.7, -95);
+    c.bezierCurveTo(32 + e * 0.7, -88, 31, -76, 28, -68);
+    c.stroke();
+
+    c.beginPath(); c.arc(-34, -18, 6, 0, Math.PI * 2); c.stroke();
+    c.beginPath(); c.arc(24, -54, 2.5, 0, Math.PI * 2); c.fill();
+    c.beginPath(); c.arc(32, -44, 1.2, 0, Math.PI * 2); c.fill();
+  }
+
+  function drawImg3Hop0(c) {
+    /* Lean adult pre-hop crouch */
+
+    c.beginPath();
+    c.moveTo(14, 0);
+    c.bezierCurveTo(6, 0, -8, 0, -18, 0);
+    c.bezierCurveTo(-26, -1, -30, -6, -30, -14);
+    c.bezierCurveTo(-30, -24, -22, -30, -10, -32);
+    c.bezierCurveTo(-2, -34, 4, -30, 8, -24);
+    c.bezierCurveTo(12, -18, 14, -8, 14, -2);
+    c.bezierCurveTo(14, 0, 14, 0, 14, 0);
+    c.stroke();
+
+    c.beginPath();
+    c.moveTo(8, -24);
+    c.bezierCurveTo(14, -22, 22, -20, 26, -26);
+    c.bezierCurveTo(30, -32, 30, -42, 24, -48);
+    c.bezierCurveTo(18, -54, 8, -52, 4, -46);
+    c.bezierCurveTo(0, -40, 0, -30, 6, -24);
+    c.bezierCurveTo(7, -24, 8, -24, 8, -24);
+    c.stroke();
+
+    c.beginPath();
+    c.moveTo(10, -50);
+    c.bezierCurveTo(0, -54, -10, -56, -18, -54);
+    c.bezierCurveTo(-20, -52, -20, -48, -18, -46);
+    c.bezierCurveTo(-10, -44, 0, -44, 8, -46);
+    c.bezierCurveTo(10, -47, 10, -49, 10, -50);
+    c.stroke();
+    c.beginPath();
+    c.moveTo(14, -46);
+    c.bezierCurveTo(4, -48, -6, -50, -14, -48);
+    c.bezierCurveTo(-16, -46, -16, -44, -14, -42);
+    c.bezierCurveTo(-6, -40, 4, -40, 12, -42);
+    c.bezierCurveTo(14, -43, 14, -45, 14, -46);
+    c.stroke();
+
+    c.beginPath(); c.arc(-28, -10, 5, 0, Math.PI * 2); c.stroke();
+    c.beginPath(); c.arc(18, -38, 2.2, 0, Math.PI * 2); c.fill();
+    c.beginPath(); c.arc(26, -28, 1.2, 0, Math.PI * 2); c.fill();
+  }
+
+  function drawImg3Hop1(c) {
+    /* Lean adult ascending */
+    c.save();
+    c.rotate(-0.28);
+
+    c.beginPath();
+    c.moveTo(-26, -10);
+    c.bezierCurveTo(-30, -6, -30, -20, -26, -24);
+    c.bezierCurveTo(-20, -28, -6, -28, 6, -24);
+    c.bezierCurveTo(12, -22, 16, -18, 16, -14);
+    c.bezierCurveTo(16, -10, 12, -8, 2, -6);
+    c.bezierCurveTo(-8, -4, -22, -6, -26, -10);
+    c.stroke();
+
+    c.beginPath();
+    c.moveTo(16, -14);
+    c.bezierCurveTo(20, -12, 30, -10, 36, -16);
+    c.bezierCurveTo(42, -22, 42, -36, 36, -42);
+    c.bezierCurveTo(30, -48, 18, -48, 12, -42);
+    c.bezierCurveTo(6, -36, 6, -22, 12, -16);
+    c.bezierCurveTo(14, -14, 16, -14, 16, -14);
+    c.stroke();
+
+    c.beginPath();
+    c.moveTo(14, -46);
+    c.bezierCurveTo(4, -50, -8, -52, -16, -50);
+    c.bezierCurveTo(-18, -48, -18, -44, -16, -42);
+    c.bezierCurveTo(-8, -40, 4, -40, 12, -42);
+    c.bezierCurveTo(14, -43, 14, -45, 14, -46);
+    c.stroke();
+    c.beginPath();
+    c.moveTo(18, -42);
+    c.bezierCurveTo(8, -44, -2, -46, -10, -44);
+    c.bezierCurveTo(-12, -42, -12, -40, -10, -38);
+    c.bezierCurveTo(-2, -36, 8, -36, 16, -38);
+    c.bezierCurveTo(18, -39, 18, -41, 18, -42);
+    c.stroke();
+
+    c.beginPath(); c.moveTo(-24, -8); c.bezierCurveTo(-30, -2, -36, 4, -40, 8); c.stroke();
+    c.beginPath(); c.moveTo(-22, -6); c.bezierCurveTo(-28, 0, -32, 6, -36, 10); c.stroke();
+    c.beginPath(); c.moveTo(10, -8); c.bezierCurveTo(16, -2, 22, 4, 26, 8); c.stroke();
+    c.beginPath(); c.moveTo(8, -6); c.bezierCurveTo(14, 0, 18, 6, 22, 10); c.stroke();
+
+    c.beginPath(); c.arc(-28, -18, 5, 0, Math.PI * 2); c.stroke();
+    c.beginPath(); c.arc(30, -30, 2.2, 0, Math.PI * 2); c.fill();
+    c.beginPath(); c.arc(38, -18, 1.2, 0, Math.PI * 2); c.fill();
+
+    c.restore();
+  }
+
+  function drawImg3Hop2(c) {
+    /* Image 3 leaping — streamlined silhouette, ears flat back */
+
+    /* Main body outline */
+    c.beginPath();
+    c.moveTo(36, -26);
+    /* Up over forehead */
+    c.bezierCurveTo(38, -32, 36, -40, 28, -44);
+    /* Ears sweep flat back */
+    c.bezierCurveTo(18, -46, 4, -46, -8, -44);
+    c.bezierCurveTo(-14, -42, -18, -40, -12, -38);
+    c.bezierCurveTo(-6, -36, 6, -36, 14, -38);
+    /* Near ear second layer */
+    c.bezierCurveTo(16, -39, 18, -38, 18, -36);
+    /* Down back of head, neck */
+    c.bezierCurveTo(14, -30, 8, -26, 0, -24);
+    /* Spine */
+    c.bezierCurveTo(-10, -22, -22, -22, -34, -24);
+    /* Haunches */
+    c.bezierCurveTo(-44, -26, -48, -20, -48, -12);
+    /* Hind end */
+    c.bezierCurveTo(-48, -6, -42, -4, -32, -4);
+    /* Belly — long gentle arc */
+    c.bezierCurveTo(-18, -2, -2, -2, 12, -6);
+    /* Chest */
+    c.bezierCurveTo(20, -8, 28, -12, 32, -18);
+    /* Under chin back to nose */
+    c.bezierCurveTo(36, -20, 38, -22, 36, -26);
+    c.stroke();
+
+    /* Front legs reaching forward */
+    c.beginPath(); c.moveTo(14, -4); c.bezierCurveTo(20, 2, 26, 8, 30, 12); c.stroke();
+    c.beginPath(); c.moveTo(8, -4); c.bezierCurveTo(14, 2, 18, 8, 22, 12); c.stroke();
+
+    /* Hind legs pushing back */
+    c.beginPath(); c.moveTo(-38, -6); c.bezierCurveTo(-44, 0, -48, 6, -50, 10); c.stroke();
+    c.beginPath(); c.moveTo(-32, -4); c.bezierCurveTo(-36, 2, -40, 8, -42, 12); c.stroke();
+
+    /* Tail */
+    c.beginPath(); c.arc(-46, -16, 5, 0, Math.PI * 2); c.stroke();
+    /* Eye */
+    c.beginPath(); c.arc(26, -32, 2.2, 0, Math.PI * 2); c.fill();
+    /* Nose */
+    c.beginPath(); c.arc(36, -24, 1.2, 0, Math.PI * 2); c.fill();
+  }
+
+  function drawImg3Hop3(c) {
+    /* Lean adult landing */
+    c.save();
+    c.rotate(0.24);
+
+    c.beginPath();
+    c.moveTo(-26, -10);
+    c.bezierCurveTo(-30, -6, -30, -20, -26, -24);
+    c.bezierCurveTo(-20, -28, -6, -28, 6, -24);
+    c.bezierCurveTo(12, -22, 16, -18, 16, -14);
+    c.bezierCurveTo(16, -10, 12, -8, 2, -6);
+    c.bezierCurveTo(-8, -4, -22, -6, -26, -10);
+    c.stroke();
+
+    c.beginPath();
+    c.moveTo(16, -14);
+    c.bezierCurveTo(20, -12, 30, -10, 36, -16);
+    c.bezierCurveTo(42, -22, 42, -36, 36, -42);
+    c.bezierCurveTo(30, -48, 18, -48, 12, -42);
+    c.bezierCurveTo(6, -36, 6, -22, 12, -16);
+    c.bezierCurveTo(14, -14, 16, -14, 16, -14);
+    c.stroke();
+
+    c.beginPath();
+    c.moveTo(14, -46);
+    c.bezierCurveTo(4, -50, -8, -52, -16, -50);
+    c.bezierCurveTo(-18, -48, -18, -44, -16, -42);
+    c.bezierCurveTo(-8, -40, 4, -40, 12, -42);
+    c.bezierCurveTo(14, -43, 14, -45, 14, -46);
+    c.stroke();
+    c.beginPath();
+    c.moveTo(18, -42);
+    c.bezierCurveTo(8, -44, -2, -46, -10, -44);
+    c.bezierCurveTo(-12, -42, -12, -40, -10, -38);
+    c.bezierCurveTo(-2, -36, 8, -36, 16, -38);
+    c.bezierCurveTo(18, -39, 18, -41, 18, -42);
+    c.stroke();
+
+    c.beginPath(); c.moveTo(-24, -8); c.bezierCurveTo(-28, -4, -30, 0, -30, 4); c.stroke();
+    c.beginPath(); c.moveTo(-22, -6); c.bezierCurveTo(-26, -2, -28, 2, -28, 6); c.stroke();
+    c.beginPath(); c.moveTo(10, -8); c.bezierCurveTo(16, -2, 20, 4, 22, 8); c.stroke();
+    c.beginPath(); c.moveTo(12, -6); c.bezierCurveTo(18, 0, 22, 6, 24, 10); c.stroke();
+
+    c.beginPath(); c.arc(-28, -18, 5, 0, Math.PI * 2); c.stroke();
+    c.beginPath(); c.arc(30, -30, 2.2, 0, Math.PI * 2); c.fill();
+    c.beginPath(); c.arc(38, -18, 1.2, 0, Math.PI * 2); c.fill();
+
+    c.restore();
+  }
+
+
+  /* ===== IMG4 ADULT BUNNY — elegant upright profile ===== */
+
+  function drawImg4Sit(c, earTwitch) {
+    var e = Math.sin(earTwitch * 0.08) * 2.0;
+    /* Body — tall upright oval, more vertical than chubby */
+    c.beginPath();
+    c.moveTo(10, 0);
+    c.bezierCurveTo(4, 0, -8, 0, -14, -2);
+    c.bezierCurveTo(-22, -4, -26, -12, -26, -24);
+    c.bezierCurveTo(-26, -38, -20, -50, -10, -54);
+    c.bezierCurveTo(-2, -58, 6, -54, 10, -46);
+    c.bezierCurveTo(14, -38, 14, -24, 12, -10);
+    c.bezierCurveTo(12, -4, 11, -1, 10, 0);
+    c.stroke();
+    /* Head — compact circle, positioned high */
+    c.beginPath();
+    c.moveTo(10, -46);
+    c.bezierCurveTo(16, -44, 26, -44, 30, -50);
+    c.bezierCurveTo(34, -56, 34, -66, 28, -72);
+    c.bezierCurveTo(22, -78, 12, -78, 8, -72);
+    c.bezierCurveTo(4, -66, 4, -54, 8, -48);
+    c.bezierCurveTo(9, -46, 10, -46, 10, -46);
+    c.stroke();
+    /* Left ear — tall, straight up, slight sway */
+    c.beginPath();
+    c.moveTo(12, -76);
+    c.bezierCurveTo(8 + e * 0.3, -84, 4 + e * 0.5, -98, 6 + e, -112);
+    c.bezierCurveTo(8 + e, -116, 12 + e * 0.5, -116, 14 + e * 0.3, -112);
+    c.bezierCurveTo(16, -98, 16, -84, 14, -76);
+    c.stroke();
+    /* Right ear — tall, straight up, offset */
+    c.beginPath();
+    c.moveTo(20, -74);
+    c.bezierCurveTo(18 + e * 0.4, -82, 16 + e * 0.6, -94, 18 + e * 0.8, -108);
+    c.bezierCurveTo(20 + e * 0.8, -112, 24 + e * 0.4, -112, 25 + e * 0.3, -108);
+    c.bezierCurveTo(26, -94, 26, -82, 24, -74);
+    c.stroke();
+    /* Front paw, small and neat */
+    c.beginPath();
+    c.moveTo(6, -4);
+    c.bezierCurveTo(8, 0, 12, 2, 14, 0);
+    c.stroke();
+    /* Hind leg hint */
+    c.beginPath();
+    c.moveTo(-14, -4);
+    c.bezierCurveTo(-18, -2, -22, 0, -22, 2);
+    c.stroke();
+    /* Tail */
+    c.beginPath(); c.arc(-24, -24, 5, 0, Math.PI * 2); c.stroke();
+    /* Eye */
+    c.beginPath(); c.arc(24, -60, 2.2, 0, Math.PI * 2); c.fill();
+    /* Nose */
+    c.beginPath(); c.arc(32, -50, 1.2, 0, Math.PI * 2); c.fill();
+  }
+
+  function drawImg4Stand(c, earTwitch) {
+    var e = Math.sin(earTwitch * 0.08) * 2.0;
+    /* Body — vertical, showing full belly */
+    c.beginPath();
+    c.moveTo(14, 0);
+    c.bezierCurveTo(8, 0, -4, 0, -12, -2);
+    c.bezierCurveTo(-20, -6, -24, -16, -24, -30);
+    c.bezierCurveTo(-24, -44, -18, -56, -8, -62);
+    c.bezierCurveTo(0, -66, 8, -64, 14, -58);
+    c.bezierCurveTo(20, -50, 22, -36, 20, -18);
+    c.bezierCurveTo(18, -8, 16, -2, 14, 0);
+    c.stroke();
+    /* Head — small compact oval */
+    c.beginPath();
+    c.moveTo(14, -58);
+    c.bezierCurveTo(20, -56, 30, -56, 34, -62);
+    c.bezierCurveTo(38, -68, 38, -78, 32, -84);
+    c.bezierCurveTo(26, -90, 16, -90, 12, -84);
+    c.bezierCurveTo(8, -78, 8, -66, 12, -60);
+    c.bezierCurveTo(13, -58, 14, -58, 14, -58);
+    c.stroke();
+    /* Left ear — erect */
+    c.beginPath();
+    c.moveTo(16, -88);
+    c.bezierCurveTo(12 + e * 0.3, -96, 8 + e * 0.5, -108, 10 + e, -122);
+    c.bezierCurveTo(12 + e, -126, 16 + e * 0.5, -126, 18 + e * 0.3, -122);
+    c.bezierCurveTo(20, -108, 20, -96, 18, -88);
+    c.stroke();
+    /* Right ear — erect */
+    c.beginPath();
+    c.moveTo(24, -86);
+    c.bezierCurveTo(22 + e * 0.4, -94, 20 + e * 0.6, -106, 22 + e * 0.8, -118);
+    c.bezierCurveTo(24 + e * 0.8, -122, 28 + e * 0.4, -122, 29 + e * 0.3, -118);
+    c.bezierCurveTo(30, -106, 30, -94, 28, -86);
+    c.stroke();
+    /* Front paws raised — left paw */
+    c.beginPath();
+    c.moveTo(8, -52);
+    c.bezierCurveTo(14, -48, 20, -44, 22, -42);
+    c.bezierCurveTo(24, -40, 22, -38, 20, -40);
+    c.stroke();
+    /* Front paws raised — right paw */
+    c.beginPath();
+    c.moveTo(12, -50);
+    c.bezierCurveTo(18, -46, 26, -40, 28, -38);
+    c.bezierCurveTo(30, -36, 28, -34, 26, -36);
+    c.stroke();
+    /* Hind feet flat on ground */
+    c.beginPath();
+    c.moveTo(-12, -4);
+    c.bezierCurveTo(-16, -2, -22, 0, -24, 2);
+    c.bezierCurveTo(-26, 4, -20, 4, -16, 2);
+    c.stroke();
+    c.beginPath();
+    c.moveTo(4, -2);
+    c.bezierCurveTo(8, 0, 14, 2, 16, 4);
+    c.bezierCurveTo(18, 6, 12, 6, 8, 4);
+    c.stroke();
+    /* Tail */
+    c.beginPath(); c.arc(-22, -30, 5, 0, Math.PI * 2); c.stroke();
+    /* Eye */
+    c.beginPath(); c.arc(28, -72, 2.2, 0, Math.PI * 2); c.fill();
+    /* Nose */
+    c.beginPath(); c.arc(36, -62, 1.2, 0, Math.PI * 2); c.fill();
+  }
+
+  function drawImg4Hop0(c) {
+    /* Crouching/gathering — body compressed, legs tucked */
+    c.beginPath();
+    c.moveTo(28, -18);
+    c.bezierCurveTo(30, -24, 28, -32, 20, -34);
+    c.bezierCurveTo(10, -36, -4, -34, -16, -30);
+    c.bezierCurveTo(-26, -28, -32, -22, -32, -16);
+    c.bezierCurveTo(-32, -8, -24, -4, -12, -4);
+    c.bezierCurveTo(0, -2, 14, -4, 22, -8);
+    c.bezierCurveTo(26, -10, 28, -14, 28, -18);
+    c.stroke();
+    /* Head */
+    c.beginPath();
+    c.moveTo(22, -32);
+    c.bezierCurveTo(28, -30, 36, -32, 40, -38);
+    c.bezierCurveTo(44, -44, 42, -54, 36, -58);
+    c.bezierCurveTo(30, -62, 20, -60, 16, -54);
+    c.bezierCurveTo(12, -48, 14, -38, 20, -34);
+    c.stroke();
+    /* Ears swept back */
+    c.beginPath();
+    c.moveTo(20, -58);
+    c.bezierCurveTo(12, -62, 0, -66, -10, -64);
+    c.bezierCurveTo(-14, -62, -14, -58, -10, -56);
+    c.bezierCurveTo(-2, -54, 10, -54, 18, -56);
+    c.stroke();
+    c.beginPath();
+    c.moveTo(22, -56);
+    c.bezierCurveTo(14, -58, 4, -60, -4, -58);
+    c.bezierCurveTo(-8, -56, -8, -52, -4, -50);
+    c.bezierCurveTo(4, -48, 14, -48, 20, -52);
+    c.stroke();
+    /* Front legs tucked */
+    c.beginPath(); c.moveTo(10, -4); c.bezierCurveTo(14, -2, 16, 0, 16, 2); c.stroke();
+    c.beginPath(); c.moveTo(4, -4); c.bezierCurveTo(8, -2, 10, 0, 10, 2); c.stroke();
+    /* Hind legs coiled */
+    c.beginPath(); c.moveTo(-22, -6); c.bezierCurveTo(-26, -2, -28, 0, -28, 2); c.stroke();
+    c.beginPath(); c.moveTo(-18, -4); c.bezierCurveTo(-22, -2, -24, 0, -24, 2); c.stroke();
+    /* Tail */
+    c.beginPath(); c.arc(-30, -18, 5, 0, Math.PI * 2); c.stroke();
+    /* Eye */
+    c.beginPath(); c.arc(32, -46, 2.2, 0, Math.PI * 2); c.fill();
+    /* Nose */
+    c.beginPath(); c.arc(40, -38, 1.2, 0, Math.PI * 2); c.fill();
+  }
+
+  function drawImg4Hop1(c) {
+    /* Launching — body angled up ~25deg, legs pushing off */
+    c.save();
+    c.rotate(-0.25);
+    c.beginPath();
+    c.moveTo(30, -20);
+    c.bezierCurveTo(32, -26, 30, -34, 22, -36);
+    c.bezierCurveTo(12, -38, -4, -36, -18, -32);
+    c.bezierCurveTo(-28, -30, -34, -24, -34, -16);
+    c.bezierCurveTo(-34, -8, -26, -4, -14, -4);
+    c.bezierCurveTo(0, -2, 16, -4, 24, -10);
+    c.bezierCurveTo(28, -12, 30, -16, 30, -20);
+    c.stroke();
+    /* Head */
+    c.beginPath();
+    c.moveTo(24, -34);
+    c.bezierCurveTo(30, -32, 38, -34, 42, -40);
+    c.bezierCurveTo(46, -46, 44, -56, 38, -60);
+    c.bezierCurveTo(32, -64, 22, -62, 18, -56);
+    c.bezierCurveTo(14, -50, 16, -40, 22, -36);
+    c.stroke();
+    /* Ears angled back */
+    c.beginPath();
+    c.moveTo(22, -60);
+    c.bezierCurveTo(14, -64, 2, -68, -8, -66);
+    c.bezierCurveTo(-12, -64, -12, -60, -8, -58);
+    c.bezierCurveTo(0, -56, 12, -56, 20, -58);
+    c.stroke();
+    c.beginPath();
+    c.moveTo(24, -58);
+    c.bezierCurveTo(16, -60, 6, -62, -2, -60);
+    c.bezierCurveTo(-6, -58, -6, -54, -2, -52);
+    c.bezierCurveTo(6, -50, 16, -50, 22, -54);
+    c.stroke();
+    /* Front legs extending forward */
+    c.beginPath(); c.moveTo(14, -6); c.bezierCurveTo(20, 0, 26, 6, 30, 10); c.stroke();
+    c.beginPath(); c.moveTo(8, -4); c.bezierCurveTo(14, 2, 20, 8, 24, 12); c.stroke();
+    /* Hind legs pushing */
+    c.beginPath(); c.moveTo(-24, -6); c.bezierCurveTo(-30, 2, -36, 10, -38, 16); c.stroke();
+    c.beginPath(); c.moveTo(-18, -4); c.bezierCurveTo(-24, 4, -30, 12, -32, 18); c.stroke();
+    /* Tail */
+    c.beginPath(); c.arc(-32, -18, 5, 0, Math.PI * 2); c.stroke();
+    /* Eye */
+    c.beginPath(); c.arc(34, -48, 2.2, 0, Math.PI * 2); c.fill();
+    /* Nose */
+    c.beginPath(); c.arc(42, -40, 1.2, 0, Math.PI * 2); c.fill();
+    c.restore();
+  }
+
+  function drawImg4Hop2(c) {
+    /* Full horizontal leap — greyhound style, body stretched flat */
+    /* One-stroke sleek body silhouette */
+    c.beginPath();
+    c.moveTo(40, -22);
+    c.bezierCurveTo(42, -28, 40, -36, 32, -38);
+    c.bezierCurveTo(22, -40, 6, -38, -10, -36);
+    c.bezierCurveTo(-26, -34, -40, -32, -50, -30);
+    c.bezierCurveTo(-58, -28, -60, -22, -58, -16);
+    c.bezierCurveTo(-56, -10, -48, -6, -36, -6);
+    c.bezierCurveTo(-20, -4, 0, -4, 16, -6);
+    c.bezierCurveTo(28, -8, 36, -12, 38, -18);
+    c.bezierCurveTo(40, -20, 40, -22, 40, -22);
+    c.stroke();
+    /* Head — streamlined, nose forward */
+    c.beginPath();
+    c.moveTo(38, -36);
+    c.bezierCurveTo(44, -34, 52, -34, 56, -38);
+    c.bezierCurveTo(60, -42, 60, -50, 54, -54);
+    c.bezierCurveTo(48, -58, 38, -56, 34, -50);
+    c.bezierCurveTo(30, -44, 32, -38, 36, -36);
+    c.stroke();
+    /* Ears swept flat back against body */
+    c.beginPath();
+    c.moveTo(36, -54);
+    c.bezierCurveTo(26, -58, 12, -60, 0, -58);
+    c.bezierCurveTo(-6, -56, -6, -52, 0, -50);
+    c.bezierCurveTo(12, -48, 26, -48, 34, -52);
+    c.stroke();
+    c.beginPath();
+    c.moveTo(38, -52);
+    c.bezierCurveTo(28, -54, 16, -56, 6, -54);
+    c.bezierCurveTo(0, -52, 0, -48, 6, -46);
+    c.bezierCurveTo(16, -44, 28, -44, 36, -48);
+    c.stroke();
+    /* Front legs fully extended forward */
+    c.beginPath(); c.moveTo(20, -6); c.bezierCurveTo(28, 0, 38, 8, 46, 14); c.stroke();
+    c.beginPath(); c.moveTo(12, -4); c.bezierCurveTo(20, 2, 30, 10, 38, 16); c.stroke();
+    /* Hind legs fully extended backward */
+    c.beginPath(); c.moveTo(-44, -8); c.bezierCurveTo(-52, -2, -60, 6, -66, 14); c.stroke();
+    c.beginPath(); c.moveTo(-36, -6); c.bezierCurveTo(-44, 0, -52, 8, -58, 16); c.stroke();
+    /* Tail */
+    c.beginPath(); c.arc(-56, -20, 5, 0, Math.PI * 2); c.stroke();
+    /* Eye */
+    c.beginPath(); c.arc(48, -46, 2.2, 0, Math.PI * 2); c.fill();
+    /* Nose */
+    c.beginPath(); c.arc(58, -38, 1.2, 0, Math.PI * 2); c.fill();
+  }
+
+  function drawImg4Hop3(c) {
+    /* Landing — body angled down, front legs reaching for ground */
+    c.save();
+    c.rotate(0.22);
+    c.beginPath();
+    c.moveTo(30, -18);
+    c.bezierCurveTo(32, -24, 30, -32, 22, -34);
+    c.bezierCurveTo(12, -36, -4, -34, -16, -30);
+    c.bezierCurveTo(-26, -28, -32, -22, -32, -16);
+    c.bezierCurveTo(-32, -8, -24, -4, -12, -4);
+    c.bezierCurveTo(0, -2, 14, -4, 22, -8);
+    c.bezierCurveTo(26, -10, 30, -14, 30, -18);
+    c.stroke();
+    /* Head */
+    c.beginPath();
+    c.moveTo(24, -32);
+    c.bezierCurveTo(30, -30, 38, -32, 42, -38);
+    c.bezierCurveTo(46, -44, 44, -54, 38, -58);
+    c.bezierCurveTo(32, -62, 22, -60, 18, -54);
+    c.bezierCurveTo(14, -48, 16, -38, 22, -34);
+    c.stroke();
+    /* Ears swept back */
+    c.beginPath();
+    c.moveTo(22, -58);
+    c.bezierCurveTo(14, -62, 2, -64, -6, -62);
+    c.bezierCurveTo(-10, -60, -10, -56, -6, -54);
+    c.bezierCurveTo(2, -52, 14, -52, 20, -56);
+    c.stroke();
+    c.beginPath();
+    c.moveTo(24, -56);
+    c.bezierCurveTo(16, -58, 6, -60, -2, -58);
+    c.bezierCurveTo(-6, -56, -6, -52, -2, -50);
+    c.bezierCurveTo(6, -48, 16, -48, 22, -52);
+    c.stroke();
+    /* Front legs reaching down */
+    c.beginPath(); c.moveTo(12, -4); c.bezierCurveTo(18, 2, 22, 8, 24, 14); c.stroke();
+    c.beginPath(); c.moveTo(6, -4); c.bezierCurveTo(12, 2, 16, 8, 18, 14); c.stroke();
+    /* Hind legs trailing */
+    c.beginPath(); c.moveTo(-22, -8); c.bezierCurveTo(-28, -4, -34, 0, -38, 4); c.stroke();
+    c.beginPath(); c.moveTo(-18, -6); c.bezierCurveTo(-24, -2, -30, 2, -34, 6); c.stroke();
+    /* Tail */
+    c.beginPath(); c.arc(-30, -18, 5, 0, Math.PI * 2); c.stroke();
+    /* Eye */
+    c.beginPath(); c.arc(34, -46, 2.2, 0, Math.PI * 2); c.fill();
+    /* Nose */
+    c.beginPath(); c.arc(42, -38, 1.2, 0, Math.PI * 2); c.fill();
+    c.restore();
+  }
+
+  /* ===== IMG5 CHUNKY BABY BUNNY — bold sticker style ===== */
+
+  function drawImg5Sit(c, earTwitch) {
+    var e = Math.sin(earTwitch * 0.08) * 2.5;
+    /* Body — very round and wide, almost as wide as tall */
+    c.beginPath();
+    c.moveTo(16, 0);
+    c.bezierCurveTo(8, 0, -8, 0, -20, -2);
+    c.bezierCurveTo(-32, -4, -40, -14, -40, -28);
+    c.bezierCurveTo(-40, -44, -32, -56, -18, -58);
+    c.bezierCurveTo(-6, -60, 8, -56, 16, -46);
+    c.bezierCurveTo(24, -36, 26, -20, 22, -8);
+    c.bezierCurveTo(20, -2, 18, 0, 16, 0);
+    c.stroke();
+    /* Head — round, slightly front-facing for whisker visibility */
+    c.beginPath();
+    c.moveTo(16, -46);
+    c.bezierCurveTo(22, -44, 34, -42, 40, -48);
+    c.bezierCurveTo(46, -54, 46, -66, 40, -74);
+    c.bezierCurveTo(34, -80, 22, -82, 14, -76);
+    c.bezierCurveTo(6, -70, 4, -58, 10, -50);
+    c.bezierCurveTo(12, -48, 14, -46, 16, -46);
+    c.stroke();
+    /* Left ear — short and round, chunky */
+    c.beginPath();
+    c.moveTo(16, -78);
+    c.bezierCurveTo(10 + e * 0.3, -86, 6 + e * 0.5, -96, 8 + e, -104);
+    c.bezierCurveTo(10 + e, -108, 16 + e * 0.5, -108, 18 + e * 0.3, -104);
+    c.bezierCurveTo(20, -96, 20, -86, 18, -78);
+    c.stroke();
+    /* Right ear — short and round, chunky */
+    c.beginPath();
+    c.moveTo(28, -76);
+    c.bezierCurveTo(26 + e * 0.4, -84, 24 + e * 0.6, -92, 26 + e * 0.8, -100);
+    c.bezierCurveTo(28 + e * 0.8, -104, 34 + e * 0.4, -104, 35 + e * 0.3, -100);
+    c.bezierCurveTo(36, -92, 36, -84, 32, -76);
+    c.stroke();
+    /* Front paws folded in front */
+    c.beginPath();
+    c.moveTo(4, -6);
+    c.bezierCurveTo(8, -2, 14, 0, 18, -2);
+    c.bezierCurveTo(22, -4, 20, -8, 16, -8);
+    c.bezierCurveTo(12, -8, 6, -6, 4, -6);
+    c.stroke();
+    /* Second paw hint */
+    c.beginPath();
+    c.moveTo(-2, -4);
+    c.bezierCurveTo(2, -2, 6, 0, 8, -2);
+    c.stroke();
+    /* Round eyes — larger for chunky baby */
+    c.beginPath(); c.arc(22, -62, 3.0, 0, Math.PI * 2); c.fill();
+    c.beginPath(); c.arc(36, -60, 2.8, 0, Math.PI * 2); c.fill();
+    /* Nose — centered between eyes */
+    var noseX = 29;
+    var noseY = -54;
+    c.beginPath(); c.arc(noseX, noseY, 1.8, 0, Math.PI * 2); c.fill();
+    /* Left whiskers — 3 lines radiating left */
+    c.beginPath(); c.moveTo(noseX - 2, noseY - 2); c.lineTo(noseX - 16, noseY - 5); c.stroke();
+    c.beginPath(); c.moveTo(noseX - 2, noseY); c.lineTo(noseX - 17, noseY); c.stroke();
+    c.beginPath(); c.moveTo(noseX - 2, noseY + 2); c.lineTo(noseX - 15, noseY + 4); c.stroke();
+    /* Right whiskers — 3 lines radiating right */
+    c.beginPath(); c.moveTo(noseX + 2, noseY - 2); c.lineTo(noseX + 16, noseY - 5); c.stroke();
+    c.beginPath(); c.moveTo(noseX + 2, noseY); c.lineTo(noseX + 17, noseY); c.stroke();
+    c.beginPath(); c.moveTo(noseX + 2, noseY + 2); c.lineTo(noseX + 15, noseY + 4); c.stroke();
+    /* Tail — small puffball */
+    c.beginPath(); c.arc(-38, -26, 6, 0, Math.PI * 2); c.stroke();
+  }
+
+  function drawImg5Stand(c, earTwitch) {
+    var e = Math.sin(earTwitch * 0.08) * 2.5;
+    /* Body — vertical round, chubby standing */
+    c.beginPath();
+    c.moveTo(16, 0);
+    c.bezierCurveTo(8, 0, -4, 0, -14, -4);
+    c.bezierCurveTo(-26, -8, -32, -20, -32, -36);
+    c.bezierCurveTo(-32, -52, -24, -64, -12, -68);
+    c.bezierCurveTo(-2, -72, 10, -68, 16, -58);
+    c.bezierCurveTo(22, -48, 24, -32, 22, -14);
+    c.bezierCurveTo(20, -6, 18, -1, 16, 0);
+    c.stroke();
+    /* Head — round */
+    c.beginPath();
+    c.moveTo(16, -58);
+    c.bezierCurveTo(22, -56, 34, -54, 40, -60);
+    c.bezierCurveTo(46, -66, 46, -78, 40, -86);
+    c.bezierCurveTo(34, -92, 22, -92, 14, -86);
+    c.bezierCurveTo(6, -80, 6, -66, 12, -60);
+    c.bezierCurveTo(14, -58, 16, -58, 16, -58);
+    c.stroke();
+    /* Left ear */
+    c.beginPath();
+    c.moveTo(16, -90);
+    c.bezierCurveTo(12 + e * 0.3, -98, 8 + e * 0.5, -108, 10 + e, -118);
+    c.bezierCurveTo(12 + e, -122, 16 + e * 0.5, -122, 18 + e * 0.3, -118);
+    c.bezierCurveTo(20, -108, 20, -98, 18, -90);
+    c.stroke();
+    /* Right ear */
+    c.beginPath();
+    c.moveTo(28, -88);
+    c.bezierCurveTo(26 + e * 0.4, -96, 24 + e * 0.6, -106, 26 + e * 0.8, -114);
+    c.bezierCurveTo(28 + e * 0.8, -118, 34 + e * 0.4, -118, 35 + e * 0.3, -114);
+    c.bezierCurveTo(36, -106, 36, -96, 32, -88);
+    c.stroke();
+    /* Front paws raised — chubby */
+    c.beginPath();
+    c.moveTo(8, -52);
+    c.bezierCurveTo(14, -48, 22, -42, 24, -38);
+    c.bezierCurveTo(26, -36, 24, -34, 22, -36);
+    c.stroke();
+    c.beginPath();
+    c.moveTo(12, -50);
+    c.bezierCurveTo(18, -46, 28, -38, 30, -34);
+    c.bezierCurveTo(32, -32, 30, -30, 28, -32);
+    c.stroke();
+    /* Hind feet */
+    c.beginPath();
+    c.moveTo(-14, -6);
+    c.bezierCurveTo(-18, -2, -24, 0, -26, 4);
+    c.bezierCurveTo(-28, 6, -22, 6, -18, 4);
+    c.stroke();
+    c.beginPath();
+    c.moveTo(4, -2);
+    c.bezierCurveTo(8, 0, 14, 4, 16, 6);
+    c.bezierCurveTo(18, 8, 12, 8, 8, 6);
+    c.stroke();
+    /* Tail */
+    c.beginPath(); c.arc(-30, -36, 6, 0, Math.PI * 2); c.stroke();
+    /* Eyes */
+    c.beginPath(); c.arc(24, -74, 3.0, 0, Math.PI * 2); c.fill();
+    c.beginPath(); c.arc(38, -72, 2.8, 0, Math.PI * 2); c.fill();
+    /* Nose */
+    c.beginPath(); c.arc(32, -64, 1.8, 0, Math.PI * 2); c.fill();
+  }
+
+  function drawImg5Hop0(c) {
+    /* Baby crouch — round body compressed */
+    c.beginPath();
+    c.moveTo(18, -12);
+    c.bezierCurveTo(20, -18, 18, -26, 10, -28);
+    c.bezierCurveTo(0, -30, -14, -28, -24, -24);
+    c.bezierCurveTo(-32, -22, -36, -16, -36, -10);
+    c.bezierCurveTo(-36, -4, -28, 0, -16, 0);
+    c.bezierCurveTo(-4, 2, 8, 0, 14, -4);
+    c.bezierCurveTo(16, -6, 18, -10, 18, -12);
+    c.stroke();
+    /* Head */
+    c.beginPath();
+    c.moveTo(14, -26);
+    c.bezierCurveTo(20, -24, 30, -24, 34, -30);
+    c.bezierCurveTo(38, -36, 38, -46, 32, -50);
+    c.bezierCurveTo(26, -54, 16, -52, 12, -46);
+    c.bezierCurveTo(8, -40, 10, -30, 14, -26);
+    c.stroke();
+    /* Ears tucked */
+    c.beginPath();
+    c.moveTo(16, -50);
+    c.bezierCurveTo(8, -54, -2, -56, -10, -54);
+    c.bezierCurveTo(-14, -52, -14, -48, -10, -46);
+    c.bezierCurveTo(-2, -44, 8, -44, 14, -48);
+    c.stroke();
+    c.beginPath();
+    c.moveTo(18, -48);
+    c.bezierCurveTo(10, -50, 2, -52, -4, -50);
+    c.bezierCurveTo(-8, -48, -8, -44, -4, -42);
+    c.bezierCurveTo(2, -40, 10, -40, 16, -44);
+    c.stroke();
+    /* Legs tucked under */
+    c.beginPath(); c.moveTo(6, 0); c.bezierCurveTo(10, 2, 12, 4, 12, 6); c.stroke();
+    c.beginPath(); c.moveTo(0, 0); c.bezierCurveTo(4, 2, 6, 4, 6, 6); c.stroke();
+    c.beginPath(); c.moveTo(-20, 0); c.bezierCurveTo(-24, 2, -26, 4, -26, 6); c.stroke();
+    c.beginPath(); c.moveTo(-16, 0); c.bezierCurveTo(-20, 2, -22, 4, -22, 6); c.stroke();
+    /* Tail */
+    c.beginPath(); c.arc(-34, -14, 5, 0, Math.PI * 2); c.stroke();
+    /* Eye */
+    c.beginPath(); c.arc(26, -38, 2.5, 0, Math.PI * 2); c.fill();
+    /* Nose */
+    c.beginPath(); c.arc(34, -30, 1.4, 0, Math.PI * 2); c.fill();
+  }
+
+  function drawImg5Hop1(c) {
+    /* Baby launch — body angled up */
+    c.save();
+    c.rotate(-0.2);
+    c.beginPath();
+    c.moveTo(20, -14);
+    c.bezierCurveTo(22, -20, 20, -28, 12, -30);
+    c.bezierCurveTo(2, -32, -12, -30, -22, -26);
+    c.bezierCurveTo(-30, -24, -34, -18, -34, -12);
+    c.bezierCurveTo(-34, -4, -26, 0, -14, 0);
+    c.bezierCurveTo(-2, 2, 10, 0, 16, -4);
+    c.bezierCurveTo(18, -6, 20, -10, 20, -14);
+    c.stroke();
+    /* Head */
+    c.beginPath();
+    c.moveTo(16, -28);
+    c.bezierCurveTo(22, -26, 32, -26, 36, -32);
+    c.bezierCurveTo(40, -38, 40, -48, 34, -52);
+    c.bezierCurveTo(28, -56, 18, -54, 14, -48);
+    c.bezierCurveTo(10, -42, 12, -32, 16, -28);
+    c.stroke();
+    /* Ears back */
+    c.beginPath();
+    c.moveTo(18, -52);
+    c.bezierCurveTo(10, -56, 0, -58, -8, -56);
+    c.bezierCurveTo(-12, -54, -12, -50, -8, -48);
+    c.bezierCurveTo(0, -46, 10, -46, 16, -50);
+    c.stroke();
+    c.beginPath();
+    c.moveTo(20, -50);
+    c.bezierCurveTo(12, -52, 4, -54, -2, -52);
+    c.bezierCurveTo(-6, -50, -6, -46, -2, -44);
+    c.bezierCurveTo(4, -42, 12, -42, 18, -46);
+    c.stroke();
+    /* Front legs extending */
+    c.beginPath(); c.moveTo(10, -2); c.bezierCurveTo(16, 4, 20, 8, 22, 12); c.stroke();
+    c.beginPath(); c.moveTo(4, 0); c.bezierCurveTo(10, 4, 14, 8, 16, 12); c.stroke();
+    /* Hind legs pushing */
+    c.beginPath(); c.moveTo(-22, 0); c.bezierCurveTo(-28, 6, -32, 10, -34, 14); c.stroke();
+    c.beginPath(); c.moveTo(-16, 0); c.bezierCurveTo(-22, 6, -26, 10, -28, 14); c.stroke();
+    /* Tail */
+    c.beginPath(); c.arc(-32, -14, 5, 0, Math.PI * 2); c.stroke();
+    /* Eye */
+    c.beginPath(); c.arc(28, -40, 2.5, 0, Math.PI * 2); c.fill();
+    /* Nose */
+    c.beginPath(); c.arc(36, -32, 1.4, 0, Math.PI * 2); c.fill();
+    c.restore();
+  }
+
+  function drawImg5Hop2(c) {
+    /* Baby mid-air — compact round tuck */
+    c.beginPath();
+    c.moveTo(22, -16);
+    c.bezierCurveTo(24, -22, 22, -30, 14, -32);
+    c.bezierCurveTo(4, -34, -10, -32, -22, -28);
+    c.bezierCurveTo(-30, -26, -34, -20, -34, -14);
+    c.bezierCurveTo(-34, -6, -26, -2, -14, -2);
+    c.bezierCurveTo(-2, 0, 12, -2, 18, -6);
+    c.bezierCurveTo(20, -8, 22, -12, 22, -16);
+    c.stroke();
+    /* Head */
+    c.beginPath();
+    c.moveTo(18, -30);
+    c.bezierCurveTo(24, -28, 34, -28, 38, -34);
+    c.bezierCurveTo(42, -40, 42, -50, 36, -54);
+    c.bezierCurveTo(30, -58, 20, -56, 16, -50);
+    c.bezierCurveTo(12, -44, 14, -34, 18, -30);
+    c.stroke();
+    /* Ears swept back flat */
+    c.beginPath();
+    c.moveTo(20, -54);
+    c.bezierCurveTo(12, -58, 0, -60, -8, -58);
+    c.bezierCurveTo(-12, -56, -12, -52, -8, -50);
+    c.bezierCurveTo(0, -48, 12, -48, 18, -52);
+    c.stroke();
+    c.beginPath();
+    c.moveTo(22, -52);
+    c.bezierCurveTo(14, -54, 4, -56, -2, -54);
+    c.bezierCurveTo(-6, -52, -6, -48, -2, -46);
+    c.bezierCurveTo(4, -44, 14, -44, 20, -48);
+    c.stroke();
+    /* Front legs tucked forward */
+    c.beginPath(); c.moveTo(10, -4); c.bezierCurveTo(16, 0, 20, 4, 22, 6); c.stroke();
+    c.beginPath(); c.moveTo(4, -2); c.bezierCurveTo(10, 2, 14, 6, 16, 8); c.stroke();
+    /* Hind legs tucked back */
+    c.beginPath(); c.moveTo(-22, -4); c.bezierCurveTo(-28, 0, -32, 4, -34, 6); c.stroke();
+    c.beginPath(); c.moveTo(-16, -2); c.bezierCurveTo(-22, 2, -26, 6, -28, 8); c.stroke();
+    /* Tail */
+    c.beginPath(); c.arc(-32, -16, 5, 0, Math.PI * 2); c.stroke();
+    /* Eye */
+    c.beginPath(); c.arc(30, -42, 2.5, 0, Math.PI * 2); c.fill();
+    /* Nose */
+    c.beginPath(); c.arc(38, -34, 1.4, 0, Math.PI * 2); c.fill();
+  }
+
+  function drawImg5Hop3(c) {
+    /* Baby landing — angled down */
+    c.save();
+    c.rotate(0.2);
+    c.beginPath();
+    c.moveTo(20, -14);
+    c.bezierCurveTo(22, -20, 20, -28, 12, -30);
+    c.bezierCurveTo(2, -32, -12, -30, -22, -26);
+    c.bezierCurveTo(-30, -24, -34, -18, -34, -12);
+    c.bezierCurveTo(-34, -4, -26, 0, -14, 0);
+    c.bezierCurveTo(-2, 2, 10, 0, 16, -4);
+    c.bezierCurveTo(18, -6, 20, -10, 20, -14);
+    c.stroke();
+    /* Head */
+    c.beginPath();
+    c.moveTo(16, -28);
+    c.bezierCurveTo(22, -26, 32, -26, 36, -32);
+    c.bezierCurveTo(40, -38, 40, -48, 34, -52);
+    c.bezierCurveTo(28, -56, 18, -54, 14, -48);
+    c.bezierCurveTo(10, -42, 12, -32, 16, -28);
+    c.stroke();
+    /* Ears back */
+    c.beginPath();
+    c.moveTo(18, -52);
+    c.bezierCurveTo(10, -56, 0, -58, -8, -56);
+    c.bezierCurveTo(-12, -54, -12, -50, -8, -48);
+    c.bezierCurveTo(0, -46, 10, -46, 16, -50);
+    c.stroke();
+    c.beginPath();
+    c.moveTo(20, -50);
+    c.bezierCurveTo(12, -52, 4, -54, -2, -52);
+    c.bezierCurveTo(-6, -50, -6, -46, -2, -44);
+    c.bezierCurveTo(4, -42, 12, -42, 18, -46);
+    c.stroke();
+    /* Front legs reaching down */
+    c.beginPath(); c.moveTo(10, -2); c.bezierCurveTo(14, 4, 16, 8, 18, 12); c.stroke();
+    c.beginPath(); c.moveTo(4, 0); c.bezierCurveTo(8, 4, 10, 8, 12, 12); c.stroke();
+    /* Hind legs trailing */
+    c.beginPath(); c.moveTo(-20, -2); c.bezierCurveTo(-24, 2, -28, 4, -30, 6); c.stroke();
+    c.beginPath(); c.moveTo(-14, 0); c.bezierCurveTo(-18, 4, -22, 6, -24, 8); c.stroke();
+    /* Tail */
+    c.beginPath(); c.arc(-32, -14, 5, 0, Math.PI * 2); c.stroke();
+    /* Eye */
+    c.beginPath(); c.arc(28, -40, 2.5, 0, Math.PI * 2); c.fill();
+    /* Nose */
+    c.beginPath(); c.arc(36, -32, 1.4, 0, Math.PI * 2); c.fill();
+    c.restore();
+  }
+
+
+  /* ===== FLORA ===== */
+
+  function drawGrassTuft(c, gx, gy, sway) {
+    c.save();
+    c.translate(gx, gy);
+    c.lineWidth = 1.0;
+    c.lineCap = 'round';
+    var blades = [
+      { ox: -7, h: -20, lean: -5 + sway * 6 },
+      { ox: -2, h: -27, lean:  1 + sway * 9 },
+      { ox:  3, h: -25, lean:  5 + sway * 9 },
+      { ox:  8, h: -19, lean:  9 + sway * 6 }
+    ];
+    for (var bi = 0; bi < blades.length; bi++) {
+      var bl = blades[bi];
+      c.beginPath();
+      c.moveTo(bl.ox, 0);
+      c.bezierCurveTo(bl.ox, bl.h * 0.5,
+                      bl.ox + bl.lean * 0.5, bl.h * 0.8,
+                      bl.ox + bl.lean, bl.h);
+      c.stroke();
+    }
+    c.restore();
+  }
+
+  function drawFlowerPlant(c, fx, fy, sway) {
+    c.save();
+    c.translate(fx, fy);
+    c.lineWidth = 1.0;
+    c.lineCap = 'round';
+    var sh = -36, tilt = sway * 7;
+    /* Stem */
+    c.beginPath();
+    c.moveTo(0, 0);
+    c.bezierCurveTo(0, sh * 0.5, tilt * 0.4, sh * 0.75, tilt, sh);
+    c.stroke();
+    /* Leaf */
+    c.beginPath();
+    c.moveTo(tilt * 0.35, sh * 0.55);
+    c.bezierCurveTo(tilt * 0.35 + 12, sh * 0.47, tilt * 0.35 + 16, sh * 0.37, tilt * 0.35 + 9, sh * 0.32);
+    c.bezierCurveTo(tilt * 0.35 + 2,  sh * 0.35, tilt * 0.35,      sh * 0.48, tilt * 0.35,      sh * 0.55);
+    c.stroke();
+    /* 5 petals */
+    c.lineWidth = 0.8;
+    for (var p = 0; p < 5; p++) {
+      var ang = (p / 5) * Math.PI * 2 - Math.PI * 0.5;
+      c.beginPath();
+      c.arc(tilt + Math.cos(ang) * 6, sh + Math.sin(ang) * 6, 3.2, 0, Math.PI * 2);
+      c.stroke();
+    }
+    /* Centre dot */
+    c.beginPath(); c.arc(tilt, sh, 2.2, 0, Math.PI * 2); c.fill();
+    c.restore();
+  }
+
+  function drawFloraTree(c, tx, gy, sway) {
+    c.save();
+    c.translate(tx, gy);
+    c.lineCap = 'round';
+    c.lineJoin = 'round';
+
+    var sw = sway; /* -0.44..+0.44 */
+
+    /* ── Trunk: wide flared base, tapers to fork ── */
+    c.lineWidth = 2.2;
+    c.beginPath();
+    c.moveTo(-7, 0);
+    c.bezierCurveTo(-7, -10, -5 + sw * 0.5, -26, -3 + sw * 2.2, -40);
+    c.stroke();
+    c.beginPath();
+    c.moveTo(7, 0);
+    c.bezierCurveTo(7, -10,  5 + sw * 0.5, -26,  3 + sw * 2.2, -40);
+    c.stroke();
+
+    /* ── Three branches from fork ── */
+    c.lineWidth = 1.2;
+    var fx = sw * 2.2, fy = -40;
+    /* Left */
+    c.beginPath();
+    c.moveTo(fx - 1, fy);
+    c.bezierCurveTo(fx - 9,  fy - 10, fx - 21 + sw * 1.4, fy - 20, fx - 25 + sw * 2.2, fy - 28);
+    c.stroke();
+    /* Right */
+    c.beginPath();
+    c.moveTo(fx + 1, fy);
+    c.bezierCurveTo(fx + 9,  fy -  9, fx + 20 + sw * 2.2, fy - 18, fx + 24 + sw * 3.0, fy - 24);
+    c.stroke();
+    /* Centre */
+    c.beginPath();
+    c.moveTo(fx, fy);
+    c.bezierCurveTo(fx + 1, fy - 12, fx + sw * 0.9, fy - 22, fx + sw * 1.4, fy - 30);
+    c.stroke();
+
+    /* ── Leaf sprigs at fork (visible through open canopy) ── */
+    c.lineWidth = 0.85;
+    var ls = sw * 2.8;
+    /* Left sprig */
+    c.beginPath();
+    c.moveTo(fx - 6 + ls * 0.3, fy - 14);
+    c.bezierCurveTo(fx - 14 + ls, fy - 23, fx - 9 + ls,  fy - 30, fx - 4 + ls,  fy - 26);
+    c.bezierCurveTo(fx - 1 + ls * 0.8, fy - 21, fx - 4 + ls * 0.4, fy - 16, fx - 6 + ls * 0.3, fy - 14);
+    c.stroke();
+    /* Right sprig */
+    c.beginPath();
+    c.moveTo(fx + 8 + ls * 0.3, fy - 12);
+    c.bezierCurveTo(fx + 16 + ls, fy - 21, fx + 13 + ls, fy - 28, fx + 7 + ls,  fy - 24);
+    c.bezierCurveTo(fx + 3 + ls * 0.8, fy - 20, fx + 6 + ls * 0.4, fy - 14, fx + 8 + ls * 0.3, fy - 12);
+    c.stroke();
+
+    /* ── Large bumpy canopy — one continuous bezier path ── */
+    c.lineWidth = 1.0;
+    var ccx = sw * 3.8, ccy = -74;
+    var rx = 40, ry = 27;
+    /* Varying bump heights give organic, uneven foliage clumps */
+    var bH = [7, 5, 8, 6, 10, 5, 8, 7, 5, 9, 7, 5, 9, 6, 8, 5, 7, 9, 6, 7];
+    var N  = bH.length;
+    var a0 = Math.PI * 0.88; /* start: lower-left, near left branch */
+    c.beginPath();
+    c.moveTo(ccx + Math.cos(a0) * rx, ccy + Math.sin(a0) * ry);
+    for (var bi = 0; bi < N; bi++) {
+      var a1 = a0 + (bi / N) * Math.PI * 2;
+      var a2 = a0 + ((bi + 1) / N) * Math.PI * 2;
+      var bh = bH[bi];
+      var outerR_x = rx + bh * 0.80;
+      var outerR_y = ry + bh * 0.80;
+      var ep1X = ccx + Math.cos(a2) * rx;
+      var ep1Y = ccy + Math.sin(a2) * ry;
+      var c1X  = ccx + Math.cos(a1 + 0.14) * outerR_x;
+      var c1Y  = ccy + Math.sin(a1 + 0.14) * outerR_y;
+      var c2X  = ccx + Math.cos(a2 - 0.14) * outerR_x;
+      var c2Y  = ccy + Math.sin(a2 - 0.14) * outerR_y;
+      c.bezierCurveTo(c1X, c1Y, c2X, c2Y, ep1X, ep1Y);
+    }
+    c.closePath();
+    c.stroke();
+
+    /* ── Small looping leaf details inside canopy (left interior) ── */
+    c.lineWidth = 0.75;
+    for (var li = 0; li < 4; li++) {
+      var llx = ccx - 21 + li * 3.5 + ls * 0.35;
+      var lly = ccy + 5  + li * 8;
+      c.beginPath();
+      c.moveTo(llx, lly);
+      c.bezierCurveTo(llx - 7, lly - 12, llx - 4, lly - 19, llx,     lly - 16);
+      c.bezierCurveTo(llx + 5, lly - 12, llx + 3, lly -  5, llx,     lly);
+      c.stroke();
+    }
+
+    c.restore();
+  }
+
+  function drawFloraHeart(c, cx, cy, s) {
+    c.beginPath();
+    c.moveTo(cx, cy + s);
+    c.bezierCurveTo(cx - s * 0.1, cy + s * 0.4, cx - s * 1.1, cy + s * 0.1,  cx - s * 1.1, cy - s * 0.35);
+    c.bezierCurveTo(cx - s * 1.1, cy - s * 1.0,  cx,           cy - s * 0.85, cx,           cy - s * 0.20);
+    c.bezierCurveTo(cx,           cy - s * 0.85, cx + s * 1.1, cy - s * 1.0,  cx + s * 1.1, cy - s * 0.35);
+    c.bezierCurveTo(cx + s * 1.1, cy + s * 0.1, cx + s * 0.1, cy + s * 0.4,  cx,           cy + s);
+    c.closePath();
+  }
+
+  function spawnFloraHearts(hx, hy, count) {
+    for (var hi = 0; hi < Math.min(count, 20); hi++) {
+      floraHearts.push({
+        x: hx + (Math.random() - 0.5) * 40,
+        y: hy,
+        vx: (Math.random() - 0.5) * 2.4,
+        vy: -(Math.random() * 2.6 + 0.5),
+        size: Math.random() * 4.5 + 3,
+        alpha: 0.95
+      });
+    }
+  }
+
+  function updateFlora(w) {
+    floraBreeze += 0.011;
+    floraTreeX = w * TREE_X_RATIO;
+    /* Cursor speed (smooth) */
+    if (floraPrevMX > -9000) {
+      floraCursorSpd = floraCursorSpd * 0.80 + Math.abs(bunnyMouseX - floraPrevMX) * 0.20;
+    }
+    floraPrevMX = bunnyMouseX;
+    /* Hearts from tree */
+    var bounds   = canvas.getBoundingClientRect();
+    var localCY  = bunnyMouseY - bounds.top;
+    var nearTree = Math.abs(bunnyMouseX - floraTreeX) < 90 && localCY > 0 && localCY < CANVAS_H;
+    var heartY   = CANVAS_H - GROUND_Y_OFFSET - 74;
+    if (nearTree) {
+      if (floraCursorSpd > 12) {
+        /* Violent — burst */
+        if (Math.random() < 0.42) {
+          spawnFloraHearts(floraTreeX, heartY, 3 + Math.floor(floraCursorSpd / 9));
+        }
+      } else if (Math.random() < 0.04) {
+        /* Gentle hover — single heart */
+        spawnFloraHearts(floraTreeX, heartY, 1);
+      }
+    }
+    /* Advance heart particles */
+    for (var hi = floraHearts.length - 1; hi >= 0; hi--) {
+      var hrt = floraHearts[hi];
+      hrt.x  += hrt.vx;
+      hrt.y  += hrt.vy;
+      hrt.vy += 0.032;
+      hrt.alpha -= 0.010;
+      if (hrt.alpha <= 0) floraHearts.splice(hi, 1);
+    }
+  }
+
+  function drawFlora(w, groundY) {
+    var t = floraBreeze;
+    ctx.strokeStyle = GOLD;
+    ctx.fillStyle   = GOLD;
+    /* Grass */
+    for (var gi = 0; gi < GRASS_POS.length; gi++) {
+      drawGrassTuft(ctx, GRASS_POS[gi] * w, groundY, Math.sin(t + gi * 1.1) * 0.65);
+    }
+    /* Flowers */
+    for (var fi = 0; fi < FLOWER_POS.length; fi++) {
+      drawFlowerPlant(ctx, FLOWER_POS[fi] * w, groundY, Math.sin(t * 1.1 + fi * 0.9 + 0.6) * 0.55);
+    }
+    /* Tree */
+    drawFloraTree(ctx, floraTreeX, groundY, Math.sin(t * 0.62) * 0.44);
+    /* Hearts */
+    for (var hi = 0; hi < floraHearts.length; hi++) {
+      var hrt = floraHearts[hi];
+      ctx.save();
+      ctx.globalAlpha = hrt.alpha;
+      ctx.fillStyle   = GOLD;
+      drawFloraHeart(ctx, hrt.x, hrt.y, hrt.size);
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  /* ===== POSE DISPATCHER ===== */
+  function drawPose(c, pose, earTwitch) {
+    switch (pose) {
+      case 'idle1':     drawIdle1(c, earTwitch); break;
+      case 'idle2':     drawIdle2(c, earTwitch); break;
+      case 'idle3':     drawIdle3(c, earTwitch); break;
+      case 'idle4':     drawIdle4(c, earTwitch); break;
+      case 'hop0':      drawHop0(c); break;
+      case 'hop1':      drawHop1(c); break;
+      case 'hop2':      drawHop2(c); break;
+      case 'hop3':      drawHop3(c); break;
+      case 'img2_sit0': drawImg2Sit0(c, earTwitch); break;
+      case 'img2_sit1': drawImg2Sit1(c, earTwitch); break;
+      case 'img2_hop0': drawImg2Hop0(c); break;
+      case 'img2_hop1': drawImg2Hop1(c); break;
+      case 'img2_hop2': drawImg2Hop2(c); break;
+      case 'img2_hop3': drawImg2Hop3(c); break;
+      case 'img3_sit':  drawImg3Sit(c, earTwitch); break;
+      case 'img3_hop0': drawImg3Hop0(c); break;
+      case 'img3_hop1': drawImg3Hop1(c); break;
+      case 'img3_hop2': drawImg3Hop2(c); break;
+      case 'img3_hop3': drawImg3Hop3(c); break;
+      case 'img4_sit':  drawImg4Sit(c, earTwitch); break;
+      case 'img4_stand': drawImg4Stand(c, earTwitch); break;
+      case 'img4_hop0': drawImg4Hop0(c); break;
+      case 'img4_hop1': drawImg4Hop1(c); break;
+      case 'img4_hop2': drawImg4Hop2(c); break;
+      case 'img4_hop3': drawImg4Hop3(c); break;
+      case 'img5_sit':  drawImg5Sit(c, earTwitch); break;
+      case 'img5_stand': drawImg5Stand(c, earTwitch); break;
+      case 'img5_hop0': drawImg5Hop0(c); break;
+      case 'img5_hop1': drawImg5Hop1(c); break;
+      case 'img5_hop2': drawImg5Hop2(c); break;
+      case 'img5_hop3': drawImg5Hop3(c); break;
+      default:          drawIdle0(c, earTwitch); break;
+    }
+  }
+
+  /* ===== DRAW GROUND LINE ===== */
+  function drawGround() {
+    var w = window.innerWidth;
+    var gy = CANVAS_H - GROUND_Y_OFFSET;
+    ctx.save();
+    ctx.strokeStyle = 'rgba(201, 168, 76, 0.12)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0, gy);
+    ctx.lineTo(w, gy);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  /* ===== PHYSICS + RENDER LOOP ===== */
+  var HOP_HEIGHT = 24;
+
+  function tick() {
+    var w = window.innerWidth;
+    var groundY = CANVAS_H - GROUND_Y_OFFSET;
+
+    /* Convert mouse position to canvas-local coordinates */
+    var canvasRect = canvas.getBoundingClientRect();
+    var localMouseX = bunnyMouseX - canvasRect.left;
+    var localMouseY = bunnyMouseY - canvasRect.top;
+
+    /* Clear */
+    ctx.clearRect(0, 0, w, CANVAS_H);
+
+    /* Ground line */
+    drawGround();
+
+    /* Flora: grass, flowers, tree + hearts */
+    updateFlora(w);
+    drawFlora(w, groundY);
+
+    /* Update and draw each bunny */
+    for (var i = 0; i < bunnies.length; i++) {
+      var b = bunnies[i];
+      b.y = groundY;
+
+      /* ---- Cursor flee behavior ---- */
+      var dx = b.x - localMouseX;
+      var dy = b.y - localMouseY;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist < FLEE_RADIUS && dist > 1) {
+        var force = Math.pow((FLEE_RADIUS - dist) / FLEE_RADIUS, 1.5);
+        b.vx += (dx / dist) * force * 5;
+        b.fleeTimer = 100;
+        b.facing = b.vx > 0 ? 1 : -1;
+      }
+
+      /* Speed limit */
+      var maxSpd = b.scale >= 1.0 ? ADULT_MAX_SPEED : BABY_MAX_SPEED;
+      b.vx = Math.max(-maxSpd, Math.min(maxSpd, b.vx));
+
+      /* Deceleration and idle/flee behavior */
+      if (b.fleeTimer > 0) {
+        b.fleeTimer--;
+        b.vx *= 0.95;
+
+        /* Advance flee phase -- one full hop cycle every ~50 ticks */
+        b.fleePhase = (b.fleePhase + 0.02) % 1.0;
+
+        /* Select hop frame based on type */
+        var hp = b.bunnyType === 'img2' ? 'img2_hop' :
+                 b.bunnyType === 'img3' ? 'img3_hop' :
+                 b.bunnyType === 'img4' ? 'img4_hop' :
+                 b.bunnyType === 'img5' ? 'img5_hop' : 'hop';
+        if      (b.fleePhase < 0.12) { b.pose = hp + '0'; }
+        else if (b.fleePhase < 0.38) { b.pose = hp + '1'; }
+        else if (b.fleePhase < 0.65) { b.pose = hp + '2'; }
+        else if (b.fleePhase < 0.88) { b.pose = hp + '3'; }
+        else                          { b.pose = hp + '0'; }
+
+        /* hopY follows a sine arc (actual visual hop height) */
+        b.hopY = -Math.sin(b.fleePhase * Math.PI) * HOP_HEIGHT;
+
+        /* Slow down and return to idle */
+        if (b.fleeTimer === 0) {
+          b.fleePhase = 0;
+          b.hopY = 0;
+          if (b.bunnyType === 'img4') { b.pose = 'img4_sit'; }
+          else if (b.bunnyType === 'img5') { b.pose = 'img5_sit'; }
+          else if (b.bunnyType === 'img3') { b.pose = 'img3_sit'; }
+          else if (b.bunnyType === 'img2') { b.pose = 'img2_sit' + b.idlePoseIndex; }
+          else { b.pose = 'idle' + b.idlePoseIndex; }
+        }
+      } else {
+        /* ---- Idle behaviour ---- */
+        b.vx *= 0.88;
+
+        /* Separation: gentle push away from neighbours */
+        for (var j = 0; j < bunnies.length; j++) {
+          if (j === i) continue;
+          var sdx = b.x - bunnies[j].x;
+          var sdist = Math.abs(sdx);
+          if (sdist > 0 && sdist < SEPARATION_RADIUS) {
+            var sepF = ((SEPARATION_RADIUS - sdist) / SEPARATION_RADIUS) * SEPARATION_FORCE;
+            b.vx += (sdx > 0 ? 1 : -1) * sepF;
+          }
+        }
+
+        /* Random voluntary hop — fires every WANDER_MIN..WANDER_MAX ticks */
+        b.wanderTimer--;
+        if (b.wanderTimer <= 0) {
+          var wdir = Math.random() < 0.5 ? 1 : -1;
+          b.facing = wdir;
+          b.vx = wdir * (1.8 + Math.random() * 2.4);
+          /* Trigger a short hop cycle (reuses flee animation, shorter duration) */
+          b.fleeTimer = 38 + Math.floor(Math.random() * 22);
+          b.fleePhase = 0;
+          b.wanderTimer = WANDER_MIN + Math.floor(Math.random() * (WANDER_MAX - WANDER_MIN));
+        }
+
+        /* Idle pose cycling (independent of wander) */
+        b.idleTimer--;
+        if (b.idleTimer <= 0) {
+          var idleCount = b.bunnyType === 'img2' ? 2 :
+                          b.bunnyType === 'img3' ? 1 :
+                          b.bunnyType === 'img4' ? 2 :
+                          b.bunnyType === 'img5' ? 2 : 5;
+          b.idlePoseIndex = (b.idlePoseIndex + 1) % idleCount;
+          if (b.bunnyType === 'img4') { b.pose = b.idlePoseIndex === 0 ? 'img4_sit' : 'img4_stand'; }
+          else if (b.bunnyType === 'img5') { b.pose = b.idlePoseIndex === 0 ? 'img5_sit' : 'img5_stand'; }
+          else if (b.bunnyType === 'img3') { b.pose = 'img3_sit'; }
+          else if (b.bunnyType === 'img2') { b.pose = 'img2_sit' + b.idlePoseIndex; }
+          else { b.pose = 'idle' + b.idlePoseIndex; }
+          b.idleTimer = 140 + Math.random() * 200;
+        }
+      }
+
+      /* Move */
+      b.x += b.vx;
+
+      /* Edge wrap */
+      var margin = 60;
+      if (b.x < -margin) b.x = w + margin;
+      if (b.x > w + margin) b.x = -margin;
+
+      /* Ear twitch timer */
+      b.earTwitch++;
+      b.earTwitchTimer--;
+      if (b.earTwitchTimer <= 0) {
+        b.earTwitch = 0;
+        b.earTwitchTimer = Math.random() * 120 + 40;
+      }
+
+      /* ---- Draw ---- */
+      ctx.save();
+      ctx.translate(b.x, b.y + b.hopY);
+      ctx.scale(b.facing * b.scale, b.scale);
+      ctx.strokeStyle = GOLD;
+      ctx.fillStyle = GOLD;
+      ctx.lineWidth = 1.5 / b.scale;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      drawPose(ctx, b.pose, b.earTwitch);
+      ctx.restore();
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  /* Start the colony */
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>
