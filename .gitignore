@@ -18,6 +18,27 @@ out/
 *.js.map
 
 # Environment & secrets
+node_modules
+package-lock.json
+
+# Build outputs
+dist
+.cache
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor directories and files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.claude
+
+# Environment
 .env
 .env.local
 .env.*.local
@@ -50,3 +71,7 @@ temp/
 *.tmp
 *.bak
 *.orig
+# Backup files
+*~
+*.bak
+*.tmp
